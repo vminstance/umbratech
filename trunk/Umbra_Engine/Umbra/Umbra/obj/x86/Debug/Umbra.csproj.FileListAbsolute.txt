@@ -1,0 +1,89 @@
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.exe
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\crosshair.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\framecounter.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\textures.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\compass.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\console.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\popup.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\bin\x86\Debug\Content\effects\effects.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.exe
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.pdb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.pdb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\crosshair.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\framecounter.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\textures.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\compass.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\console.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\popup.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\effects\effects.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.exe
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.pdb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.exe
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.pdb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\crosshair.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\framecounter.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\textures.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\compass.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\console.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\popup.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\effects\effects.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.exe
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.pdb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.exe
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.pdb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\crosshair.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\framecounter.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\compass.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\textures.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\console.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\popup.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\effects\effects.xnb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.exe
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.pdb
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.exe
+D:\Users\Eier\Desktop\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.pdb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\crosshair.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\framecounter.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\compass.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\textures.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\console.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\popup.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\effects\effects.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\mainsong.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\snap.xnb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\mainsong.wma
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.exe
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.pdb
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.exe
+D:\Personal\Desktop\Skype_pictures\Umbra\Umbra\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.pdb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\crosshair.xnb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\compass.xnb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\textures.xnb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\console.xnb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\popup.xnb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\mainsong.xnb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\snap.xnb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\mainsong.wma
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.exe.manifest
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.application
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.exe
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Umbra.pdb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\obj\x86\Debug\ResolveAssemblyReference.cache
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.exe.manifest
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.application
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.exe
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.pdb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\walk.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\debug.xnb
+d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\effects\main.xnb

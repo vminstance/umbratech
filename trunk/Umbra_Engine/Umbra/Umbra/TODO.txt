@@ -1,0 +1,18 @@
+﻿TODO:
+~~~~~
+
+Features:
+  -Demanding:
+	-Block editing (Almost done)
+	-LUA
+	-Console key-binding
+
+Bugfixes:
+  -Faces
+
+Improvements:
+  -Octree generation
+
+Cleanups:
+  -Constants
+  -Block vs. ushort

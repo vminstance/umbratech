@@ -1,0 +1,11 @@
+Content\textures\crosshair.xnb
+Content\textures\compass.xnb
+Content\textures\textures.xnb
+Content\fonts\console.xnb
+Content\fonts\popup.xnb
+Content\sounds\mainsong.xnb
+Content\sounds\mainsong.wma
+Content\sounds\snap.xnb
+Content\sounds\walk.xnb
+Content\fonts\debug.xnb
+Content\effects\main.xnb
