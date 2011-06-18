@@ -1,4 +1,0 @@
-d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra_GL\Umbra_GL\obj\x86\Debug\ResolveAssemblyReference.cache
-d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra_GL\Umbra_GL\obj\x86\Debug\Umbra_GL.Properties.Resources.resources
-d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra_GL\Umbra_GL\obj\x86\Debug\GenerateResource.read.1.tlog
-d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra_GL\Umbra_GL\obj\x86\Debug\GenerateResource.write.1.tlog
