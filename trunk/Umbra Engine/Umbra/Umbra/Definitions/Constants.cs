@@ -219,7 +219,7 @@ namespace Umbra.Definitions
         //----------------
         static public bool MusicEnabled = false;
         static public bool InteractSoundEnabled = true;
-        static public bool WalkSoundEnabled = true;
+        static public bool WalkSoundEnabled = false;
 
 
 
