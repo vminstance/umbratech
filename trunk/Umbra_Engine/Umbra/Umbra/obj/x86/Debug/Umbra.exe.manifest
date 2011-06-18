@@ -99,17 +99,17 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>X18y89ncEYzddu56fdmp/a5k0mw=</dsig:DigestValue>
+        <dsig:DigestValue>YAPVjUV65drcTM5v7Ta/1mM62aQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Content\effects\main.xnb" size="32952">
+  <file name="Content\effects\main.xnb" size="32904">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>UNvXAZTdXJCAnwIkpFseT3783qg=</dsig:DigestValue>
+      <dsig:DigestValue>s0Zwm24AaWQSs80OJzrLRQBUO+s=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\fonts\console.xnb" size="29147">
@@ -145,7 +145,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>CF5AbZ0iXOFWoNJbeG5+FnP3T2k=</dsig:DigestValue>
+      <dsig:DigestValue>wiwLfjPQt6BH/Ng9nlerIo2YvFQ=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\sounds\mainsong.xnb" size="126">

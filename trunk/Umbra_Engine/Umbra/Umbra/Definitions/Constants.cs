@@ -50,10 +50,10 @@ namespace Umbra.Definitions
 
         static public World CurrentWorld = new World("default");
         public const int ChunkSize = 32;
-        public const int WorldSize = 8;
+        public const int WorldSize = 4;
         public const float UpdateChunksMoveLength = ChunkSize * ChunkSize / 4;
         public const float UpdateGridsMoveLength = ChunkSize * WorldSize * ChunkSize * WorldSize / 6;
-        static public bool DynamicWorld = true;
+        static public bool DynamicWorld = false;
         public const bool SaveDynamicWorld = false;
 
 
@@ -214,7 +214,7 @@ namespace Umbra.Definitions
         //----------------
         // Sounds
         //----------------
-        static public bool MusicEnabled = true;
+        static public bool MusicEnabled = false;
         static public bool InteractSoundEnabled = true;
         static public bool WalkSoundEnabled = true;
 

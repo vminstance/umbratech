@@ -39,7 +39,7 @@ namespace Umbra.Implementations
             Layers = new GridLayer[layerCount];
             for (int x = 0; x < layerCount; x++)
             {
-                Layers[x] = new GridLayer(GridElementType.PerlinBicubic, 3, (float)Random.NextDouble() * 5.0F);
+                Layers[x] = new GridLayer(GridElementType.Bicubic, 3, (float)Random.NextDouble() * 5.0F);
             }
         }
 
@@ -105,7 +105,7 @@ namespace Umbra.Implementations
 
                         if (absoluteHeight > height)
                         {
-                            if (absoluteHeight < 20)
+                            if (absoluteHeight < 10)
                             {
                                 chunk[x, y, z] = Block.Water;
                             }
@@ -116,7 +116,7 @@ namespace Umbra.Implementations
                         }
                         else if (absoluteHeight > height - 1)
                         {
-                            if (absoluteHeight < 22)
+                            if (absoluteHeight < 12)
                             {
                                 chunk[x, y, z] = Block.Sand;
                             }

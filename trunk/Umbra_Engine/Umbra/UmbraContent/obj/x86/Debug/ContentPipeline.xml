@@ -7,17 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\crosshair.xnb</Output>
-      <Time>2011-05-13T15:37:15.3936871+02:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\compass.png</Source>
-      <Name>textures\compass</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\compass.xnb</Output>
-      <Time>2011-06-14T19:41:57.8720356+02:00</Time>
+      <Output>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\crosshair.xnb</Output>
+      <Time>2011-06-19T00:01:02.75+02:00</Time>
     </Item>
     <Item>
       <Source>textures\textures.png</Source>
@@ -25,54 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\textures.xnb</Output>
-      <Time>2011-05-22T15:47:03.5275647+02:00</Time>
-    </Item>
-    <Item>
-      <Source>fonts\console.spritefont</Source>
-      <Name>fonts\console</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\console.xnb</Output>
-      <Time>2011-05-13T23:10:58.3457509+02:00</Time>
-    </Item>
-    <Item>
-      <Source>fonts\popup.spritefont</Source>
-      <Name>fonts\popup</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\popup.xnb</Output>
-      <Time>2011-05-13T23:40:37.1804944+02:00</Time>
-    </Item>
-    <Item>
-      <Source>sounds\mainsong.mp3</Source>
-      <Name>sounds\mainsong</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\mainsong.xnb</Output>
-      <Extra>d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\mainsong.wma</Extra>
-      <Time>2011-05-22T21:41:36.8511303+02:00</Time>
-    </Item>
-    <Item>
-      <Source>sounds\snap.wav</Source>
-      <Name>sounds\snap</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\snap.xnb</Output>
-      <Time>2011-05-22T21:42:08.5099411+02:00</Time>
-    </Item>
-    <Item>
-      <Source>sounds\walk.wav</Source>
-      <Name>sounds\walk</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\walk.xnb</Output>
-      <Time>2011-06-12T09:03:38.980594+02:00</Time>
+      <Output>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\textures.xnb</Output>
+      <Time>2011-06-19T00:01:02.7519531+02:00</Time>
     </Item>
     <Item>
       <Source>fonts\debug.png</Source>
@@ -80,8 +25,53 @@
       <Importer>TextureImporter</Importer>
       <Processor>FontTextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\debug.xnb</Output>
-      <Time>2011-06-12T17:57:30.8145586+02:00</Time>
+      <Output>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\debug.xnb</Output>
+      <Time>2011-06-19T00:01:03.4433593+02:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\compass.png</Source>
+      <Name>textures\compass</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\textures\compass.xnb</Output>
+      <Time>2011-06-19T00:01:02.7792968+02:00</Time>
+    </Item>
+    <Item>
+      <Source>fonts\console.spritefont</Source>
+      <Name>fonts\console</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\console.xnb</Output>
+      <Time>2011-06-19T00:01:03.4550781+02:00</Time>
+    </Item>
+    <Item>
+      <Source>fonts\popup.spritefont</Source>
+      <Name>fonts\popup</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\fonts\popup.xnb</Output>
+      <Time>2011-06-19T00:01:03.4414062+02:00</Time>
+    </Item>
+    <Item>
+      <Source>sounds\walk.wav</Source>
+      <Name>sounds\walk</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\walk.xnb</Output>
+      <Time>2011-06-19T00:01:05.4267578+02:00</Time>
+    </Item>
+    <Item>
+      <Source>sounds\snap.wav</Source>
+      <Name>sounds\snap</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\snap.xnb</Output>
+      <Time>2011-06-19T00:01:05.4287109+02:00</Time>
     </Item>
     <Item>
       <Source>effects\main.fx</Source>
@@ -89,8 +79,18 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>d:\personal\documents\visual studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\effects\main.xnb</Output>
-      <Time>2011-06-17T00:32:27.8286648+02:00</Time>
+      <Output>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\effects\main.xnb</Output>
+      <Time>2011-06-19T00:01:02.4179687+02:00</Time>
+    </Item>
+    <Item>
+      <Source>sounds\mainsong.mp3</Source>
+      <Name>sounds\mainsong</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\mainsong.xnb</Output>
+      <Extra>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\sounds\mainsong.wma</Extra>
+      <Time>2011-06-19T00:01:05.4248046+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -98,10 +98,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\UmbraContent\</RootDirectory>
-      <LoggerRootDirectory>D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\</LoggerRootDirectory>
-      <IntermediateDirectory>D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\UmbraContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra\Umbra\Umbra\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\UmbraContent\</RootDirectory>
+      <LoggerRootDirectory>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\</LoggerRootDirectory>
+      <IntermediateDirectory>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\UmbraContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -129,8 +129,8 @@
         <Value>2010-08-23T13:41:18+02:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2011-01-15T17:20:13.2554256+01:00</Value>
+        <Key>C:\windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-02-16T22:52:39.2304687+01:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
