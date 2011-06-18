@@ -105,7 +105,7 @@ namespace Umbra.Implementations
 
                         if (absoluteHeight > height)
                         {
-                            if (absoluteHeight < 10)
+                            if (absoluteHeight < 12)
                             {
                                 chunk[x, y, z] = Block.Water;
                             }
@@ -116,7 +116,7 @@ namespace Umbra.Implementations
                         }
                         else if (absoluteHeight > height - 1)
                         {
-                            if (absoluteHeight < 12)
+                            if (absoluteHeight < 14)
                             {
                                 chunk[x, y, z] = Block.Sand;
                             }
