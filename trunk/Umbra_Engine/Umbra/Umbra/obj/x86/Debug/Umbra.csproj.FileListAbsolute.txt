@@ -108,3 +108,24 @@ D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\obj\x86\De
 D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.application
 D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.exe
 D:\Users\Eier\Documents\Visual Studio 2010\Projects\Umbra\Umbra\Umbra\obj\x86\Debug\Umbra.pdb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\textures\crosshair.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\textures\textures.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\fonts\debug.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\textures\compass.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\fonts\console.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\fonts\popup.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\sounds\walk.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\sounds\snap.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\effects\main.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\sounds\mainsong.xnb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Content\sounds\mainsong.wma
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Umbra.exe.manifest
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Umbra.application
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Umbra.exe
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\bin\x86\Debug\Umbra.pdb
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\obj\x86\Debug\Umbra.exe.manifest
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\obj\x86\Debug\Umbra.application
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\obj\x86\Debug\Umbra.exe
+D:\Personal\Documents\Visual Studio 2010\Projects\Fullscale\Umbra Technologies\Umbra_Engine\Umbra\Umbra\obj\x86\Debug\Umbra.pdb
