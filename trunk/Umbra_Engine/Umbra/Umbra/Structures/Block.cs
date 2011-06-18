@@ -37,6 +37,9 @@ namespace Umbra.Structures
         static public ushort Sand { get { return BitConverter.ToUInt16(new byte[] { 13, 0 }, 0); } }
         static public ushort Leaves { get { return BitConverter.ToUInt16(new byte[] { 14, 0 }, 0); } }
         static public ushort Lava { get { return BitConverter.ToUInt16(new byte[] { 15, 0 }, 0); } }
+        static public ushort Brick { get { return BitConverter.ToUInt16(new byte[] { 16, 0 }, 0); } }
+        static public ushort Cobblestone { get { return BitConverter.ToUInt16(new byte[] { 17, 0 }, 0); } }
+        static public ushort Ice { get { return BitConverter.ToUInt16(new byte[] { 18, 0 }, 0); } }
         static public ushort Vacuum { get { return BitConverter.ToUInt16(new byte[] { 255, 0 }, 0); } }
 
         static public ushort Create(byte type, byte data)
@@ -83,6 +86,9 @@ namespace Umbra.Structures
                 case 13: return 18;                                                             // Sand
                 case 14: return 52;                                                             // Leaves
                 case 15: return 255;                                                            // Lava
+                case 16: return 7;                                                              // Brick
+                case 17: return 16;                                                             // Cobblestone
+                case 18: return 67;                                                             // Ice
                 case 255: return 17;                                                            // Vacuum
                 default: return 49;
             }
@@ -97,6 +103,7 @@ namespace Umbra.Structures
                 case 0: return true;    // Air
                 case 4: return true;    // Water
                 case 5: return true;    // Glass
+                case 18: return true;   // Ice
                 case 14: return true;   // Leaves
                 case 255: return false; // Vacuum
                 default: return false;
@@ -138,6 +145,7 @@ namespace Umbra.Structures
                 case 4: return BlockVisibility.Translucent;     // Water
                 case 5: return BlockVisibility.Translucent;     // Glass
                 case 14: return BlockVisibility.Translucent;    // Leaves
+                case 18: return BlockVisibility.Translucent;    // Ice
                 case 255: return BlockVisibility.Invisible;     // Vacuum
                 default: return BlockVisibility.Opaque;
             }
@@ -165,6 +173,9 @@ namespace Umbra.Structures
                 case 13: return "Sand";
                 case 14: return "Leaves";
                 case 15: return "Lava";
+                case 16: return "Brick";
+                case 17: return "Cobblestone";
+                case 18: return "Ice";
                 case 255: return "Vacuum";
                 default: return "UNUSED";
             }
@@ -190,6 +201,9 @@ namespace Umbra.Structures
                 case "sand": return 13;
                 case "leaves": return 14;
                 case "lava": return 15;
+                case "brick": return 16;
+                case "cobblestone": return 17;
+                case "ice": return 18;
                 case "vacuum": return 255;
                 default: return 0;
             }

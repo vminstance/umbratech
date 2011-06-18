@@ -59,7 +59,7 @@ VertexToPixelBlock TexturedVS( float4 inPos : POSITION0, float4 inColor : COLOR0
     Output.OriginalPos		= inPos;
     Output.ScreenPos		= float2(Output.Position.x, Output.Position.y);
     bool IsTransparent = false;
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < 4; i++)
 	{
         if(	inPos.w == (int)(xTranslucentBlocks[i] % 16)		&& inColor.w == (int)(xTranslucentBlocks[i] / 16)		||
 			inPos.w == (int)(xTranslucentBlocks[i] % 16)		&& inColor.w == (int)(xTranslucentBlocks[i] / 16) + 1	||
@@ -154,7 +154,7 @@ VertexToPixelBlock TexturedVSAlpha( float4 inPos : POSITION0, float4 inColor : C
     Output.Color			= float4((float)inColor.x / 255, (float)inColor.y / 255, (float)inColor.z / 255, 1);
     Output.OriginalPos		= inPos;
     bool IsTransparent = false;
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < 4; i++)
 	{
         if(	inPos.w == (int)(xTranslucentBlocks[i] % 16)		&& inColor.w == (int)(xTranslucentBlocks[i] / 16)		||
 			inPos.w == (int)(xTranslucentBlocks[i] % 16)		&& inColor.w == (int)(xTranslucentBlocks[i] / 16) + 1	||

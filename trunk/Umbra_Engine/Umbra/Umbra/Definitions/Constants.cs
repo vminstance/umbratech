@@ -81,10 +81,13 @@ namespace Umbra.Definitions
                                                     "furnace",
                                                     "leaves",
                                                     "lava",
-                                                    "sand"
+                                                    "sand",
+                                                    "brick",
+                                                    "cobblestone",
+                                                    "ice",
                                                };
 
-        static public float[] TranslucentBlocks = { Block.GetFace(Block.Glass, Direction.Up), Block.GetFace(Block.Water, Direction.Up), Block.GetFace(Block.Leaves, Direction.Up), Block.GetFace(255, Direction.Up) };
+        static public float[] TranslucentBlocks = { Block.GetFace(Block.Glass, Direction.Up), Block.GetFace(Block.Water, Direction.Up), Block.GetFace(Block.Leaves, Direction.Up), Block.GetFace(Block.Ice, Direction.Up) };
 
 
 
@@ -216,7 +219,7 @@ namespace Umbra.Definitions
         //----------------
         static public bool MusicEnabled = false;
         static public bool InteractSoundEnabled = true;
-        static public bool WalkSoundEnabled = false;
+        static public bool WalkSoundEnabled = true;
 
 
 
