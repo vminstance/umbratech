@@ -7,5 +7,5 @@ All newtonian physics is handled by Implementations/Physics.cs
 
 = Details =
 
-Enteties like the player makes calls to this class to update it's position.
+Entities like the player make calls to this class to update their position.
 ----
