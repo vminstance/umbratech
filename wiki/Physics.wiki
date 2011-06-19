@@ -2,7 +2,7 @@
 
 = Introduction =
 
-All newtonian physics is handled by Implementations/Physics.cs
+All newtonian physics is handled by {{{Physics.cs}}}
 ----
 
 = Details =
