@@ -17,6 +17,6 @@ The chunk data is stored in .cnk files. Octrees are made recursivly from the bot
 
 These are the main aspects of the engine:
  * Landscape generation
- * Voxel rendering
+ * [Rendering Voxel rendering]
  * Physics
  * Chunk management
