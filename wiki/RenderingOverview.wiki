@@ -1,4 +1,5 @@
 #sidebar TableOfContents
+* [ProjectOutline Project Outline]
 
 #summary Overview of the rendering process.
 
