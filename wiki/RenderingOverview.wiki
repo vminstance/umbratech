@@ -1,4 +1,5 @@
-#summary Overview of the rendering process.
+#sidebar TableOfContents
+* [UmbraEngine Project Outline]
 
 = Introduction =
 
