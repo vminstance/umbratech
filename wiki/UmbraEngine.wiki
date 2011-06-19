@@ -7,7 +7,7 @@ Umbra Engine is a voxel engine.
 
 = Details =
 
-Umbra Engine was started March 1 2011. It is currently using XNA libraries, but we aim to port it to using OpenTK for release.
+Umbra Engine was started March 1 2011. It is currently using XNA libraries, but we aim to port it to using an OpenGL library such as OpenTK or SFML for release.
 
 = Main Aspects=
 
