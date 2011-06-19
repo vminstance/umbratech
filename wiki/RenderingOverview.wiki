@@ -12,11 +12,3 @@ The rendering is done in several steps:
 = Details =
 
 The chunk data is stored in .cnk files. Octrees are made recursivly from the bottom.
-
-= Main Aspects=
-
-These are the main aspects of the engine:
- * Landscape generation
- * [Rendering Voxel rendering]
- * Physics
- * Chunk management
