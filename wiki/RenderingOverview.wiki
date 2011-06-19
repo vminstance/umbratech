@@ -1,3 +1,5 @@
+#sidebar TableOfContents
+
 #summary Overview of the rendering process.
 
 = Introduction =
