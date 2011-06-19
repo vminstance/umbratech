@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Chunks are managed by 
+Chunks are managed by ChunkManager.cs
 ----
 
 = Details =
