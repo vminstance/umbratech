@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Chunks are managed by ChunkManager
+Chunks are managed by 
 ----
 
 = Details =
