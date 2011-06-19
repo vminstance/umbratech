@@ -1,5 +1,4 @@
 #sidebar TableOfContents
-  * [UmbraEngine Project Outline]
 
 = Introduction =
 
