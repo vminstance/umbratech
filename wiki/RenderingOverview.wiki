@@ -3,11 +3,11 @@
 = Introduction =
 
 The rendering is done in several steps:
- - Load or generate chunk data.
- - Build an octree.
- - Use the octree to generate faces.
- - Loop through each chunk and render it's vertexbuffer.
- - Draw overlays.
+ * Load or generate chunk data.
+ * Build an octree.
+ * Use the octree to generate faces.
+ * Loop through each chunk and render it's vertexbuffer.
+ * Draw overlays.
 
 = Details =
 
@@ -16,7 +16,7 @@ The chunk data is stored in .cnk files. Octrees are made recursivly from the bot
 = Main Aspects=
 
 These are the main aspects of the engine:
- - Landscape generation
- - Voxel rendering
- - Physics
- - Chunk management
+ * Landscape generation
+ * Voxel rendering
+ * Physics
+ * Chunk management
