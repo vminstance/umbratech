@@ -50,7 +50,7 @@ namespace Umbra.Definitions
 
         static public World CurrentWorld = new World("default");
         public const int ChunkSize = 32;
-        public const int WorldSize = 8;
+        public const int WorldSize = 4;
         public const float UpdateChunksMoveLength = ChunkSize * ChunkSize / 4;
         public const float UpdateGridsMoveLength = ChunkSize * WorldSize * ChunkSize * WorldSize / 6;
         static public bool DynamicWorld = true;
