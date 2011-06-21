@@ -30,11 +30,9 @@ namespace Umbra.Implementations
                 return null;
             }
 
-            CursorVertex[] vertices = new CursorVertex[24 * offsets.Length];
+            CursorVertex[] vertices = new CursorVertex[24];
 
-            for (int i = 0; i < offsets.Length; i++)
-            {
-                Vector3 currentAimPosition = currentAim.Position + offsets[i];
+                Vector3 currentAimPosition = currentAim.Position;
                 Vector3 UnitX = Vector3.UnitX;
                 Vector3 UnitY = Vector3.UnitY;
                 Vector3 UnitZ = Vector3.UnitZ;
@@ -66,9 +64,8 @@ namespace Umbra.Implementations
                 vertices[21] = new CursorVertex(One + currentAimPosition, Color.Black);
                 vertices[22] = new CursorVertex(UnitX + UnitZ + currentAimPosition, Color.Black);
                 vertices[23] = new CursorVertex(One + currentAimPosition, Color.Black);
-            }
 
-            VertexBuffer returnVal = new VertexBuffer(Constants.Graphics.GraphicsDevice, VertexPositionColor.VertexDeclaration, 24 * offsets.Length, BufferUsage.None);
+            VertexBuffer returnVal = new VertexBuffer(Constants.Graphics.GraphicsDevice, VertexPositionColor.VertexDeclaration, 24, BufferUsage.None);
             returnVal.SetData(vertices.ToArray());
 
             return returnVal;
