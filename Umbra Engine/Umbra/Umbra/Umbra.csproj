@@ -196,9 +196,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Umbra_TemporaryKey.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
