@@ -136,7 +136,6 @@
     <Compile Include="Structures\ChunkQueue.cs" />
     <Compile Include="Structures\GridElement.cs" />
     <Compile Include="Structures\GridLayer.cs" />
-    <Compile Include="Structures\OctreeBackup.cs" />
     <Compile Include="Structures\PlayerBox.cs" />
     <Compile Include="Utilities\Landscape Generation\BicubicArea.cs" />
     <Compile Include="Utilities\EventInput.cs" />
