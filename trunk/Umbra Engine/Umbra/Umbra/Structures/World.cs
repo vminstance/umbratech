@@ -130,9 +130,9 @@ namespace Umbra.Structures
                                 if ((newX == 0 && offset.X < 0) || (newX == Constants.WorldSize - 1 && offset.X > 0) ||
                                     (newY == 0 && offset.Y < 0) || (newY == Constants.WorldSize - 1 && offset.Y > 0) ||
                                     (newZ == 0 && offset.Z < 0) || (newZ == Constants.WorldSize - 1 && offset.Z > 0) ||
-                                    !newArray[x, y, z].IsSetup)
+                                    newArray[x, y, z].SetupState == 0)
                                 {
-                                    newArray[x, y, z].IsSetup = false;
+                                    newArray[x, y, z].SetupState = 2;
                                     ChunkManager.Setup.AddToSetup(newArray[x, y, z]);
                                 }
                             }
