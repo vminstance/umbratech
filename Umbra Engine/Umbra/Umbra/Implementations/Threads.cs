@@ -163,11 +163,12 @@ namespace Umbra.Implementations
                     {
                         continue;
                     }
+                    currentChunk.SetupState = 4;
 
                     // Setup Chunk
 
                     currentChunk.BuildGeometry(false);
-                    currentChunk.IsSetup = true;
+                    currentChunk.SetupState = 1;
 
                     Console.Write("SetupQueue: " + SetupQueue.Count);
                     // End Setup Chunk

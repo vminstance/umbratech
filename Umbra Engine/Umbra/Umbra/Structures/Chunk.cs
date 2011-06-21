@@ -27,7 +27,7 @@ namespace Umbra.Structures
         ushort[, ,] Data;
         Octree VisibleFaces;
 
-        public bool IsSetup { get; set; }
+        public byte SetupState { get; set; }
         public bool HasData { get; set; }
         public bool WillBeUnloaded { get; set; }
 
@@ -75,7 +75,7 @@ namespace Umbra.Structures
 
         public Chunk(ChunkIndex index)
         {
-            IsSetup = false;
+            SetupState = 0;
             HasData = false;
             WillBeUnloaded = false;
             Index = index;

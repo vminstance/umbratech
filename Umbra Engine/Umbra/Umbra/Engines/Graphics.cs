@@ -88,7 +88,8 @@ namespace Umbra.Engines
                         c.VertexBuffer == null ||
                         c.VertexBuffer.IsDisposed ||
                         c.VertexBuffer.VertexCount == 0 ||
-                        !c.IsSetup
+                        c.SetupState == 0 ||
+                        c.SetupState == 4 
                         )
                     {
                         continue;
