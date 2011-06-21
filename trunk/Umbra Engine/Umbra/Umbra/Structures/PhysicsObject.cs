@@ -18,7 +18,7 @@ using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
 {
-    abstract class PhysicsObject
+    public abstract class PhysicsObject
     {
         public Vector3 Position { get; set; }
         public Vector3 Velocity { get; set; }
