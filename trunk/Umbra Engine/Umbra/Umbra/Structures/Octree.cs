@@ -27,17 +27,17 @@ namespace Umbra.Structures
         public byte Size;
         BlockVisibility Visibility;
 
-        public Octree(ushort[, ,] data, Chunk parentChunk)
+        public Octree(Block[, ,] data, Chunk parentChunk)
         {
             SetupOctree(Constants.ChunkSize, data, BlockIndex.Zero, BlockIndex.Zero, parentChunk);
         }
 
-        public Octree(byte size, ushort[, ,] data, BlockIndex absoluteBlockIndex, BlockIndex localPosition, Chunk parentChunk)
+        public Octree(byte size, Block[, ,] data, BlockIndex absoluteBlockIndex, BlockIndex localPosition, Chunk parentChunk)
         {
             SetupOctree(size, data, absoluteBlockIndex, localPosition, parentChunk);
         }
 
-        void SetupOctree(byte size, ushort[, ,] data, BlockIndex absoluteBlockIndex, BlockIndex localPosition, Chunk parentChunk)
+        void SetupOctree(byte size, Block[, ,] data, BlockIndex absoluteBlockIndex, BlockIndex localPosition, Chunk parentChunk)
         {
             AbsoluteBlockIndex = absoluteBlockIndex;
             Size = size;
@@ -46,7 +46,7 @@ namespace Umbra.Structures
 
             if (size == 1)
             {
-                Visibility = Block.GetVisibility(data[absoluteBlockIndex.X, absoluteBlockIndex.Y, absoluteBlockIndex.Z]);
+                Visibility = data[absoluteBlockIndex.X, absoluteBlockIndex.Y, absoluteBlockIndex.Z].Visibility;
                 Children = null;
             }
             else
@@ -232,11 +232,11 @@ namespace Umbra.Structures
 
             if (validation == FaceValidation.ThisFace || validation == FaceValidation.BothFaces)
             {
-                faceList.AddFace(currentIndex, faceDirection, Block.GetFace(ParentChunk[currentIndex], faceDirection), DirOperators.GetFaceShade(faceDirection));
+                faceList.AddFace(currentIndex, faceDirection, ParentChunk[currentIndex].GetFace(faceDirection), DirOperators.GetFaceShade(faceDirection));
             }
             if (validation == FaceValidation.OtherFace || validation == FaceValidation.BothFaces)
             {
-                faceList.AddFace(nextIndex, DirOperators.Opposite(faceDirection), Block.GetFace(Constants.CurrentWorld.GetBlock(nextIndex + ParentChunk.Index.ToBlockIndex()), DirOperators.Opposite(faceDirection)), DirOperators.GetFaceShade(DirOperators.Opposite(faceDirection)));
+                faceList.AddFace(nextIndex, DirOperators.Opposite(faceDirection), Constants.CurrentWorld.GetBlock(nextIndex + ParentChunk.Index.ToBlockIndex()).GetFace(DirOperators.Opposite(faceDirection)), DirOperators.GetFaceShade(DirOperators.Opposite(faceDirection)));
             }
         }
     }

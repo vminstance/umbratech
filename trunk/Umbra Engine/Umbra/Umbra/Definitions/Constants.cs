@@ -65,7 +65,7 @@ namespace Umbra.Definitions
         static public float AlterDelay = 250.0F; // Delay between editing blocks (mS)
         public const bool SmoothCameraEnabled = false;
         public const float SmoothCameraRespons = 0.4F;
-        static public ushort CurrentCursorBlock = Block.Stone;
+        static public Block CurrentCursorBlock = Block.Stone;
         static public string[] PlacableBlocks = {
                                                     "grass",
                                                     "stone",
@@ -87,7 +87,7 @@ namespace Umbra.Definitions
                                                     "ice",
                                                };
 
-        static public float[] TranslucentBlocks = { Block.GetFace(Block.Glass, Direction.Up), Block.GetFace(Block.Water, Direction.Up), Block.GetFace(Block.Leaves, Direction.Up), Block.GetFace(Block.Ice, Direction.Up) };
+        static public float[] TranslucentBlocks = { Block.Glass.GetFace(Direction.Up), Block.Water.GetFace(Direction.Up), Block.Leaves.GetFace(Direction.Up), Block.Ice.GetFace(Direction.Up) };
 
 
 
@@ -186,7 +186,7 @@ namespace Umbra.Definitions
         public const float PlayerMinDistanceToGround = 0.02F;
 
         // Block editing
-        static public ushort StartBlock = Block.Stone;
+        static public Block StartBlock = Block.Stone;
         public const float PlayerReach = 10.0F;
 
 

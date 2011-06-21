@@ -331,7 +331,7 @@ namespace Umbra.Definitions
                     return false;
                 }
 
-                Constants.CurrentCursorBlock = Block.GetBlockFromName(args[0]);
+                Constants.CurrentCursorBlock = Block.GetFromName(args[0]);
                 Popup.Post("Block cursor set to " + args[0] + ".");
                 return false;
             });

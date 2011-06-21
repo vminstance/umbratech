@@ -176,7 +176,7 @@ namespace Umbra.Implementations
                 {
                     for (int z = (int)Math.Floor(position.Z - Constants.PlayerBoxWidth / 2); z <= Math.Floor(position.Z + Constants.PlayerBoxWidth / 2); z++)
                     {
-                        if (Block.IsSolid(Constants.CurrentWorld.GetBlock(new BlockIndex(x, y, z))))
+                        if (Constants.CurrentWorld.GetBlock(new BlockIndex(x, y, z)).Solidity)
                         {
                             return false;
                         }

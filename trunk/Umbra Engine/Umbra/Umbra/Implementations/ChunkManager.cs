@@ -83,7 +83,7 @@ namespace Umbra.Engines
                 {
                     for (int z = 0; z < Constants.ChunkSize; z++)
                     {
-                        chunk[x, y, z] = Block.Create((byte)stream.ReadByte(), (byte)stream.ReadByte());
+                        chunk[x, y, z] = new Block((byte)stream.ReadByte(), (byte)stream.ReadByte());
                     }
                 }
             }
@@ -117,7 +117,7 @@ namespace Umbra.Engines
                 {
                     for (int z = 0; z < Constants.ChunkSize; z++)
                     {
-                        stream.Write(Block.GetBytes(chunk[x, y, z]), 0, 2);
+                        stream.Write(chunk[x, y, z].Bytes, 0, 2);
                     }
                 }
             }
