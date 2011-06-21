@@ -73,7 +73,7 @@ namespace Umbra.Engines
 
 
             MainEffect.Parameters["xTranslucentBlocks"].SetValue(Constants.TranslucentBlocks);
-            MainEffect.Parameters["xIsUnderWater"].SetValue(Block.GetType(Constants.CurrentWorld.GetBlock(new BlockIndex(Constants.Player.Position + Constants.PlayerEyeHeight * Vector3.UnitY))) == Block.Water);
+            MainEffect.Parameters["xIsUnderWater"].SetValue(Constants.CurrentWorld.GetBlock(new BlockIndex(Constants.Player.Position + Constants.PlayerEyeHeight * Vector3.UnitY)).Type == (byte)BlockType.Water);
             MainEffect.Parameters["xTime"].SetValue((int)gameTime.TotalGameTime.TotalMilliseconds);
             
 

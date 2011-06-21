@@ -52,7 +52,7 @@ namespace Umbra.Engines
                     {
                         for (int z = (int)Math.Floor(Position.Z - Constants.PlayerBoxWidth / 2); z <= Math.Floor(Position.Z + Constants.PlayerBoxWidth / 2); z++)
                         {
-                            buoyancy += box.IntersectionVolume(new BlockIndex(x, y, z)) * Block.GetViscosity(Constants.CurrentWorld.GetBlock(new BlockIndex(x, y, z)));
+                            buoyancy += box.IntersectionVolume(new BlockIndex(x, y, z)) * Constants.CurrentWorld.GetBlock(new BlockIndex(x, y, z)).Viscosity;
                         }
                     }
                 }

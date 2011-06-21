@@ -183,7 +183,7 @@ namespace Umbra.Structures
             return returnChunk;
         }
 
-        public ushort GetBlock(BlockIndex index)
+        public Block GetBlock(BlockIndex index)
         {
             Chunk chunk = GetChunk(new ChunkIndex(index.Position));
 
@@ -197,7 +197,7 @@ namespace Umbra.Structures
             }
         }
 
-        public void SetBlock(BlockIndex index, ushort type)
+        public void SetBlock(BlockIndex index, Block type)
         {
             Chunk chunk = GetChunk(new ChunkIndex(index.Position));
 

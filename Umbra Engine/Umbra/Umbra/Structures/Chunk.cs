@@ -24,14 +24,14 @@ namespace Umbra.Structures
 
         public ChunkIndex Index { get; private set; }
 
-        ushort[, ,] Data;
+        Block[, ,] Data;
         Octree VisibleFaces;
 
         public byte SetupState { get; set; }
         public bool HasData { get; set; }
         public bool WillBeUnloaded { get; set; }
 
-        public ushort this[BlockIndex index]
+        public Block this[BlockIndex index]
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Umbra.Structures
             }
         }
 
-        public ushort this[int x, int y, int z]
+        public Block this[int x, int y, int z]
         {
             get
             {
@@ -63,7 +63,7 @@ namespace Umbra.Structures
                     Data[x, y, z] = value;
                     if (VisibleFaces != null)
                     {
-                        VisibleFaces.SetVisibility(new BlockIndex(x, y, z), Block.GetVisibility(value));
+                        VisibleFaces.SetVisibility(new BlockIndex(x, y, z), value.Visibility);
                     }
                 }
                 else
@@ -79,10 +79,10 @@ namespace Umbra.Structures
             HasData = false;
             WillBeUnloaded = false;
             Index = index;
-            Data = new ushort[Constants.ChunkSize, Constants.ChunkSize, Constants.ChunkSize];
+            Data = new Block[Constants.ChunkSize, Constants.ChunkSize, Constants.ChunkSize];
         }
 
-        public void SetBlock(BlockIndex index, ushort value, bool updateAdjacentChunks)
+        public void SetBlock(BlockIndex index, Block value, bool updateAdjacentChunks)
         {
             if (index.X >= 0 && index.X < Constants.ChunkSize && index.Y >= 0 && index.Y < Constants.ChunkSize && index.Z >= 0 && index.Z < Constants.ChunkSize)
             {

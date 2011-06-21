@@ -216,10 +216,10 @@ namespace Umbra.Structures
             return returnValue;
         }
 
-        static public FaceValidation GetFaceValidation(ushort thisBlock, ushort nextBlock)
+        static public FaceValidation GetFaceValidation(Block thisBlock, Block nextBlock)
         {
-            BlockVisibility thisBlockVisibility = Block.GetVisibility(thisBlock);
-            BlockVisibility nextBlockVisibility = Block.GetVisibility(nextBlock);
+            BlockVisibility thisBlockVisibility = thisBlock.Visibility;
+            BlockVisibility nextBlockVisibility = nextBlock.Visibility;
 
             if (thisBlockVisibility == BlockVisibility.Invisible && nextBlockVisibility == BlockVisibility.Invisible)
             {
@@ -241,7 +241,7 @@ namespace Umbra.Structures
                 }
                 else if (nextBlockVisibility == BlockVisibility.Translucent)
                 {
-                    if (Block.GetType(thisBlock) == Block.GetType(nextBlock))
+                    if (thisBlock.Type == nextBlock.Type)
                     {
                         return FaceValidation.NoFaces;
                     }
@@ -263,7 +263,7 @@ namespace Umbra.Structures
                 }
                 else if (thisBlockVisibility == BlockVisibility.Translucent)
                 {
-                    if (Block.GetType(thisBlock) == Block.GetType(nextBlock))
+                    if (thisBlock.Type == nextBlock.Type)
                     {
                         return FaceValidation.NoFaces;
                     }
