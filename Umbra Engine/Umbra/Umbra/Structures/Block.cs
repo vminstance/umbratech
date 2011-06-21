@@ -208,5 +208,18 @@ namespace Umbra.Structures
                 default: return 0;
             }
         }
+
+        static public float GetViscosity(ushort block)
+        {
+            byte type = GetType(block);
+
+            switch (type)
+            {
+            case 0: return 0.0F;     // Air
+            case 4: return 0.04F;     // Water
+            case 15: return 10.0F;   // Lava
+            default: return 0.0F;
+            }
+        }
     }
 }

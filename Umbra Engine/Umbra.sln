@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbra", "Umbra\Umbra\Umbra.csproj", "{0A08F7E2-7253-4107-A401-D3336A4434F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbraContent", "Umbra\UmbraContent\UmbraContent.contentproj", "{D9E4502B-4C50-45EC-ABE4-86DCF04880B4}"
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "UmbraContent", "Umbra\UmbraContent\UmbraContent.contentproj", "{D9E4502B-4C50-45EC-ABE4-86DCF04880B4}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
