@@ -18,7 +18,7 @@ using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Engines
 {
-    public class Player : DrawableGameComponent
+    public class PlayerOLD : DrawableGameComponent
     {
         public Camera FirstPersonCamera { get; private set; }
 
@@ -52,7 +52,7 @@ namespace Umbra.Engines
                     {
                         for (int z = (int)Math.Floor(Position.Z - Constants.PlayerBoxWidth / 2); z <= Math.Floor(Position.Z + Constants.PlayerBoxWidth / 2); z++)
                         {
-                            buoyancy += box.IntersectionVolume(new BlockIndex(x, y, z)) * Constants.CurrentWorld.GetBlock(new BlockIndex(x, y, z)).Viscosity;
+                            buoyancy += box.IntersectionVolume(new BlockIndex(x, y, z)) * Block.GetViscosity(Constants.CurrentWorld.GetBlock(new BlockIndex(x, y, z)));
                         }
                     }
                 }
