@@ -27,7 +27,7 @@ namespace Umbra.Implementations
             if (PlayerIsOnGround())
             {
                 // Add jumping
-                if (Constants.Player.ShouldJump && player.Velocity.Y == 0.0F)
+                if (player.ShouldJump && player.Velocity.Y == 0.0F)
                 {
                     player.Velocity.Y = Constants.JumpForce;
                 }
@@ -44,6 +44,11 @@ namespace Umbra.Implementations
             }
             else
             {
+                //if (player.ShouldJump && player.MaxViscosity > 1)
+                //{
+                //    player.Velocity.Y = Math.Min(player.Velocity.Y + 0.1F, 0.4F);
+                //}
+
                 // Add gravity
                 player.Velocity += Vector3.Down * Constants.Gravity;
 
@@ -53,6 +58,9 @@ namespace Umbra.Implementations
                 // Set flying values
                 Constants.CurrentValues = Constants.FlyingValues;
             }
+
+            // Add buoyency
+            player.Velocity += Vector3.Up * player.Buoyancy;
 
             // Add horizontal movement
             float currentSpeed = (player.Velocity * new Vector3(1,0,1)).Length();

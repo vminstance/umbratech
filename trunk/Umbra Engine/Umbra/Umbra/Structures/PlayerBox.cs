@@ -64,5 +64,49 @@ namespace Umbra.Structures
 
             return true;
         }
+
+        public float IntersectionVolume(BlockIndex block)
+        {
+            Vector3 min = Position - new Vector3(Constants.PlayerBoxWidth / 2, 0, Constants.PlayerBoxWidth / 2);
+            Vector3 max = Position + new Vector3(Constants.PlayerBoxWidth / 2, Constants.PlayerEyeHeight, Constants.PlayerBoxWidth / 2);
+
+            float intersectionVolume = 1;
+
+            if(!block.GetBoundingBox().Intersects(new BoundingBox(min, max)))
+            {
+                return 0;
+            }
+
+            List<float> points = new List<float>();
+            points.Add(min.X);
+            points.Add(block.X);
+            points.Add(max.X);
+            points.Add(block.X + 1);
+            points.Sort();
+            intersectionVolume *= points[2] - points[1];
+
+            points.Clear();
+            points.Add(min.Y);
+            points.Add(block.Y);
+            points.Add(max.Y);
+            points.Add(block.Y + 1);
+            points.Sort();
+            intersectionVolume *= points[2] - points[1];
+
+            points.Clear();
+            points.Add(min.Z);
+            points.Add(block.Z);
+            points.Add(max.Z);
+            points.Add(block.Z + 1);
+            points.Sort();
+            intersectionVolume *= points[2] - points[1];
+
+            return intersectionVolume;
+        }
+
+        public BoundingBox GetBoundingBox()
+        {
+            return new BoundingBox(Position - new Vector3(Constants.PlayerBoxWidth / 2, 0, Constants.PlayerBoxWidth / 2), Position + new Vector3(Constants.PlayerBoxWidth / 2, Constants.PlayerEyeHeight, Constants.PlayerBoxWidth / 2));
+        }
     }
 }

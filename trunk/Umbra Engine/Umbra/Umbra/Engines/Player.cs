@@ -39,6 +39,28 @@ namespace Umbra.Engines
             get { return Constants.Input.ShouldJump(); }
         }
 
+        public float Buoyancy
+        {
+            get
+            {
+                PlayerBox box = new PlayerBox(Position);
+                float buoyancy = 0;
+
+                for (int x = (int)Math.Floor(Position.X - Constants.PlayerBoxWidth / 2); x <= Math.Floor(Position.X + Constants.PlayerBoxWidth / 2); x++)
+                {
+                    for (int y = (int)Math.Floor(Position.Y); y <= Math.Floor(Position.Y + Constants.PlayerBoxHeight); y++)
+                    {
+                        for (int z = (int)Math.Floor(Position.Z - Constants.PlayerBoxWidth / 2); z <= Math.Floor(Position.Z + Constants.PlayerBoxWidth / 2); z++)
+                        {
+                            buoyancy += box.IntersectionVolume(new BlockIndex(x, y, z)) * Block.GetViscosity(Constants.CurrentWorld.GetBlock(new BlockIndex(x, y, z)));
+                        }
+                    }
+                }
+
+                return buoyancy;
+            }
+        }
+
         public Player(Main main)
             : base(main)
         {
