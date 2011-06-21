@@ -215,9 +215,9 @@ namespace Umbra.Structures
 
             switch (type)
             {
-            case 0: return 0.0F;     // Air
-            case 4: return 0.04F;     // Water
-            case 15: return 10.0F;   // Lava
+            case 0: return 0.0F;    // Air
+            case 4: return 0.04F;   // Water
+            case 15: return 0.1F;   // Lava
             default: return 0.0F;
             }
         }
