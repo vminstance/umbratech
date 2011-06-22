@@ -59,7 +59,7 @@ namespace Umbra.Engines
             Constants.Graphics.MainEffect = ContentManager.Load<Effect>("effects/main");
 
             // Load Sounds
-            Constants.Sound.MainMusic = ContentManager.Load<Song>("sounds/mainsong");
+            Constants.Sound.MainMusic = ContentManager.Load<Song>("sounds/mainsong1");
             Constants.Sound.AddBlock = ContentManager.Load<SoundEffect>("sounds/snap");
             Constants.Sound.Walk = ContentManager.Load<SoundEffect>("sounds/walk");
 
