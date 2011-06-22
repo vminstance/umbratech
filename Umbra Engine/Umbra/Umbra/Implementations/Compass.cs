@@ -22,7 +22,7 @@ namespace Umbra.Implementations
     {
         static public void Draw()
         {
-            int degrees = 360 - (int)(MathHelper.ToDegrees(MathHelper.WrapAngle(Constants.Player.FirstPersonCamera.Direction) + (float)Math.PI));
+            int degrees = 360 - (int)(MathHelper.ToDegrees(MathHelper.WrapAngle(Constants.Physics.Player.FirstPersonCamera.Direction) + (float)Math.PI));
 
             Rectangle mainRectangle = new Rectangle();
             mainRectangle.Y = (int)Constants.CompassFrameSize.Y;

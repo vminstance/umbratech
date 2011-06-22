@@ -218,11 +218,11 @@ namespace Umbra.Engines
         {
             Mouse.SetPosition((int)Constants.ScreenResolution.X / 2, (int)Constants.ScreenResolution.Y / 2);
 
-            KeyboardCurrentState = Keyboard.GetState();
-            MouseCurrentState = Mouse.GetState();
-
             KeyboardLastState = KeyboardCurrentState;
             MouseLastState = MouseCurrentState;
+
+            KeyboardCurrentState = Keyboard.GetState();
+            MouseCurrentState = Mouse.GetState();
         }
     }
 }

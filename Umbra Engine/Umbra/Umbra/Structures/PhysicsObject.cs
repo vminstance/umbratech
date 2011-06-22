@@ -20,8 +20,9 @@ namespace Umbra.Structures
 {
     public abstract class PhysicsObject
     {
-        public Vector3 Position { get; set; }
-        public Vector3 Velocity { get; set; }
+        public Vector3 Position;
+        public Vector3 Dimensions;
+        public Vector3 Velocity;
         private Vector3 ForceAccumulator;
         public AABB BoundingBox { get; protected set; }
 
@@ -29,6 +30,39 @@ namespace Umbra.Structures
         public float Mass { get; protected set; }
         public float DragCoefficient { get; protected set; }
         public float SurfaceFrictionCoefficient { get; protected set; }
+
+        public PhysicsObject(Vector3 position, float mass)
+        {
+            Position = position;
+            Dimensions = Vector3.One;
+            Velocity = Vector3.Zero;
+            ForceAccumulator = Vector3.Zero;
+            BoundingBox = new AABB(Position, Position + Dimensions);
+            Volume = Dimensions.X * Dimensions.Y + Dimensions.X * Dimensions.Z + Dimensions.Y * Dimensions.Z;
+            Mass = mass;
+        }
+
+        public PhysicsObject(Vector3 position, Vector3 dimension, float mass)
+        {
+            Position = position;
+            Dimensions = dimension;
+            Velocity = Vector3.Zero;
+            ForceAccumulator = Vector3.Zero;
+            BoundingBox = new AABB(Position, Position + Dimensions);
+            Volume = Dimensions.X * Dimensions.Y + Dimensions.X * Dimensions.Z + Dimensions.Y * Dimensions.Z;
+            Mass = mass;
+        }
+
+        public PhysicsObject(Vector3 position, Vector3 dimension, float mass, float volume)
+        {
+            Position = position;
+            Dimensions = dimension;
+            Velocity = Vector3.Zero;
+            ForceAccumulator = Vector3.Zero;
+            BoundingBox = new AABB(Position, Position + Dimensions);
+            Volume = volume;
+            Mass = mass;
+        }
 
         public void ResetForceAccumulator()
         {

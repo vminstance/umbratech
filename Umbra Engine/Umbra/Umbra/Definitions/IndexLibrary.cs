@@ -280,9 +280,9 @@ namespace Umbra.Definitions
             return new ChunkIndex((int)Math.Floor((float)X / Constants.ChunkSize), (int)Math.Floor((float)Y / Constants.ChunkSize), (int)Math.Floor((float)Z / Constants.ChunkSize));
         }
 
-        public BoundingBox GetBoundingBox()
+        public AABB GetBoundingBox()
         {
-            return new BoundingBox(this.Position, (this + BlockIndex.One).Position);
+            return new AABB(this.Position, (this + BlockIndex.One).Position);
         }
 
         public static BlockIndex operator +(BlockIndex part1, BlockIndex part2)

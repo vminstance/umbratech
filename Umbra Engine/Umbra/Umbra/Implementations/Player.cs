@@ -20,10 +20,23 @@ namespace Umbra.Structures
 {
     public class Player : PhysicsObject
     {
-        public Player(float mass, float volume)
+        public Camera FirstPersonCamera { get; private set; }
+        float CurrentAlterDelay;
+
+        public Player() : base(Constants.PlayerSpawn, new Vector3(Constants.PlayerBoxWidth, Constants.PlayerBoxHeight, Constants.PlayerBoxWidth), Constants.PlayerMass, Constants.PlayerVolume)
         {
-            this.Mass = mass;
-            this.Volume = volume;
+            FirstPersonCamera = new Camera(this.Position);
+            CurrentAlterDelay = Constants.AlterDelay;
+        }
+
+        public Matrix GetViewMatrix()
+        {
+            return FirstPersonCamera.GetView();
+        }
+
+        public Matrix GetProjectionMatrix()
+        {
+            return FirstPersonCamera.GetProjection();
         }
 
         public override void Update(GameTime gameTime)
@@ -31,18 +44,61 @@ namespace Umbra.Structures
             // Add player movement
             if (Constants.NoclipEnabed)
             {
-                Position += Constants.Input.NoclipDirection() *  Constants.NoclipSpeed;
+                //Position += Vector3.Transform(Constants.Input.NoclipDirection(), Matrix.CreateRotationX(FirstPersonCamera.Direction) * Matrix.CreateRotationY(FirstPersonCamera.Pitch)) * Constants.NoclipSpeed;
+                Position += Vector3.Transform(Constants.Input.NoclipDirection(), FirstPersonCamera.Rotation) * Constants.NoclipSpeed;
             }
             else
             {
                 float oldSpeed = Velocity.Length();
-                
-                Velocity += Constants.Input.WalkingDirection();
+
+                Velocity += Vector3.Transform(Constants.Input.WalkingDirection(), FirstPersonCamera.Rotation);
                 Velocity.Normalize();
                 Velocity *= Math.Min(oldSpeed * Constants.CurrentValues[0], Constants.CurrentValues[2]);
             }
 
+            if (Constants.Input.MouseCurrentState.LeftButton == ButtonState.Pressed)
+            {
+                if (CurrentAlterDelay >= Constants.AlterDelay)
+                {
+                    BlockIndex target = BlockCursor.GetToDestroy();
+                    if (target != null)
+                    {
+                        Constants.CurrentWorld.SetBlock(target, Block.Air);
+                        CurrentAlterDelay = 0.0F;
+                        Constants.Sound.PlayerBlockRemoval();
+                    }
+                }
+            }
+            else if (Constants.Input.MouseCurrentState.RightButton == ButtonState.Pressed)
+            {
+                if (CurrentAlterDelay >= Constants.AlterDelay)
+                {
+                    BlockIndex target = BlockCursor.GetToCreate();
+                    if (target != null && !AABB.PlayerBoundingBox(Position).Intersects(target.GetBoundingBox()))
+                    {
+                        Constants.CurrentWorld.SetBlock(target, Constants.CurrentCursorBlock);
+                        CurrentAlterDelay = 0.0F;
+                        Constants.Sound.PlayerBlockAdd();
+                    }
+                }
+            }
+            else
+            {
+                CurrentAlterDelay = Constants.AlterDelay;
+            }
+
+            FirstPersonCamera.Position = (Position + (Dimensions / 2) * new Vector3(1, 0, 1)) + Vector3.UnitY * Constants.PlayerEyeHeight;
+
+            UpdateCamera(gameTime);
+
             base.Update(gameTime);
+        }
+
+
+        private void UpdateCamera(GameTime gameTime)
+        {
+            FirstPersonCamera.Position = Position + Vector3.UnitY * Constants.PlayerEyeHeight;// +CameraBobbing(gameTime);
+            FirstPersonCamera.Update();
         }
     }
 }

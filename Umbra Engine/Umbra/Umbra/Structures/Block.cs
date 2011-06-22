@@ -21,7 +21,6 @@ namespace Umbra.Structures
 
     public struct Block
     {
-
         public byte Type { get; private set; }
         public byte Data { get; private set; }
 
@@ -129,7 +128,7 @@ namespace Umbra.Structures
                 }
             }
         }
-        
+
 
         public float Viscosity
         {
@@ -137,10 +136,73 @@ namespace Umbra.Structures
             {
                 switch (Type)
                 {
-                    case (byte)BlockType.Air: return 0.0F; 
-                    case (byte)BlockType.Water: return 0.04F;
-                    case (byte)BlockType.Lava: return 0.1F;
-                    default: return 0.0F;
+                case (byte)BlockType.Air: return 1.2F;
+                case (byte)BlockType.Water: return 1000.0F;
+                case (byte)BlockType.Lava: return 2600.0F;
+                case (byte)BlockType.Vacuum: return 0.0F;
+                default: return 0.0F;
+                }
+            }
+        }
+
+        public float Mass
+        {
+            get
+            {
+                switch (Type)
+                {
+                case (byte)BlockType.Air: return 1.225F;
+                case (byte)BlockType.Grass: return 1920.0F;
+                case (byte)BlockType.Stone: return 2700.0F;
+                case (byte)BlockType.Dirt: return 1922.0F;
+                case (byte)BlockType.Water: return 1000.0F;
+                case (byte)BlockType.Glass: return 2600.0F;
+                case (byte)BlockType.Bookshelf: return 500.0F;
+                case (byte)BlockType.Log: return 700.0F;
+                case (byte)BlockType.Wood: return 20.0F;
+                case (byte)BlockType.Snow: return 200.0F;
+                case (byte)BlockType.Slab: return 2400.0F;
+                case (byte)BlockType.CraftingTable: return 500.0F;
+                case (byte)BlockType.Furnace: return 1400.0F;
+                case (byte)BlockType.Sand: return 1602.0F;
+                case (byte)BlockType.Leaves: return 8.5F;
+                case (byte)BlockType.Lava: return 2600.0F;
+                case (byte)BlockType.Brick: return 1922.0F;
+                case (byte)BlockType.Cobblestone: return 2800.0F;
+                case (byte)BlockType.Ice: return 917.0F;
+                case (byte)BlockType.Vacuum: return 0.0F;
+                default: return float.NaN;
+                }
+            }
+        }
+
+        public float FrictionCoefficient
+        {
+            get
+            {
+                switch (Type)
+                {
+                case (byte)BlockType.Air: return 0.0F;
+                case (byte)BlockType.Grass: return 1.0F;
+                case (byte)BlockType.Stone: return 1.0F;
+                case (byte)BlockType.Dirt: return 1.0F;
+                case (byte)BlockType.Water: return 0.0F;
+                case (byte)BlockType.Glass: return 0.94F;
+                case (byte)BlockType.Bookshelf: return 1.0F;
+                case (byte)BlockType.Log: return 1.0F;
+                case (byte)BlockType.Wood: return 1.0F;
+                case (byte)BlockType.Snow: return 0.8F;
+                case (byte)BlockType.Slab: return 1.0F;
+                case (byte)BlockType.CraftingTable: return 1.0F;
+                case (byte)BlockType.Furnace: return 1.0F;
+                case (byte)BlockType.Sand: return 1.3F;
+                case (byte)BlockType.Leaves: return 1.2F;
+                case (byte)BlockType.Lava: return 0.0F;
+                case (byte)BlockType.Brick: return 1.0F;
+                case (byte)BlockType.Cobblestone: return 1.0F;
+                case (byte)BlockType.Ice: return 0.15F;
+                case (byte)BlockType.Vacuum: return 0.0F;
+                default: return float.NaN;
                 }
             }
         }
@@ -151,27 +213,27 @@ namespace Umbra.Structures
             {
                 switch (Type)
                 {
-                    case (byte)BlockType.Air: return "Air";
-                    case (byte)BlockType.Grass: return "Grass";
-                    case (byte)BlockType.Stone: return "Stone";
-                    case (byte)BlockType.Dirt: return "Dirt";
-                    case (byte)BlockType.Water: return "Water";
-                    case (byte)BlockType.Glass: return "Glass";
-                    case (byte)BlockType.Bookshelf: return "Bookshelf";
-                    case (byte)BlockType.Log: return "Log";
-                    case (byte)BlockType.Wood: return "Wood";
-                    case (byte)BlockType.Snow: return "Snow";
-                    case (byte)BlockType.Slab: return "Slab";
-                    case (byte)BlockType.CraftingTable: return "CraftingTable";
-                    case (byte)BlockType.Furnace: return "Furnace";
-                    case (byte)BlockType.Sand: return "Sand";
-                    case (byte)BlockType.Leaves: return "Leaves";
-                    case (byte)BlockType.Lava: return "Lava";
-                    case (byte)BlockType.Brick: return "Brick";
-                    case (byte)BlockType.Cobblestone: return "Cobblestone";
-                    case (byte)BlockType.Ice: return "Ice";
-                    case (byte)BlockType.Vacuum: return "Vacuum";
-                    default: return "UNUSED";
+                case (byte)BlockType.Air: return "Air";
+                case (byte)BlockType.Grass: return "Grass";
+                case (byte)BlockType.Stone: return "Stone";
+                case (byte)BlockType.Dirt: return "Dirt";
+                case (byte)BlockType.Water: return "Water";
+                case (byte)BlockType.Glass: return "Glass";
+                case (byte)BlockType.Bookshelf: return "Bookshelf";
+                case (byte)BlockType.Log: return "Log";
+                case (byte)BlockType.Wood: return "Wood";
+                case (byte)BlockType.Snow: return "Snow";
+                case (byte)BlockType.Slab: return "Slab";
+                case (byte)BlockType.CraftingTable: return "CraftingTable";
+                case (byte)BlockType.Furnace: return "Furnace";
+                case (byte)BlockType.Sand: return "Sand";
+                case (byte)BlockType.Leaves: return "Leaves";
+                case (byte)BlockType.Lava: return "Lava";
+                case (byte)BlockType.Brick: return "Brick";
+                case (byte)BlockType.Cobblestone: return "Cobblestone";
+                case (byte)BlockType.Ice: return "Ice";
+                case (byte)BlockType.Vacuum: return "Vacuum";
+                default: return "UNUSED";
                 }
             }
         }

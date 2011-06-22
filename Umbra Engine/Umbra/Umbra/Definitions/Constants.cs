@@ -29,7 +29,7 @@ namespace Umbra.Definitions
         static public Input Input;
         static public Main Main;
         static public Overlay Overlay;
-        static public Player Player;
+        static public Physics Physics;
         static public Sound Sound;
 
         static public bool IsInitialized;
@@ -161,9 +161,12 @@ namespace Umbra.Definitions
         // Player
         //----------------
 
+        public const float PlayerMass = 75.0F;
+        public const float PlayerVolume = PlayerMass / 1000.0F;
+
         public const float PlayerBoxWidth = 0.6F;
         public const float PlayerBoxHeight = 1.8F;
-        public const float PlayerEyeHeight = 1.5F;
+        public const float PlayerEyeHeight = 1.7F;
         static public Vector3 PlayerSpawn = new Vector3(0, 0, 0);
 
         // Camera
@@ -252,14 +255,14 @@ namespace Umbra.Definitions
             Input = new Input(main);
             Main = main;
             Overlay = new Overlay(main);
-            Player = new Player(main);
+            Physics = new Physics(main);
             Sound = new Sound(main);
 
             Main.Components.Add(Content);
             Main.Components.Add(Graphics);
             Main.Components.Add(Input);
             Main.Components.Add(Overlay);
-            Main.Components.Add(Player);
+            Main.Components.Add(Physics);
             Main.Components.Add(Sound);
 
             ConsoleFunctions.Initialize();
