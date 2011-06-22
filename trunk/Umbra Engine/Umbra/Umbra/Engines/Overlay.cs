@@ -59,7 +59,7 @@ namespace Umbra.Engines
                 SpriteBatch.DrawString(DebugFont, memoryUsage, new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(memoryUsage).X - 10, 100), Color.Yellow);
 
                 // Position
-                string[] position = {"X: " + Math.Round(Constants.Player.Position.X, 1), "Y: " + Math.Round(Constants.Player.Position.Y, 1), "Z: " + Math.Round(Constants.Player.Position.Z, 1)};
+                string[] position = { "X: " + Math.Round(Constants.Physics.Player.Position.X, 1), "Y: " + Math.Round(Constants.Physics.Player.Position.Y, 1), "Z: " + Math.Round(Constants.Physics.Player.Position.Z, 1) };
                 SpriteBatch.DrawString(DebugFont, position[0], new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(position[0]).X - 10, 130), Color.Yellow);
                 SpriteBatch.DrawString(DebugFont, position[1], new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(position[1]).X - 10, 150), Color.Yellow);
                 SpriteBatch.DrawString(DebugFont, position[2], new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(position[2]).X - 10, 170), Color.Yellow);

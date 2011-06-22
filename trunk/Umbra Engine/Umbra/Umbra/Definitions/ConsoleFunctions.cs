@@ -123,7 +123,7 @@ namespace Umbra.Definitions
 
                 Popup.Post("Noclip: " + Constants.NoclipEnabed.ToString());
 
-                Constants.Player.Velocity = Vector3.Zero;
+                Constants.Physics.Player.Velocity = Vector3.Zero;
 
                 return false;
             });
@@ -231,7 +231,7 @@ namespace Umbra.Definitions
 
             ConsoleCommands["facing"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Popup.Post(Vector3.Transform(Vector3.UnitZ, Matrix.CreateRotationY(Constants.Player.FirstPersonCamera.Direction)).ToString());
+                Popup.Post(Vector3.Transform(Vector3.UnitZ, Matrix.CreateRotationY(Constants.Physics.Player.FirstPersonCamera.Direction)).ToString());
                 return false;
             });
 

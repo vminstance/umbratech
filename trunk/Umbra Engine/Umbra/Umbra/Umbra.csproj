@@ -128,6 +128,7 @@
     <Compile Include="Definitions\Enumerations.cs" />
     <Compile Include="Definitions\IndexLibrary.cs" />
     <Compile Include="Engines\Physics.cs" />
+    <None Include="Engines\XXXXXXXXPlayer.cs" />
     <Compile Include="Implementations\BlockCursor.cs" />
     <Compile Include="Implementations\Compass.cs" />
     <Compile Include="Implementations\ClockTime.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Implementations\Popup.cs" />
     <Compile Include="Implementations\LandscapeGenerator.cs" />
     <Compile Include="Implementations\Threads.cs" />
+    <None Include="Implementations\XXXXXXXXXXPhysics.cs" />
     <Compile Include="Structures\AABB.cs" />
     <Compile Include="Structures\ChunkQueue.cs" />
     <Compile Include="Structures\GridElement.cs" />

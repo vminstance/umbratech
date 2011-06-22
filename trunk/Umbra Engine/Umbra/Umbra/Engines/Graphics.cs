@@ -58,8 +58,8 @@ namespace Umbra.Engines
 
             //Setup Effect
             MainEffect.CurrentTechnique = MainEffect.Techniques["Voxel"];
-            MainEffect.Parameters["xView"].SetValue(Constants.Player.GetViewMatrix());
-            MainEffect.Parameters["xProjection"].SetValue(Constants.Player.GetProjectionMatrix());
+            MainEffect.Parameters["xView"].SetValue(Constants.Physics.Player.GetViewMatrix());
+            MainEffect.Parameters["xProjection"].SetValue(Constants.Physics.Player.GetProjectionMatrix());
             MainEffect.Parameters["xTexture"].SetValue(Constants.Content.Textures);
             MainEffect.Parameters["xViewPort"].SetValue(new float[] { Constants.ScreenResolution.X, Constants.ScreenResolution.Y });
             MainEffect.Parameters["xFlashEnabled"].SetValue(Constants.FlashLightEnabled);
@@ -73,7 +73,7 @@ namespace Umbra.Engines
 
 
             MainEffect.Parameters["xTranslucentBlocks"].SetValue(Constants.TranslucentBlocks);
-            MainEffect.Parameters["xIsUnderWater"].SetValue(Constants.CurrentWorld.GetBlock(new BlockIndex(Constants.Player.Position + Constants.PlayerEyeHeight * Vector3.UnitY)).Type == (byte)BlockType.Water);
+            MainEffect.Parameters["xIsUnderWater"].SetValue(Constants.CurrentWorld.GetBlock(new BlockIndex(Constants.Physics.Player.Position + Constants.PlayerEyeHeight * Vector3.UnitY)).Type == (byte)BlockType.Water);
             MainEffect.Parameters["xTime"].SetValue((int)gameTime.TotalGameTime.TotalMilliseconds);
             
 
@@ -96,7 +96,7 @@ namespace Umbra.Engines
                     }
 
                     MainEffect.Parameters["xWorld"].SetValue(Matrix.CreateTranslation(c.Index.Position));
-                    MainEffect.Parameters["xCameraPos"].SetValue(Constants.Player.FirstPersonCamera.Position - c.Index.Position);
+                    MainEffect.Parameters["xCameraPos"].SetValue(Constants.Physics.Player.FirstPersonCamera.Position - c.Index.Position);
 
                     GraphicsDevice.SetVertexBuffers(c.VertexBuffer);
                     pass.Apply();

@@ -44,6 +44,14 @@ namespace Umbra.Structures
             }
         }
 
+        public float SurfaceArea
+        {
+            get
+            {
+                return 2 * (Max.X - Min.X) * (Max.Y - Min.Y) + (Max.X - Min.X) * (Max.Z - Min.Z) + (Max.Y - Min.Y) * (Max.Z - Min.Z);
+            }
+        }
+
         public AABB(Vector3 min, Vector3 max)
         {
             Min = min;
@@ -52,9 +60,7 @@ namespace Umbra.Structures
 
         static public AABB PlayerBoundingBox(Vector3 position)
         {
-            return new AABB(
-                position - new Vector3(Constants.PlayerBoxWidth / 2, 0, Constants.PlayerBoxWidth / 2),
-                position + new Vector3(Constants.PlayerBoxWidth / 2, Constants.PlayerEyeHeight, Constants.PlayerBoxWidth / 2));
+            return new AABB(position, position + new Vector3(Constants.PlayerBoxWidth, Constants.PlayerBoxHeight, Constants.PlayerBoxWidth));
         }
 
         public bool Intersects(AABB block)
@@ -93,6 +99,11 @@ namespace Umbra.Structures
             return true;
         }
 
+        public float? Intersects(Ray ray)
+        {
+            return ray.Intersects(new BoundingBox(Min, Max));
+        }
+
         public float IntersectionVolume(AABB box)
         {
             float intersectionVolume = 1;
@@ -127,6 +138,11 @@ namespace Umbra.Structures
             intersectionVolume *= points[2] - points[1];
 
             return intersectionVolume;
+        }
+
+        public AABB At(Vector3 pos)
+        {
+            return new AABB(pos, (Max - Min) + pos);
         }
     }
 }

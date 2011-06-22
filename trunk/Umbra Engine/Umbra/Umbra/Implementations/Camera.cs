@@ -40,7 +40,7 @@ namespace Umbra.Implementations
             Position = position;
             Direction = MathHelper.WrapAngle(direction);
             Pitch = MathHelper.Clamp(pitch, -MathHelper.PiOver2, MathHelper.PiOver2);
-            Rotation = Quaternion.Identity;
+            Rotation = Quaternion.CreateFromYawPitchRoll(Direction, Pitch, 0.0F);
         }
 
         public void Update()
@@ -49,22 +49,31 @@ namespace Umbra.Implementations
             {
                 Direction -= MathHelper.WrapAngle((float)(Constants.Input.MouseCurrentState.X - Constants.ScreenResolution.X / 2) / Constants.MouseSensitivityInv);
                 Pitch = MathHelper.Clamp(Pitch - (float)(Constants.Input.MouseCurrentState.Y - Constants.ScreenResolution.Y / 2) / Constants.MouseSensitivityInv, -MathHelper.PiOver2, MathHelper.PiOver2);
-                Mouse.SetPosition((int)Constants.ScreenResolution.X / 2, (int)Constants.ScreenResolution.Y / 2);
+                Constants.Input.ResetMouse();
             }
 
-            Rotation = Quaternion.Lerp(Rotation, Quaternion.CreateFromYawPitchRoll(Direction, Pitch, 0), Constants.SmoothCameraRespons);
+            if (Constants.SmoothCameraEnabled)
+            {
+                Rotation = Quaternion.Lerp(Rotation, Quaternion.CreateFromYawPitchRoll(Direction, Pitch, 0), Constants.SmoothCameraRespons);
+            }
+            else
+            {
+                Rotation = Quaternion.CreateFromYawPitchRoll(Direction, Pitch, 0.0F);
+            }
         }
 
         public void SetRotation(float direction, float pitch)
         {
             Direction = MathHelper.WrapAngle(direction);
             Pitch = MathHelper.Clamp(pitch, -MathHelper.PiOver2, MathHelper.PiOver2);
+            Rotation = Quaternion.CreateFromYawPitchRoll(Direction, Pitch, 0.0F);
         }
 
         public void Rotate(float direction, float pitch)
         {
             Direction = MathHelper.WrapAngle(Direction + direction);
             Pitch = MathHelper.Clamp(Pitch + pitch, -MathHelper.PiOver2, MathHelper.PiOver2);
+            Rotation = Quaternion.CreateFromYawPitchRoll(Direction, Pitch, 0.0F);
         }
 
         public Matrix GetProjection()
