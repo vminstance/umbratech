@@ -132,7 +132,7 @@
     <Compile Include="Implementations\BlockCursor.cs" />
     <Compile Include="Implementations\Compass.cs" />
     <Compile Include="Implementations\ClockTime.cs" />
-    <Compile Include="Implementations\Player.cs" />
+    <Compile Include="Structures\Player.cs" />
     <Compile Include="Implementations\Popup.cs" />
     <Compile Include="Implementations\LandscapeGenerator.cs" />
     <Compile Include="Implementations\Threads.cs" />

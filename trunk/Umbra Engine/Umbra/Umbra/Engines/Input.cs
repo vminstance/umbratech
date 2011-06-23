@@ -196,6 +196,7 @@ namespace Umbra.Engines
             {
                 return Vector3.Zero;
             }
+
             return Vector3.Normalize(returnVector);
         }
 

@@ -37,8 +37,11 @@ namespace Umbra.Engines
             foreach (PhysicsObject currentObject in PhysicsObjects)
             {
                 currentObject.Update(gameTime);
-                UpdateVelocity(currentObject, gameTime);
-                UpdatePosition(currentObject, gameTime);
+                if (currentObject.PhysicsEnabled)
+                {
+                    UpdateVelocity(currentObject, gameTime);
+                    UpdatePosition(currentObject, gameTime);
+                }
             }
 
             base.Update(gameTime);
@@ -46,8 +49,6 @@ namespace Umbra.Engines
 
         private void UpdateVelocity(PhysicsObject currentObject, GameTime gameTime)
         {
-            currentObject.ResetForceAccumulator();
-
             // Gravity
             currentObject.ApplyForce(Vector3.Down * Constants.Gravity * currentObject.Mass);
 
@@ -55,10 +56,18 @@ namespace Umbra.Engines
             currentObject.ApplyForce(Vector3.Up * GetBuoyancyForce(currentObject));
 
             // Drag
-            currentObject.ApplyForce(-0.5F * GetAverageViscosity(currentObject) * currentObject.BoundingBox.SurfaceArea * currentObject.DragCoefficient * (float)currentObject.Velocity.LengthSquared() * (currentObject.Velocity == Vector3.Zero ? Vector3.One : Vector3.Normalize(currentObject.Velocity)));
+            currentObject.ApplyForce(-0.5F *
+                GetAverageViscosity(currentObject) *
+                currentObject.BoundingBox.SurfaceArea *
+                currentObject.DragCoefficient *
+                (float)currentObject.Velocity.LengthSquared() *
+                (currentObject.Velocity == Vector3.Zero ? Vector3.One : Vector3.Normalize(currentObject.Velocity)));
 
             // Surface friction
-            currentObject.ApplyForce(Vector3.Zero);
+            if (IsOnGround(currentObject) && currentObject.Velocity != Vector3.Zero)
+            {
+                currentObject.ApplyForce(-(Vector3.Normalize(currentObject.Velocity) * GetAverageFrictionCoefficient(currentObject) * new Vector3(1, 0, 1) * currentObject.Mass * Constants.Gravity) * Math.Min(currentObject.Velocity.Length(), 1));
+            }
 
             // Update velocity
             currentObject.UpdateVelocity((float)gameTime.ElapsedGameTime.TotalSeconds);
@@ -68,19 +77,19 @@ namespace Umbra.Engines
         {
             float buoyancy = 0;
 
-            foreach (BlockIndex index in obj.BoundingBox.IntersectionSpace)
+            foreach (BlockIndex index in obj.BoundingBox.IntersectionIndices)
             {
-                buoyancy += Constants.CurrentWorld.GetBlock(index).Mass;
+                buoyancy += Constants.CurrentWorld.GetBlock(index).Density * obj.BoundingBox.IntersectionVolume(index.GetBoundingBox());
             }
 
-            return (2 * -Constants.Gravity * obj.Mass * buoyancy) / (obj.Mass + buoyancy);
+            return (2 * Constants.Gravity * obj.Mass * buoyancy) / (obj.Mass + buoyancy);
         }
 
         private float GetAverageViscosity(PhysicsObject obj)
         {
             float average = 0;
 
-            foreach (BlockIndex index in obj.BoundingBox.IntersectionSpace)
+            foreach (BlockIndex index in obj.BoundingBox.IntersectionIndices)
             {
                 average += Constants.CurrentWorld.GetBlock(index).Viscosity * (index.GetBoundingBox().IntersectionVolume(obj.BoundingBox) / obj.Volume);
             }
@@ -92,17 +101,20 @@ namespace Umbra.Engines
         {
             float average = 0;
 
-            foreach (BlockIndex index in obj.BoundingBox.IntersectionSpace)
+            foreach (BlockIndex index in BlocksBeneath(obj))
             {
-                average += Constants.CurrentWorld.GetBlock(index).FrictionCoefficient * (index.GetBoundingBox().IntersectionVolume(obj.BoundingBox) / obj.Volume);
+                average += Constants.CurrentWorld.GetBlock(index).FrictionCoefficient;
             }
 
-            return average;
+            return average / BlocksBeneath(obj).Count;
         }
 
         private void UpdatePosition(PhysicsObject obj, GameTime gameTime)
         {
             Vector3 newPos = obj.Position + obj.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Vector3 newPosX = obj.Position + obj.Velocity.X * Vector3.UnitX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Vector3 newPosY = obj.Position + obj.Velocity.Y * Vector3.UnitY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Vector3 newPosZ = obj.Position + obj.Velocity.Z * Vector3.UnitZ * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (PlaceFree(obj, newPos))
             {
@@ -110,24 +122,24 @@ namespace Umbra.Engines
             }
             else
             {
-                UpdatePositionOneDimension(obj, newPos, ref obj.Position.Y, ref obj.Velocity.Y);
+                UpdatePositionOneDimension(obj, newPosY, ref obj.Position.Y, ref obj.Velocity.Y);
 
-                if (obj.Velocity.X > obj.Velocity.Z)
+                if (Math.Abs(obj.Velocity.X) > Math.Abs(obj.Velocity.Z))
                 {
-                    UpdatePositionOneDimension(obj, newPos, ref obj.Position.X, ref obj.Velocity.X);
-                    UpdatePositionOneDimension(obj, newPos, ref obj.Position.Z, ref obj.Velocity.Z);
+                    UpdatePositionOneDimension(obj, newPosX, ref obj.Position.X, ref obj.Velocity.X);
+                    UpdatePositionOneDimension(obj, newPosZ, ref obj.Position.Z, ref obj.Velocity.Z);
                 }
                 else
                 {
-                    UpdatePositionOneDimension(obj, newPos, ref obj.Position.Z, ref obj.Velocity.Z);
-                    UpdatePositionOneDimension(obj, newPos, ref obj.Position.X, ref obj.Velocity.X);
+                    UpdatePositionOneDimension(obj, newPosZ, ref obj.Position.Z, ref obj.Velocity.Z);
+                    UpdatePositionOneDimension(obj, newPosX, ref obj.Position.X, ref obj.Velocity.X);
                 }
             }
         }
 
         private bool PlaceFree(PhysicsObject obj, Vector3 position)
         {
-            foreach (BlockIndex index in obj.BoundingBox.At(position).IntersectionSpace)
+            foreach (BlockIndex index in obj.BoundingBox.At(position).IntersectionIndices)
             {
                 if (Constants.CurrentWorld.GetBlock(index).Solidity)
                 {
@@ -144,18 +156,31 @@ namespace Umbra.Engines
             {
                 if (!PlaceFree(obj, newPosition))
                 {
-                    // Debounce
+                    velocity = Math.Min(Math.Abs(velocity), 0.0F) * Math.Sign(velocity);
                 }
-
-                velocity = 0;
             }
 
             position += velocity;
         }
 
-        public bool ObjectOnGround(PhysicsObject obj)
+        public List<BlockIndex> BlocksBeneath(PhysicsObject obj)
         {
-            return PlaceFree(obj, obj.Position + Vector3.Down * Constants.PlayerMinDistanceToGround);
+            List<BlockIndex> returnList = new List<BlockIndex>();
+
+            for (int x = (int)Math.Floor(obj.BoundingBox.Min.X); x <= Math.Floor(obj.BoundingBox.Max.X); x++)
+            {
+                for (int z = (int)Math.Floor(obj.BoundingBox.Min.Z); z <= Math.Floor(obj.BoundingBox.Max.Z); z++)
+                {
+                    returnList.Add(new BlockIndex(x, (int)obj.Position.Y - 1, z));
+                }
+            }
+
+            return returnList;
+        }
+
+        public bool IsOnGround(PhysicsObject obj)
+        {
+            return !PlaceFree(obj, obj.Position + Vector3.Down * Constants.PlayerMinDistanceToGround);
         }
     }
 }
