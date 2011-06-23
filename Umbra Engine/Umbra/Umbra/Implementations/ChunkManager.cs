@@ -16,6 +16,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Engines
@@ -39,12 +40,12 @@ namespace Umbra.Engines
 
         static string GetChunkPath()
         {
-            return Constants.CurrentWorld.Path + Constants.ChunkFilePath;
+            return Variables.World.Current.Path + Constants.Content.Data.ChunkFilePath;
         }
 
         static string GetChunkPath(ChunkIndex index)
         {
-            return Constants.CurrentWorld.Path + Constants.ChunkFilePath + @"\" + index.ToString() + Constants.ChunkFileExtension;
+            return Variables.World.Current.Path + Constants.Content.Data.ChunkFilePath + @"\" + index.ToString() + Constants.Content.Data.ChunkFileExtension;
         }
 
         static bool IsChunkOnDisk(ChunkIndex index)
@@ -77,11 +78,11 @@ namespace Umbra.Engines
 
             FileStream stream = File.Open(GetChunkPath(chunk.Index), FileMode.Open);
 
-            for (int x = 0; x < Constants.ChunkSize; x++)
+            for (int x = 0; x < Constants.World.ChunkSize; x++)
             {
-                for (int y = 0; y < Constants.ChunkSize; y++)
+                for (int y = 0; y < Constants.World.ChunkSize; y++)
                 {
-                    for (int z = 0; z < Constants.ChunkSize; z++)
+                    for (int z = 0; z < Constants.World.ChunkSize; z++)
                     {
                         chunk[x, y, z] = new Block((byte)stream.ReadByte(), (byte)stream.ReadByte());
                     }
@@ -93,7 +94,7 @@ namespace Umbra.Engines
 
         static public void UnloadChunk(Chunk chunk)
         {
-            if (Constants.SaveDynamicWorld)
+            if (Constants.World.SaveDynamicWorld)
             {
                 Setup.AddToUnload(chunk);
             }
@@ -111,11 +112,11 @@ namespace Umbra.Engines
 
             chunk.DisposeBuffers();
 
-            for (int x = 0; x < Constants.ChunkSize; x++)
+            for (int x = 0; x < Constants.World.ChunkSize; x++)
             {
-                for (int y = 0; y < Constants.ChunkSize; y++)
+                for (int y = 0; y < Constants.World.ChunkSize; y++)
                 {
-                    for (int z = 0; z < Constants.ChunkSize; z++)
+                    for (int z = 0; z < Constants.World.ChunkSize; z++)
                     {
                         stream.Write(chunk[x, y, z].Bytes, 0, 2);
                     }

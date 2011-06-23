@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Utilities
@@ -23,7 +24,7 @@ namespace Umbra.Utilities
         static float[,] ChunkValues;
         static public void Generate(ref float[,] currentLandscape)
         {
-            int size = Constants.WorldSize + 3;
+            int size = Constants.World.WorldSize + 3;
 
             ChunkValues = new float[size, size];
 
@@ -35,7 +36,7 @@ namespace Umbra.Utilities
                     if (x > 0 && y > 0)
                     {
                         ChunkValues[x, y] +=
-                            ((((float)LandscapeGenerator.Random.NextDouble() * Constants.BicubicAmplitude / 5) - (Constants.BicubicAmplitude / 10)) +
+                            ((((float)LandscapeGenerator.Random.NextDouble() * Constants.Landscape.BicubicAmplitude / 5) - (Constants.Landscape.BicubicAmplitude / 10)) +
                             ChunkValues[x, y - 1] +
                             ChunkValues[x - 1, y] +
                             ChunkValues[x - 1, y - 1]) / 3;
@@ -43,18 +44,18 @@ namespace Umbra.Utilities
                     else if (x > 0)
                     {
                         ChunkValues[x, y] +=
-                            ((((float)LandscapeGenerator.Random.NextDouble() * Constants.BicubicAmplitude / 10) - (Constants.BicubicAmplitude / 20)) +
+                            ((((float)LandscapeGenerator.Random.NextDouble() * Constants.Landscape.BicubicAmplitude / 10) - (Constants.Landscape.BicubicAmplitude / 20)) +
                             ChunkValues[x - 1, y]) / 1.5F;
                     }
                     else if (y > 0)
                     {
                         ChunkValues[x, y] +=
-                            ((((float)LandscapeGenerator.Random.NextDouble() * Constants.BicubicAmplitude / 10) - (Constants.BicubicAmplitude / 20)) +
+                            ((((float)LandscapeGenerator.Random.NextDouble() * Constants.Landscape.BicubicAmplitude / 10) - (Constants.Landscape.BicubicAmplitude / 20)) +
                             ChunkValues[x, y - 1]) / 1.5F;
                     }
                     else
                     {
-                        ChunkValues[x, y] += ((float)LandscapeGenerator.Random.NextDouble() * Constants.BicubicAmplitude) - Constants.BicubicAmplitude / 2;
+                        ChunkValues[x, y] += ((float)LandscapeGenerator.Random.NextDouble() * Constants.Landscape.BicubicAmplitude) - Constants.Landscape.BicubicAmplitude / 2;
                     }
                 }
             }
@@ -76,11 +77,11 @@ namespace Umbra.Utilities
 
                     Interpolation.UpdateBicubicCoefficients(points);
 
-                    for (int x = 0; x < Constants.ChunkSize; x++)
+                    for (int x = 0; x < Constants.World.ChunkSize; x++)
                     {
-                        for (int y = 0; y < Constants.ChunkSize; y++)
+                        for (int y = 0; y < Constants.World.ChunkSize; y++)
                         {
-                            currentLandscape[x + (chunkX - 1) * Constants.ChunkSize, y + (chunkY - 1) * Constants.ChunkSize] += Constants.WorldHeightOffset + Interpolation.BicubicInterpolation((float)x / (float)Constants.ChunkSize, (float)y / (float)Constants.ChunkSize);
+                            currentLandscape[x + (chunkX - 1) * Constants.World.ChunkSize, y + (chunkY - 1) * Constants.World.ChunkSize] += Constants.Landscape.WorldHeightOffset + Interpolation.BicubicInterpolation((float)x / (float)Constants.World.ChunkSize, (float)y / (float)Constants.World.ChunkSize);
                         }
                     }
                 }

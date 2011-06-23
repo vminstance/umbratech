@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
@@ -47,7 +48,7 @@ namespace Umbra.Structures
         {
             get
             {
-                if (x >= 0 && x < Constants.ChunkSize && y >= 0 && y < Constants.ChunkSize && z >= 0 && z < Constants.ChunkSize)
+                if (x >= 0 && x < Constants.World.ChunkSize && y >= 0 && y < Constants.World.ChunkSize && z >= 0 && z < Constants.World.ChunkSize)
                 {
                     return Data[x, y, z];
                 }
@@ -58,7 +59,7 @@ namespace Umbra.Structures
             }
             set
             {
-                if (x >= 0 && x < Constants.ChunkSize && y >= 0 && y < Constants.ChunkSize && z >= 0 && z < Constants.ChunkSize)
+                if (x >= 0 && x < Constants.World.ChunkSize && y >= 0 && y < Constants.World.ChunkSize && z >= 0 && z < Constants.World.ChunkSize)
                 {
                     Data[x, y, z] = value;
                     if (VisibleFaces != null)
@@ -79,12 +80,12 @@ namespace Umbra.Structures
             HasData = false;
             WillBeUnloaded = false;
             Index = index;
-            Data = new Block[Constants.ChunkSize, Constants.ChunkSize, Constants.ChunkSize];
+            Data = new Block[Constants.World.ChunkSize, Constants.World.ChunkSize, Constants.World.ChunkSize];
         }
 
         public void SetBlock(BlockIndex index, Block value, bool updateAdjacentChunks)
         {
-            if (index.X >= 0 && index.X < Constants.ChunkSize && index.Y >= 0 && index.Y < Constants.ChunkSize && index.Z >= 0 && index.Z < Constants.ChunkSize)
+            if (index.X >= 0 && index.X < Constants.World.ChunkSize && index.Y >= 0 && index.Y < Constants.World.ChunkSize && index.Z >= 0 && index.Z < Constants.World.ChunkSize)
             {
                 Data[index.X, index.Y, index.Z] = value;
                 BuildGeometry(true);
@@ -93,15 +94,15 @@ namespace Umbra.Structures
                 {
                     if (index.X == 0)
                     {
-                        Chunk chunk = Constants.CurrentWorld.GetChunk(Index - ChunkIndex.UnitX);
+                        Chunk chunk = Constants.World.Current.GetChunk(Index - ChunkIndex.UnitX);
                         if (chunk != null)
                         {
                             chunk.BuildGeometry(false);
                         }
                     }
-                    else if (index.X == Constants.ChunkSize - 1)
+                    else if (index.X == Constants.World.ChunkSize - 1)
                     {
-                        Chunk chunk = Constants.CurrentWorld.GetChunk(Index + ChunkIndex.UnitX);
+                        Chunk chunk = Constants.World.Current.GetChunk(Index + ChunkIndex.UnitX);
                         if (chunk != null)
                         {
                             chunk.BuildGeometry(false);
@@ -110,15 +111,15 @@ namespace Umbra.Structures
 
                     if (index.Y == 0)
                     {
-                        Chunk chunk = Constants.CurrentWorld.GetChunk(Index - ChunkIndex.UnitY);
+                        Chunk chunk = Constants.World.Current.GetChunk(Index - ChunkIndex.UnitY);
                         if (chunk != null)
                         {
                             chunk.BuildGeometry(false);
                         }
                     }
-                    else if (index.Y == Constants.ChunkSize - 1)
+                    else if (index.Y == Constants.World.ChunkSize - 1)
                     {
-                        Chunk chunk = Constants.CurrentWorld.GetChunk(Index + ChunkIndex.UnitY);
+                        Chunk chunk = Constants.World.Current.GetChunk(Index + ChunkIndex.UnitY);
                         if (chunk != null)
                         {
                             chunk.BuildGeometry(false);
@@ -127,15 +128,15 @@ namespace Umbra.Structures
 
                     if (index.Z == 0)
                     {
-                        Chunk chunk = Constants.CurrentWorld.GetChunk(Index - ChunkIndex.UnitZ);
+                        Chunk chunk = Constants.World.Current.GetChunk(Index - ChunkIndex.UnitZ);
                         if (chunk != null)
                         {
                             chunk.BuildGeometry(false);
                         }
                     }
-                    else if (index.Z == Constants.ChunkSize - 1)
+                    else if (index.Z == Constants.World.ChunkSize - 1)
                     {
-                        Chunk chunk = Constants.CurrentWorld.GetChunk(Index + ChunkIndex.UnitZ);
+                        Chunk chunk = Constants.World.Current.GetChunk(Index + ChunkIndex.UnitZ);
                         if (chunk != null)
                         {
                             chunk.BuildGeometry(false);

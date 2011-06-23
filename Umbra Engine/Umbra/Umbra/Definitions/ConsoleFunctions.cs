@@ -15,6 +15,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Definitions
@@ -32,7 +33,7 @@ namespace Umbra.Definitions
             ConsoleCommands["exit"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
                 ChunkManager.AbortThreads();
-                Constants.Main.Exit();
+                Constants.Engine_Main.Exit();
                 return false;
             });
             ConsoleCommands.Add("quit", ConsoleCommands["exit"]);
@@ -94,15 +95,15 @@ namespace Umbra.Definitions
                 {
                     if (Boolify(args[0]).HasValue)
                     {
-                        Constants.CameraBobbingEnabled = Boolify(args[0]).Value;
+                        Variables.Player.Camera.Bobbing.Enabled = Boolify(args[0]).Value;
                     }
                 }
                 else
                 {
-                    Constants.CameraBobbingEnabled = !Constants.CameraBobbingEnabled;
+                    Variables.Player.Camera.Bobbing.Enabled = !Variables.Player.Camera.Bobbing.Enabled;
                 }
 
-                Popup.Post("Camera Bobbing: " + Constants.CameraBobbingEnabled.ToString());
+                Popup.Post("Camera Bobbing: " + Variables.Player.Camera.Bobbing.Enabled.ToString());
 
                 return false;
             });
@@ -113,17 +114,17 @@ namespace Umbra.Definitions
                 {
                     if (Boolify(args[0]).HasValue)
                     {
-                        Constants.NoclipEnabed = Boolify(args[0]).Value;
+                        Variables.Player.NoclipEnabled = Boolify(args[0]).Value;
                     }
                 }
                 else
                 {
-                    Constants.NoclipEnabed = !Constants.NoclipEnabed;
+                    Variables.Player.NoclipEnabled = !Variables.Player.NoclipEnabled;
                 }
 
-                Popup.Post("Noclip: " + Constants.NoclipEnabed.ToString());
+                Popup.Post("Noclip: " + Variables.Player.NoclipEnabled.ToString());
 
-                Constants.Physics.Player.Velocity = Vector3.Zero;
+                Constants.Engine_Physics.Player.Velocity = Vector3.Zero;
 
                 return false;
             });
@@ -134,15 +135,15 @@ namespace Umbra.Definitions
                 {
                     if (Boolify(args[0]).HasValue)
                     {
-                        Constants.DayNightCycleEnabled = Boolify(args[0]).Value;
+                        Variables.Graphics.DayNight.CycleEnabled = Boolify(args[0]).Value;
                     }
                 }
                 else
                 {
-                    Constants.DayNightCycleEnabled = !Constants.DayNightCycleEnabled;
+                    Variables.Graphics.DayNight.CycleEnabled = !Variables.Graphics.DayNight.CycleEnabled;
                 }
 
-                Popup.Post("Day/Night Cycle: " + Constants.DayNightCycleEnabled.ToString());
+                Popup.Post("Day/Night Cycle: " + Variables.Graphics.DayNight.CycleEnabled.ToString());
 
                 return false;
             });
@@ -153,15 +154,15 @@ namespace Umbra.Definitions
                 {
                     if (Boolify(args[0]).HasValue)
                     {
-                        Constants.DisplayFPS = Boolify(args[0]).Value;
+                        Variables.Overlay.DisplayFPS = Boolify(args[0]).Value;
                     }
                 }
                 else
                 {
-                    Constants.DisplayFPS = !Constants.DisplayFPS;
+                    Variables.Overlay.DisplayFPS = !Variables.Overlay.DisplayFPS;
                 }
 
-                Popup.Post("FPS: " + Constants.DisplayFPS.ToString());
+                Popup.Post("FPS: " + Variables.Overlay.DisplayFPS.ToString());
 
                 return false;
             });
@@ -172,15 +173,15 @@ namespace Umbra.Definitions
                 {
                     if (Boolify(args[0]).HasValue)
                     {
-                        Constants.DynamicWorld = Boolify(args[0]).Value;
+                        Constants.World.DynamicWorld = Boolify(args[0]).Value;
                     }
                 }
                 else
                 {
-                    Constants.DynamicWorld = !Constants.DynamicWorld;
+                    Constants.World.DynamicWorld = !Constants.World.DynamicWorld;
                 }
 
-                Popup.Post("Dynamic World: " + Constants.DynamicWorld.ToString());
+                Popup.Post("Dynamic World: " + Constants.World.DynamicWorld.ToString());
 
                 return false;
             });
@@ -191,15 +192,15 @@ namespace Umbra.Definitions
                 {
                     if (Boolify(args[0]).HasValue)
                     {
-                        Constants.FogEnabled = Boolify(args[0]).Value;
+                        Variables.Graphics.Fog.Enabled = Boolify(args[0]).Value;
                     }
                 }
                 else
                 {
-                    Constants.FogEnabled = !Constants.FogEnabled;
+                    Variables.Graphics.Fog.Enabled = !Variables.Graphics.Fog.Enabled;
                 }
 
-                Popup.Post("Fog: " + Constants.FogEnabled.ToString());
+                Popup.Post("Fog: " + Variables.Graphics.Fog.Enabled.ToString());
 
                 return false;
             });
@@ -210,28 +211,28 @@ namespace Umbra.Definitions
                 {
                     if (Boolify(args[0]).HasValue)
                     {
-                        Constants.FlashLightEnabled = Boolify(args[0]).Value;
+                        Variables.Graphics.Lighting.FlashLightEnabled = Boolify(args[0]).Value;
                     }
                 }
                 else
                 {
-                    Constants.FlashLightEnabled = !Constants.FlashLightEnabled;
+                    Variables.Graphics.Lighting.FlashLightEnabled = !Variables.Graphics.Lighting.FlashLightEnabled;
                 }
 
-                Popup.Post("Flashlight: " + Constants.FlashLightEnabled.ToString());
+                Popup.Post("Flashlight: " + Variables.Graphics.Lighting.FlashLightEnabled.ToString());
 
                 return false;
             });
 
             ConsoleCommands["light"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Constants.CurrentFaceLightCoef = 5.0F;
+                Variables.Graphics.DayNight.CurrentFaceLightCoef = 5.0F;
                 return false;
             });
 
             ConsoleCommands["facing"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Popup.Post(Vector3.Transform(Vector3.UnitZ, Matrix.CreateRotationY(Constants.Physics.Player.FirstPersonCamera.Direction)).ToString());
+                Popup.Post(Vector3.Transform(Vector3.UnitZ, Matrix.CreateRotationY(Constants.Engine_Physics.Player.FirstPersonCamera.Direction)).ToString());
                 return false;
             });
 
@@ -307,7 +308,7 @@ namespace Umbra.Definitions
                 {
                     Console.Write("Usage: \"block <blocktype>\"");
                     Console.Write("Currently selectable blocktypes:");
-                    foreach (string s in Constants.PlacableBlocks)
+                    foreach (string s in Constants.Controls.PlacableBlocks)
                     {
                         Console.Write(s);
                     }
@@ -316,7 +317,7 @@ namespace Umbra.Definitions
                 }
 
                 bool canUse = false;
-                foreach (string s in Constants.PlacableBlocks)
+                foreach (string s in Constants.Controls.PlacableBlocks)
                 {
                     if (args[0] == s)
                     {
@@ -331,7 +332,7 @@ namespace Umbra.Definitions
                     return false;
                 }
 
-                Constants.CurrentCursorBlock = Block.GetFromName(args[0]);
+                Variables.Player.BlockEditing.CurrentCursorBlock = Block.GetFromName(args[0]);
                 Popup.Post("Block cursor set to " + args[0] + ".");
                 return false;
             });

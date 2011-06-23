@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
@@ -32,11 +33,11 @@ namespace Umbra.Structures
         public GridElement(GridElementType type, float range)
         {
             Type = type;
-            Values = new float[Constants.WorldSize * Constants.ChunkSize, Constants.WorldSize * Constants.ChunkSize];
+            Values = new float[Constants.World.WorldSize * Constants.World.ChunkSize, Constants.World.WorldSize * Constants.World.ChunkSize];
 
             if (type == GridElementType.Bicubic || type == GridElementType.PerlinBicubic)
             {
-                int size = Constants.WorldSize + 3;
+                int size = Constants.World.WorldSize + 3;
                 float[,] InterpolantSeeds = new float[size, size];
 
                 for (int x = 0; x < size; x++)
@@ -49,9 +50,9 @@ namespace Umbra.Structures
 
 
 
-                for (int ChunkX = 0; ChunkX < Constants.WorldSize; ChunkX++)
+                for (int ChunkX = 0; ChunkX < Constants.World.WorldSize; ChunkX++)
                 {
-                    for (int ChunkY = 0; ChunkY < Constants.WorldSize; ChunkY++)
+                    for (int ChunkY = 0; ChunkY < Constants.World.WorldSize; ChunkY++)
                     {
 
                         float[,] points = new float[4, 4];
@@ -66,11 +67,11 @@ namespace Umbra.Structures
 
                         Interpolation.UpdateBicubicCoefficients(points);
 
-                        for (int x = 0; x < Constants.ChunkSize; x++)
+                        for (int x = 0; x < Constants.World.ChunkSize; x++)
                         {
-                            for (int y = 0; y < Constants.ChunkSize; y++)
+                            for (int y = 0; y < Constants.World.ChunkSize; y++)
                             {
-                                Values[x + ChunkX * Constants.ChunkSize, y + ChunkY * Constants.ChunkSize] = Interpolation.BicubicInterpolation((float)x / (float)Constants.ChunkSize, (float)y / (float)Constants.ChunkSize);
+                                Values[x + ChunkX * Constants.World.ChunkSize, y + ChunkY * Constants.World.ChunkSize] = Interpolation.BicubicInterpolation((float)x / (float)Constants.World.ChunkSize, (float)y / (float)Constants.World.ChunkSize);
                             }
                         }
                     }
@@ -79,7 +80,7 @@ namespace Umbra.Structures
 
             if (type == GridElementType.Perlin || type == GridElementType.PerlinBicubic)
             {
-                Perlin.Generate(ref Values, Constants.WorldSize * Constants.ChunkSize);
+                Perlin.Generate(ref Values, Constants.World.WorldSize * Constants.World.ChunkSize);
             }
         }
 

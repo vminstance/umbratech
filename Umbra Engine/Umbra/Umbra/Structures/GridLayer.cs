@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
@@ -51,7 +52,7 @@ namespace Umbra.Structures
         public float GetLandscapePoint(ChunkIndex index, BlockIndex block)
         {
             WorldIndex rounded = new WorldIndex(index + WorldIndex.One * 1.5F);
-            ChunkIndex newIndex = (index + WorldIndex.One) % Constants.WorldSize;
+            ChunkIndex newIndex = (index + WorldIndex.One) % Constants.World.WorldSize;
 
             return Layer[(int)rounded.X % Size, (int)rounded.Y % Size].GetChunkInterpolant(newIndex, block);
         }

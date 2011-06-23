@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Definitions
@@ -101,12 +102,12 @@ namespace Umbra.Definitions
         {
             switch (dir)
             {
-            case Direction.Backward: return Constants.TextureBackwardShade;
-            case Direction.Forward: return Constants.TextureForwardShade;
-            case Direction.Left: return Constants.TextureLeftShade;
-            case Direction.Right: return Constants.TextureRightShade;
-            case Direction.Up: return Constants.TextureUpShade;
-            case Direction.Down: return Constants.TextureDownShade;
+            case Direction.Backward: return Constants.Graphics.Lighting.BackwardShade;
+            case Direction.Forward: return Constants.Graphics.Lighting.ForwardShade;
+            case Direction.Left: return Constants.Graphics.Lighting.LeftShade;
+            case Direction.Right: return Constants.Graphics.Lighting.RightShade;
+            case Direction.Up: return Constants.Graphics.Lighting.UpShade;
+            case Direction.Down: return Constants.Graphics.Lighting.DownShade;
             default: return 0;
             }
         }

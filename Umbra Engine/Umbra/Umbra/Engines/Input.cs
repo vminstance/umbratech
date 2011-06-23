@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Engines
@@ -66,7 +67,7 @@ namespace Umbra.Engines
                 }
                 Console.InputString = "";
                 Console.CursorPosition = 0;
-                if (!(Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.LeftShift) || Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.RightShift)))
+                if (!(Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.LeftShift) || Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.RightShift)))
                 {
                     Console.Close();
                 }
@@ -115,15 +116,15 @@ namespace Umbra.Engines
                 {
                     if (IsResizingConsole)
                     {
-                        Constants.ConsoleArea.Width = Constants.DefaultConsoleArea.Width + (MouseCurrentState.X - ResizePosition.X);
-                        Constants.ConsoleArea.Y = Constants.DefaultConsoleArea.Y + (MouseCurrentState.Y - ResizePosition.Y);
-                        Constants.ConsoleArea.Height = Constants.DefaultConsoleArea.Height - (MouseCurrentState.Y - ResizePosition.Y);
+                        Variables.Overlay.Console.Area.Width = Constants.Overlay.Console.DefaultArea.Width + (MouseCurrentState.X - ResizePosition.X);
+                        Variables.Overlay.Console.Area.Y = Variables.Overlay.Console.Area.Y + (MouseCurrentState.Y - ResizePosition.Y);
+                        Variables.Overlay.Console.Area.Height = Variables.Overlay.Console.Area.Height - (MouseCurrentState.Y - ResizePosition.Y);
 
-                        Constants.ConsoleArea.Width = (int)Math.Max(Console.Font.MeasureString("12345").X + 30, Constants.ConsoleArea.Width);
-                        Constants.ConsoleArea.Y = (int)Math.Min(Constants.ScreenResolution.Y - 50, Constants.ConsoleArea.Y);
+                        Variables.Overlay.Console.Area.Width = (int)Math.Max(Console.Font.MeasureString("12345").X + 30, Variables.Overlay.Console.Area.Width);
+                        Variables.Overlay.Console.Area.Y = (int)Math.Min(Constants.Graphics.ScreenResolution.Y - 50, Variables.Overlay.Console.Area.Y);
                     }
 
-                    if (MouseCurrentState.X < Constants.ConsoleArea.Width && MouseCurrentState.X > Constants.ConsoleArea.Width - 5 && MouseCurrentState.Y < Constants.ConsoleArea.Y + 5 && MouseCurrentState.Y > Constants.ConsoleArea.Y)
+                    if (MouseCurrentState.X < Variables.Overlay.Console.Area.Width && MouseCurrentState.X > Variables.Overlay.Console.Area.Width - 5 && MouseCurrentState.Y < Variables.Overlay.Console.Area.Y + 5 && MouseCurrentState.Y > Variables.Overlay.Console.Area.Y)
                     {
                         ResizePosition = new Point(MouseCurrentState.X, MouseCurrentState.Y);
                         IsResizingConsole = true;
@@ -134,10 +135,10 @@ namespace Umbra.Engines
                 {
                     IsResizingConsole = false;
                     ResizePosition = Point.Zero;
-                    Constants.DefaultConsoleArea = Constants.ConsoleArea;
+                    Constants.Overlay.Console.DefaultArea = Variables.Overlay.Console.Area;
                 }
             }
-            else if (Constants.GameIsActive)
+            else if (Variables.Game.IsActive)
             {
                 //----------------
                 // Normal 
@@ -174,9 +175,9 @@ namespace Umbra.Engines
 
         public Vector3 NoclipDirection()
         {
-            Vector3 returnVector = new Vector3((Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.D) ? 1 : 0) - (Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.A) ? 1 : 0),
-                (Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.Space) ? 1 : 0) - (Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.LeftShift) ? 1 : 0),
-                (Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.S) ? 1 : 0) - (Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.W) ? 1 : 0));
+            Vector3 returnVector = new Vector3((Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.D) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.A) ? 1 : 0),
+                (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.Space) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.LeftShift) ? 1 : 0),
+                (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.S) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.W) ? 1 : 0));
 
             if (returnVector == Vector3.Zero)
             {
@@ -188,9 +189,9 @@ namespace Umbra.Engines
 
         public Vector3 WalkingDirection()
         {
-            Vector3 returnVector = new Vector3((Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.D) ? 1 : 0) - (Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.A) ? 1 : 0),
+            Vector3 returnVector = new Vector3((Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.D) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.A) ? 1 : 0),
                 0,
-                (Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.S) ? 1 : 0) - (Constants.Input.KeyboardCurrentState.IsKeyDown(Keys.W) ? 1 : 0));
+                (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.S) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.W) ? 1 : 0));
 
             if (returnVector == Vector3.Zero)
             {
@@ -217,7 +218,7 @@ namespace Umbra.Engines
 
         public void ResetMouse()
         {
-            Mouse.SetPosition((int)Constants.ScreenResolution.X / 2, (int)Constants.ScreenResolution.Y / 2);
+            Mouse.SetPosition((int)Constants.Graphics.ScreenResolution.X / 2, (int)Constants.Graphics.ScreenResolution.Y / 2);
 
             KeyboardLastState = KeyboardCurrentState;
             MouseLastState = MouseCurrentState;

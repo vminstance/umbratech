@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
@@ -64,7 +65,7 @@ namespace Umbra.Structures
 
         static public AABB PlayerBoundingBox(Vector3 position)
         {
-            return new AABB(position, position + new Vector3(Constants.PlayerBoxWidth, Constants.PlayerBoxHeight, Constants.PlayerBoxWidth));
+            return new AABB(position, position + new Vector3(Constants.Player.Physics.Box.Width, Constants.Player.Physics.Box.Height, Constants.Player.Physics.Box.Width));
         }
 
         public bool Intersects(AABB box)

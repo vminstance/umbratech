@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Implementations
@@ -21,7 +22,7 @@ namespace Umbra.Implementations
     static public class LandscapeGenerator
     {
         static public Random Random;
-        static public int Size = Constants.WorldSize * Constants.ChunkSize;
+        static public int Size = Constants.World.WorldSize * Constants.World.ChunkSize;
 
         static GridLayer[] Layers;
 
@@ -77,7 +78,7 @@ namespace Umbra.Implementations
             foreach (GridLayer layer in Layers)
             {
                 relativeIndex = index + layer.FixedOffset;
-                weight = Interpolation.Weight((float)((((relativeIndex.X % Constants.WorldSize) + Constants.WorldSize) % Constants.WorldSize) * Constants.ChunkSize + x) / (float)(Constants.WorldSize * Constants.ChunkSize), (float)(((((relativeIndex.Z % Constants.WorldSize) + Constants.WorldSize) % Constants.WorldSize) * Constants.ChunkSize + y) / (float)(Constants.WorldSize * Constants.ChunkSize)));
+                weight = Interpolation.Weight((float)((((relativeIndex.X % Constants.World.WorldSize) + Constants.World.WorldSize) % Constants.World.WorldSize) * Constants.World.ChunkSize + x) / (float)(Constants.World.WorldSize * Constants.World.ChunkSize), (float)(((((relativeIndex.Z % Constants.World.WorldSize) + Constants.World.WorldSize) % Constants.World.WorldSize) * Constants.World.ChunkSize + y) / (float)(Constants.World.WorldSize * Constants.World.ChunkSize)));
 
                 relativeIndex = index - layer.CurrentOffset + layer.FixedOffset;
                 returnVal += layer.GetLandscapePoint(relativeIndex, new BlockIndex(x, 0, y)) * weight;
@@ -93,13 +94,13 @@ namespace Umbra.Implementations
             int height;
             int absoluteHeight;
 
-            for (int x = 0; x < Constants.ChunkSize; x++)
+            for (int x = 0; x < Constants.World.ChunkSize; x++)
             {
-                for (int z = 0; z < Constants.ChunkSize; z++)
+                for (int z = 0; z < Constants.World.ChunkSize; z++)
                 {
-                    height = (int)GetLandscapeHeight(x, z, chunk.Index) + Constants.WorldHeightOffset;
+                    height = (int)GetLandscapeHeight(x, z, chunk.Index) + Constants.Landscape.WorldHeightOffset;
 
-                    for (int y = 0; y < Constants.ChunkSize; y++)
+                    for (int y = 0; y < Constants.World.ChunkSize; y++)
                     {
                         absoluteHeight = y + (int)(chunk.Index).Position.Y;
 

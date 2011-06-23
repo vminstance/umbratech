@@ -15,6 +15,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 
@@ -66,7 +67,7 @@ namespace Umbra.Implementations
             Chunk currentChunk;
             while (true)
             {
-                if (!Constants.IsInitialized)
+                if (!Variables.Game.IsInitialized)
                 {
                     continue;
                 }
@@ -81,7 +82,7 @@ namespace Umbra.Implementations
                     }
 
                     // Unload Chunk
-                    if (Constants.SaveDynamicWorld)
+                    if (Constants.World.SaveDynamicWorld)
                     {
                         ChunkManager.StoreChunkImmediate(currentChunk);
                     }

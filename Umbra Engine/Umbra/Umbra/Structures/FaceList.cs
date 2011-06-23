@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
@@ -174,16 +175,16 @@ namespace Umbra.Structures
             tempVertices[2].PositionZ += (byte)position.Z;
             tempVertices[3].PositionZ += (byte)position.Z;
 
-            float inverted = 1.0F / (float)Constants.TerrainTextureIndexWidthHeigh;
+            float inverted = 1.0F / (float)Constants.Content.Textures.TerrainTextureIndexWidthHeigh;
 
-            tempVertices[0].TextureX = (byte)(Constants.TerrainTextureIndexWidthHeigh * (0 + GetTextureOffset(texture).X));
-            tempVertices[0].TextureY = (byte)(Constants.TerrainTextureIndexWidthHeigh * (0 + GetTextureOffset(texture).Y));
-            tempVertices[1].TextureX = (byte)(Constants.TerrainTextureIndexWidthHeigh * (inverted + GetTextureOffset(texture).X));
-            tempVertices[1].TextureY = (byte)(Constants.TerrainTextureIndexWidthHeigh * (0 + GetTextureOffset(texture).Y));
-            tempVertices[2].TextureX = (byte)(Constants.TerrainTextureIndexWidthHeigh * (0 + GetTextureOffset(texture).X));
-            tempVertices[2].TextureY = (byte)(Constants.TerrainTextureIndexWidthHeigh * (inverted + GetTextureOffset(texture).Y));
-            tempVertices[3].TextureX = (byte)(Constants.TerrainTextureIndexWidthHeigh * (inverted + GetTextureOffset(texture).X));
-            tempVertices[3].TextureY = (byte)(Constants.TerrainTextureIndexWidthHeigh * (inverted + GetTextureOffset(texture).Y));
+            tempVertices[0].TextureX = (byte)(Constants.Content.Textures.TerrainTextureIndexWidthHeigh * (0 + GetTextureOffset(texture).X));
+            tempVertices[0].TextureY = (byte)(Constants.Content.Textures.TerrainTextureIndexWidthHeigh * (0 + GetTextureOffset(texture).Y));
+            tempVertices[1].TextureX = (byte)(Constants.Content.Textures.TerrainTextureIndexWidthHeigh * (inverted + GetTextureOffset(texture).X));
+            tempVertices[1].TextureY = (byte)(Constants.Content.Textures.TerrainTextureIndexWidthHeigh * (0 + GetTextureOffset(texture).Y));
+            tempVertices[2].TextureX = (byte)(Constants.Content.Textures.TerrainTextureIndexWidthHeigh * (0 + GetTextureOffset(texture).X));
+            tempVertices[2].TextureY = (byte)(Constants.Content.Textures.TerrainTextureIndexWidthHeigh * (inverted + GetTextureOffset(texture).Y));
+            tempVertices[3].TextureX = (byte)(Constants.Content.Textures.TerrainTextureIndexWidthHeigh * (inverted + GetTextureOffset(texture).X));
+            tempVertices[3].TextureY = (byte)(Constants.Content.Textures.TerrainTextureIndexWidthHeigh * (inverted + GetTextureOffset(texture).Y));
 
             tempVertices[0].ColorR = shade;
             tempVertices[0].ColorG = shade;
@@ -206,12 +207,12 @@ namespace Umbra.Structures
 
         Vector2 GetTextureOffset(uint ID)
         {
-            return new Vector2(((float)ID % (float)Constants.TerrainTextureIndexWidthHeigh) / (float)Constants.TerrainTextureIndexWidthHeigh, (float)Math.Floor((float)ID / (float)Constants.TerrainTextureIndexWidthHeigh) / (float)Constants.TerrainTextureIndexWidthHeigh);
+            return new Vector2(((float)ID % (float)Constants.Content.Textures.TerrainTextureIndexWidthHeigh) / (float)Constants.Content.Textures.TerrainTextureIndexWidthHeigh, (float)Math.Floor((float)ID / (float)Constants.Content.Textures.TerrainTextureIndexWidthHeigh) / (float)Constants.Content.Textures.TerrainTextureIndexWidthHeigh);
         }
 
         public VertexBuffer GetVertexBuffer()
         {
-            VertexBuffer returnValue = new VertexBuffer(Constants.Graphics.GraphicsDevice, SmallBlockVertex.VertexDeclaration, Vertices.Count, BufferUsage.WriteOnly);
+            VertexBuffer returnValue = new VertexBuffer(Constants.Engine_Graphics.GraphicsDevice, SmallBlockVertex.VertexDeclaration, Vertices.Count, BufferUsage.WriteOnly);
             returnValue.SetData(Vertices.ToArray());
             return returnValue;
         }

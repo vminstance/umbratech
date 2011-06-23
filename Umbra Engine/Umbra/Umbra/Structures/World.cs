@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
@@ -29,7 +30,7 @@ namespace Umbra.Structures
         {
             get
             {
-                return Constants.WorldPath + @"\" + Name;
+                return Constants.Content.Data.WorldPath + @"\" + Name;
             }
         }
         public string Name { get; private set; }
@@ -38,37 +39,37 @@ namespace Umbra.Structures
         {
             Name = name;
 
-            LoadedChunks = new Chunk[Constants.WorldSize, Constants.WorldSize, Constants.WorldSize];
-            Offset = ChunkIndex.One * (-Constants.WorldSize / 2);
+            LoadedChunks = new Chunk[Constants.World.WorldSize, Constants.World.WorldSize, Constants.World.WorldSize];
+            Offset = ChunkIndex.One * (-Constants.World.WorldSize / 2);
 
-            ChunkValues = new float[Constants.WorldSize + 3, Constants.WorldSize + 3];
+            ChunkValues = new float[Constants.World.WorldSize + 3, Constants.World.WorldSize + 3];
         }
 
         public void Initialize()
         {
-            for (int x = 0; x < Constants.WorldSize + 3; x++)
+            for (int x = 0; x < Constants.World.WorldSize + 3; x++)
             {
-                for (int y = 0; y < Constants.WorldSize + 3; y++)
+                for (int y = 0; y < Constants.World.WorldSize + 3; y++)
                 {
-                    if (x < Constants.WorldSize && y < Constants.WorldSize)
+                    if (x < Constants.World.WorldSize && y < Constants.World.WorldSize)
                     {
-                        for (int z = 0; z < Constants.WorldSize; z++)
+                        for (int z = 0; z < Constants.World.WorldSize; z++)
                         {
                             LoadedChunks[x, y, z] = ChunkManager.ObtainChunk(Offset + new ChunkIndex(x, y, z));
                         }
                     }
-                    ChunkValues[x, y] = ((float)LandscapeGenerator.Random.NextDouble() * Constants.BicubicAmplitude) - Constants.BicubicAmplitude / 2;
+                    ChunkValues[x, y] = ((float)LandscapeGenerator.Random.NextDouble() * Constants.Landscape.BicubicAmplitude) - Constants.Landscape.BicubicAmplitude / 2;
                 }
             }
         }
 
         public void GetLandscape(ChunkIndex chunkIndex, ref float[,] returnValue)
         {
-            returnValue = new float[Constants.ChunkSize, Constants.ChunkSize];
+            returnValue = new float[Constants.World.ChunkSize, Constants.World.ChunkSize];
             ChunkIndex localIndex = chunkIndex - Offset;
 
 
-            if (localIndex.X < 0 || localIndex.X >= Constants.WorldSize + 3 || localIndex.Z < 0 || localIndex.Z >= Constants.WorldSize + 3)
+            if (localIndex.X < 0 || localIndex.X >= Constants.World.WorldSize + 3 || localIndex.Z < 0 || localIndex.Z >= Constants.World.WorldSize + 3)
             {
                 return;
             }
@@ -85,11 +86,11 @@ namespace Umbra.Structures
 
             Interpolation.UpdateBicubicCoefficients(points);
 
-            for (int x = 0; x < Constants.ChunkSize; x++)
+            for (int x = 0; x < Constants.World.ChunkSize; x++)
             {
-                for (int y = 0; y < Constants.ChunkSize; y++)
+                for (int y = 0; y < Constants.World.ChunkSize; y++)
                 {
-                    returnValue[x, y] = Interpolation.BicubicInterpolation((float)x / (float)Constants.ChunkSize, (float)y / (float)Constants.ChunkSize);
+                    returnValue[x, y] = Interpolation.BicubicInterpolation((float)x / (float)Constants.World.ChunkSize, (float)y / (float)Constants.World.ChunkSize);
                 }
             }
         }
@@ -103,33 +104,33 @@ namespace Umbra.Structures
 
             Offset += offset;
 
-            Chunk[, ,] newArray = new Chunk[Constants.WorldSize, Constants.WorldSize, Constants.WorldSize];
-            float[,] newValueArray = new float[Constants.WorldSize + 3, Constants.WorldSize + 3];
+            Chunk[, ,] newArray = new Chunk[Constants.World.WorldSize, Constants.World.WorldSize, Constants.World.WorldSize];
+            float[,] newValueArray = new float[Constants.World.WorldSize + 3, Constants.World.WorldSize + 3];
 
-            for (int x = 0; x < Constants.WorldSize + 3; x++)
+            for (int x = 0; x < Constants.World.WorldSize + 3; x++)
             {
-                for (int y = 0; y < Constants.WorldSize + 3; y++)
+                for (int y = 0; y < Constants.World.WorldSize + 3; y++)
                 {
-                    if (x < Constants.WorldSize && y < Constants.WorldSize)
+                    if (x < Constants.World.WorldSize && y < Constants.World.WorldSize)
                     {
-                        for (int z = 0; z < Constants.WorldSize; z++)
+                        for (int z = 0; z < Constants.World.WorldSize; z++)
                         {
                             int newX = x + offset.X;
                             int newY = y + offset.Y;
                             int newZ = z + offset.Z;
 
-                            if (newX < 0 || newX >= Constants.WorldSize || newY < 0 || newY >= Constants.WorldSize || newZ < 0 || newZ >= Constants.WorldSize)
+                            if (newX < 0 || newX >= Constants.World.WorldSize || newY < 0 || newY >= Constants.World.WorldSize || newZ < 0 || newZ >= Constants.World.WorldSize)
                             {
-                                ChunkManager.UnloadChunk(LoadedChunks[Constants.WorldSize - x - 1, Constants.WorldSize - y - 1, Constants.WorldSize - z - 1]);
+                                ChunkManager.UnloadChunk(LoadedChunks[Constants.World.WorldSize - x - 1, Constants.World.WorldSize - y - 1, Constants.World.WorldSize - z - 1]);
                                 newArray[x, y, z] = ChunkManager.ObtainChunk(Offset + new ChunkIndex(x, y, z));
                             }
                             else
                             {
                                 newArray[x, y, z] = LoadedChunks[newX, newY, newZ];
 
-                                if ((newX == 0 && offset.X < 0) || (newX == Constants.WorldSize - 1 && offset.X > 0) ||
-                                    (newY == 0 && offset.Y < 0) || (newY == Constants.WorldSize - 1 && offset.Y > 0) ||
-                                    (newZ == 0 && offset.Z < 0) || (newZ == Constants.WorldSize - 1 && offset.Z > 0) ||
+                                if ((newX == 0 && offset.X < 0) || (newX == Constants.World.WorldSize - 1 && offset.X > 0) ||
+                                    (newY == 0 && offset.Y < 0) || (newY == Constants.World.WorldSize - 1 && offset.Y > 0) ||
+                                    (newZ == 0 && offset.Z < 0) || (newZ == Constants.World.WorldSize - 1 && offset.Z > 0) ||
                                     newArray[x, y, z].SetupState == 0)
                                 {
                                     newArray[x, y, z].SetupState = 2;
@@ -144,9 +145,9 @@ namespace Umbra.Structures
                         int newValueX = x + offset.X;
                         int newValueY = y + offset.Z;
 
-                        if (newValueX < 0 || newValueX >= Constants.WorldSize + 3 || newValueY < 0 || newValueY >= Constants.WorldSize + 3)
+                        if (newValueX < 0 || newValueX >= Constants.World.WorldSize + 3 || newValueY < 0 || newValueY >= Constants.World.WorldSize + 3)
                         {
-                            newValueArray[x, y] = ((float)LandscapeGenerator.Random.NextDouble() * Constants.BicubicAmplitude) - Constants.BicubicAmplitude / 2;
+                            newValueArray[x, y] = ((float)LandscapeGenerator.Random.NextDouble() * Constants.Landscape.BicubicAmplitude) - Constants.Landscape.BicubicAmplitude / 2;
                         }
                         else
                         {
@@ -168,7 +169,7 @@ namespace Umbra.Structures
         {
             ChunkIndex indexRelative = index - Offset;
 
-            if (indexRelative.X < 0 || indexRelative.X >= Constants.WorldSize || indexRelative.Y < 0 || indexRelative.Y >= Constants.WorldSize || indexRelative.Z < 0 || indexRelative.Z >= Constants.WorldSize)
+            if (indexRelative.X < 0 || indexRelative.X >= Constants.World.WorldSize || indexRelative.Y < 0 || indexRelative.Y >= Constants.World.WorldSize || indexRelative.Z < 0 || indexRelative.Z >= Constants.World.WorldSize)
             {
                 return null;
             }

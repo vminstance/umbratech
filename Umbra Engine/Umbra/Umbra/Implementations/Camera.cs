@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Implementations
@@ -45,16 +46,16 @@ namespace Umbra.Implementations
 
         public void Update()
         {
-            if (Constants.Main.IsActive && !Console.IsActive)
+            if (Constants.Engine_Main.IsActive && !Console.IsActive)
             {
-                Direction -= MathHelper.WrapAngle((float)(Constants.Input.MouseCurrentState.X - Constants.ScreenResolution.X / 2) / Constants.MouseSensitivityInv);
-                Pitch = MathHelper.Clamp(Pitch - (float)(Constants.Input.MouseCurrentState.Y - Constants.ScreenResolution.Y / 2) / Constants.MouseSensitivityInv, -MathHelper.PiOver2, MathHelper.PiOver2);
-                Constants.Input.ResetMouse();
+                Direction -= MathHelper.WrapAngle((float)(Constants.Engine_Input.MouseCurrentState.X - Constants.Graphics.ScreenResolution.X / 2) / Constants.Controls.MouseSensitivityInv);
+                Pitch = MathHelper.Clamp(Pitch - (float)(Constants.Engine_Input.MouseCurrentState.Y - Constants.Graphics.ScreenResolution.Y / 2) / Constants.Controls.MouseSensitivityInv, -MathHelper.PiOver2, MathHelper.PiOver2);
+                Constants.Engine_Input.ResetMouse();
             }
 
-            if (Constants.SmoothCameraEnabled)
+            if (Variables.Controls.SmoothCameraEnabled)
             {
-                Rotation = Quaternion.Lerp(Rotation, Quaternion.CreateFromYawPitchRoll(Direction, Pitch, 0), Constants.SmoothCameraRespons);
+                Rotation = Quaternion.Lerp(Rotation, Quaternion.CreateFromYawPitchRoll(Direction, Pitch, 0), Constants.Controls.SmoothCameraResponse);
             }
             else
             {
@@ -78,12 +79,12 @@ namespace Umbra.Implementations
 
         public Matrix GetProjection()
         {
-            return Matrix.CreatePerspectiveFieldOfView(Constants.FieldOfView, Constants.AspectRatio, Constants.CameraNearPlane, Constants.CameraFarPlane);
+            return Matrix.CreatePerspectiveFieldOfView(Constants.Graphics.FieldOfView, Constants.Graphics.AspectRatio, Constants.Graphics.CameraNearPlane, Constants.Graphics.CameraFarPlane);
         }
 
         public Matrix GetView()
         {
-            if (Constants.SmoothCameraEnabled)
+            if (Variables.Controls.SmoothCameraEnabled)
             {
                 return Matrix.CreateLookAt(
                     /*cam pos*/     Position,
