@@ -161,12 +161,11 @@ namespace Umbra.Definitions
         // Player
         //----------------
 
-        public const float PlayerMass = 75.0F;
-        public const float PlayerVolume = PlayerMass / 1000.0F;
-
-        public const float PlayerBoxWidth = 0.6F;
-        public const float PlayerBoxHeight = 1.8F;
-        public const float PlayerEyeHeight = 1.7F;
+        public const float PlayerMass = 75.0F;                          // kg
+        
+        public const float PlayerBoxWidth = 0.6F;                       // m
+        public const float PlayerBoxHeight = 1.8F;                      // m
+        public const float PlayerEyeHeight = 1.7F;                      // m
         static public Vector3 PlayerSpawn = new Vector3(0, 0, 0);
 
         // Camera
@@ -178,13 +177,11 @@ namespace Umbra.Definitions
         static public bool NoclipEnabed = true;
         public const float NoclipSpeed = 0.3F;
 
-        static public float[] WalkingValues = { 0.015F, 0.015F, 0.1F, 0.01F }; // Acceleration, Friction, MaxSpeed, MinSpeed
-        static public float[] RunningValues = { 0.03F, 0.03F, 0.2F, 0.02F };
-        static public float[] FlyingValues = { 0.005F, 0.0F, 0.1F, 0.001F };
-        static public float[] CurrentValues = WalkingValues;
-
-        public const float JumpForce = 0.17F;
-        public const float Gravity = 0.01F;
+        static public float WalkAcceleration = 1.0F;                     // ms^-2
+        static public float MaxSpeed = 4.0F;                            // ms^-1
+        static public float JumpForce = PlayerMass * 5.42F * 60.0F;        // N
+        
+        public const float Gravity = 9.81F;
         public const float AirFriction = 0.015F;
         public const float PlayerMinDistanceToGround = 0.02F;
 

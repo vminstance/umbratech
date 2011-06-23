@@ -23,7 +23,7 @@ namespace Umbra.Structures
         public Vector3 Min { get; private set; }
         public Vector3 Max { get; private set; }
 
-        public List<BlockIndex> IntersectionSpace
+        public List<BlockIndex> IntersectionIndices
         {
             get
             {
@@ -35,6 +35,10 @@ namespace Umbra.Structures
                     {
                         for (int z = (int)Math.Floor(Min.Z); z <= Math.Floor(Max.Z); z++)
                         {
+                            if(Intersects(new BlockIndex(x,y,z).GetBoundingBox()))
+                            {
+
+                            }
                             returnList.Add(new BlockIndex(x, y, z));
                         }
                     }
@@ -48,7 +52,7 @@ namespace Umbra.Structures
         {
             get
             {
-                return 2 * (Max.X - Min.X) * (Max.Y - Min.Y) + (Max.X - Min.X) * (Max.Z - Min.Z) + (Max.Y - Min.Y) * (Max.Z - Min.Z);
+                return 2 * ((Max.X - Min.X) * (Max.Y - Min.Y) + (Max.X - Min.X) * (Max.Z - Min.Z) + (Max.Y - Min.Y) * (Max.Z - Min.Z));
             }
         }
 
@@ -63,35 +67,19 @@ namespace Umbra.Structures
             return new AABB(position, position + new Vector3(Constants.PlayerBoxWidth, Constants.PlayerBoxHeight, Constants.PlayerBoxWidth));
         }
 
-        public bool Intersects(AABB block)
+        public bool Intersects(AABB box)
         {
-
-            if (block.Max.X >= Max.X)
+            if (box.Min.X >= Max.X || box.Min.X >= Max.X)
             {
                 return false;
             }
 
-            if (block.Max.X >= Max.Y)
+            if (box.Min.Y >= Max.Y || box.Min.Y >= Max.Y)
             {
                 return false;
             }
 
-            if (block.Max.Z >= Max.Z)
-            {
-                return false;
-            }
-
-            if (block.Min.X + 1 <= Min.X)
-            {
-                return false;
-            }
-
-            if (block.Min.Y + 1 <= Min.Y)
-            {
-                return false;
-            }
-
-            if (block.Min.Z + 1 <= Min.Z)
+            if (box.Min.Z >= Max.Z || box.Min.Z >= Max.Z)
             {
                 return false;
             }

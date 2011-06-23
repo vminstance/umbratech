@@ -20,11 +20,13 @@ namespace Umbra.Structures
 {
     public abstract class PhysicsObject
     {
+        public bool PhysicsEnabled;
+
         public Vector3 Position;
-        public Vector3 Dimensions;
         public Vector3 Velocity;
         private Vector3 ForceAccumulator;
-        public AABB BoundingBox { get; protected set; }
+        public AABB BoundingBox { get { return new AABB(Position, Position + Dimensions); } }
+        public Vector3 Dimensions { get; protected set; }
 
         public float Volume { get; protected set; }
         public float Mass { get; protected set; }
@@ -37,9 +39,9 @@ namespace Umbra.Structures
             Dimensions = Vector3.One;
             Velocity = Vector3.Zero;
             ForceAccumulator = Vector3.Zero;
-            BoundingBox = new AABB(Position, Position + Dimensions);
-            Volume = Dimensions.X * Dimensions.Y + Dimensions.X * Dimensions.Z + Dimensions.Y * Dimensions.Z;
+            Volume = Dimensions.X * Dimensions.Y * Dimensions.Z;
             Mass = mass;
+            PhysicsEnabled = true;
         }
 
         public PhysicsObject(Vector3 position, Vector3 dimension, float mass)
@@ -48,9 +50,9 @@ namespace Umbra.Structures
             Dimensions = dimension;
             Velocity = Vector3.Zero;
             ForceAccumulator = Vector3.Zero;
-            BoundingBox = new AABB(Position, Position + Dimensions);
-            Volume = Dimensions.X * Dimensions.Y + Dimensions.X * Dimensions.Z + Dimensions.Y * Dimensions.Z;
+            Volume = Dimensions.X * Dimensions.Y * Dimensions.Z;
             Mass = mass;
+            PhysicsEnabled = true;
         }
 
         public PhysicsObject(Vector3 position, Vector3 dimension, float mass, float volume)
@@ -59,9 +61,9 @@ namespace Umbra.Structures
             Dimensions = dimension;
             Velocity = Vector3.Zero;
             ForceAccumulator = Vector3.Zero;
-            BoundingBox = new AABB(Position, Position + Dimensions);
             Volume = volume;
             Mass = mass;
+            PhysicsEnabled = true;
         }
 
         public void ResetForceAccumulator()

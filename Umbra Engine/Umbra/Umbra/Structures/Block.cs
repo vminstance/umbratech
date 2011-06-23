@@ -145,13 +145,13 @@ namespace Umbra.Structures
             }
         }
 
-        public float Mass
+        public float Density
         {
             get
             {
                 switch (Type)
                 {
-                case (byte)BlockType.Air: return 1.225F;
+                case (byte)BlockType.Air: return 0.0F;// 1.225F;
                 case (byte)BlockType.Grass: return 1920.0F;
                 case (byte)BlockType.Stone: return 2700.0F;
                 case (byte)BlockType.Dirt: return 1922.0F;

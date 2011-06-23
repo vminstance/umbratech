@@ -59,10 +59,18 @@ namespace Umbra.Engines
                 SpriteBatch.DrawString(DebugFont, memoryUsage, new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(memoryUsage).X - 10, 100), Color.Yellow);
 
                 // Position
-                string[] position = { "X: " + Math.Round(Constants.Physics.Player.Position.X, 1), "Y: " + Math.Round(Constants.Physics.Player.Position.Y, 1), "Z: " + Math.Round(Constants.Physics.Player.Position.Z, 1) };
+                string[] position = { "Px: " + Math.Round(Constants.Physics.Player.Position.X, 1), "Py: " + Math.Round(Constants.Physics.Player.Position.Y, 1), "Pz: " + Math.Round(Constants.Physics.Player.Position.Z, 1) };
+                
                 SpriteBatch.DrawString(DebugFont, position[0], new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(position[0]).X - 10, 130), Color.Yellow);
                 SpriteBatch.DrawString(DebugFont, position[1], new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(position[1]).X - 10, 150), Color.Yellow);
                 SpriteBatch.DrawString(DebugFont, position[2], new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(position[2]).X - 10, 170), Color.Yellow);
+
+                // Velocity
+                string[] velocity = { "Vx: " + Math.Round(Constants.Physics.Player.Velocity.X, 1), "Vy: " + Math.Round(Constants.Physics.Player.Velocity.Y, 1), "Vz: " + Math.Round(Constants.Physics.Player.Velocity.Z, 1) };
+
+                SpriteBatch.DrawString(DebugFont, velocity[0], new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(velocity[0]).X - 10, 200), Color.Yellow);
+                SpriteBatch.DrawString(DebugFont, velocity[1], new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(velocity[1]).X - 10, 220), Color.Yellow);
+                SpriteBatch.DrawString(DebugFont, velocity[2], new Vector2(Constants.ScreenResolution.X - DebugFont.MeasureString(velocity[2]).X - 10, 240), Color.Yellow);
             }
             SpriteBatch.End();
             base.Draw(gameTime);

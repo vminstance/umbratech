@@ -109,7 +109,7 @@ namespace Umbra.Implementations
         static private BlockIndex Cursor(float maxReach, out Vector3 intersectionPoint)
         {
             Vector3 direction = Vector3.Transform(Vector3.Forward, Constants.Physics.Player.FirstPersonCamera.Rotation);
-            Vector3 startPosition = Constants.Physics.Player.Position + Vector3.Up * Constants.PlayerEyeHeight;
+            Vector3 startPosition = Constants.Physics.Player.FirstPersonCamera.Position;
             Ray ray = new Ray(startPosition, direction);
             float distance = 0.0F;
             BlockIndex index;
