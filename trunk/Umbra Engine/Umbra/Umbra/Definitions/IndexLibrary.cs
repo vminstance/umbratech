@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Definitions
@@ -25,7 +26,7 @@ namespace Umbra.Definitions
 
         public Vector3 Position
         {
-            get { return new Vector3(X * Constants.ChunkSize * Constants.WorldSize, 0, Y * Constants.ChunkSize * Constants.WorldSize); }
+            get { return new Vector3(X * Constants.World.ChunkSize * Constants.World.WorldSize, 0, Y * Constants.World.ChunkSize * Constants.World.WorldSize); }
         }
 
         public WorldIndex(float x, float y)
@@ -36,30 +37,30 @@ namespace Umbra.Definitions
 
         public WorldIndex(Vector2 position)
         {
-            X = (int)Math.Floor((double)position.X / (double)(Constants.ChunkSize * Constants.WorldSize));
-            Y = (int)Math.Floor((double)position.Y / (double)(Constants.ChunkSize * Constants.WorldSize));
+            X = (int)Math.Floor((double)position.X / (double)(Constants.World.ChunkSize * Constants.World.WorldSize));
+            Y = (int)Math.Floor((double)position.Y / (double)(Constants.World.ChunkSize * Constants.World.WorldSize));
         }
 
         public WorldIndex(Vector3 position)
         {
-            X = (int)Math.Floor((double)position.X / (double)(Constants.ChunkSize * Constants.WorldSize));
-            Y = (int)Math.Floor((double)position.Z / (double)(Constants.ChunkSize * Constants.WorldSize));
+            X = (int)Math.Floor((double)position.X / (double)(Constants.World.ChunkSize * Constants.World.WorldSize));
+            Y = (int)Math.Floor((double)position.Z / (double)(Constants.World.ChunkSize * Constants.World.WorldSize));
         }
 
         public WorldIndex(ChunkIndex index)
         {
-            X = (int)Math.Floor((double)index.X / (double)Constants.WorldSize);
-            Y = (int)Math.Floor((double)index.Z / (double)Constants.WorldSize);
+            X = (int)Math.Floor((double)index.X / (double)Constants.World.WorldSize);
+            Y = (int)Math.Floor((double)index.Z / (double)Constants.World.WorldSize);
         }
 
         public BlockIndex ToBlockIndex()
         {
-            return new BlockIndex((int)(X * Constants.ChunkSize * Constants.WorldSize), 0, (int)(Y * Constants.ChunkSize * Constants.WorldSize));
+            return new BlockIndex((int)(X * Constants.World.ChunkSize * Constants.World.WorldSize), 0, (int)(Y * Constants.World.ChunkSize * Constants.World.WorldSize));
         }
 
         public float DistanceFromOrigo()
         {
-            return (float)Math.Sqrt(Math.Pow(X * Constants.ChunkSize * Constants.WorldSize, 2) + Math.Pow(Y * Constants.ChunkSize * Constants.WorldSize, 2));
+            return (float)Math.Sqrt(Math.Pow(X * Constants.World.ChunkSize * Constants.World.WorldSize, 2) + Math.Pow(Y * Constants.World.ChunkSize * Constants.World.WorldSize, 2));
         }
 
         public static WorldIndex Zero { get { return new WorldIndex(0, 0); } }
@@ -74,7 +75,7 @@ namespace Umbra.Definitions
 
         public static WorldIndex operator +(WorldIndex part1, ChunkIndex part2)
         {
-            return new WorldIndex(part1.X - (float)part2.X / (float)Constants.WorldSize, part1.Y - (float)part2.Z / (float)Constants.WorldSize);
+            return new WorldIndex(part1.X - (float)part2.X / (float)Constants.World.WorldSize, part1.Y - (float)part2.Z / (float)Constants.World.WorldSize);
         }
 
         public static WorldIndex operator -(WorldIndex part1, WorldIndex part2)
@@ -134,7 +135,7 @@ namespace Umbra.Definitions
 
         public Vector3 Position
         {
-            get { return new Vector3(X * Constants.ChunkSize, Y * Constants.ChunkSize, Z * Constants.ChunkSize); }
+            get { return new Vector3(X * Constants.World.ChunkSize, Y * Constants.World.ChunkSize, Z * Constants.World.ChunkSize); }
         }
 
         public ChunkIndex(int x, int y, int z)
@@ -146,26 +147,26 @@ namespace Umbra.Definitions
 
         public ChunkIndex(Vector2 position)
         {
-            X = (int)Math.Floor((double)position.X / (double)Constants.ChunkSize);
+            X = (int)Math.Floor((double)position.X / (double)Constants.World.ChunkSize);
             Y = 0;
-            Z = (int)Math.Floor((double)position.Y / (double)Constants.ChunkSize);
+            Z = (int)Math.Floor((double)position.Y / (double)Constants.World.ChunkSize);
         }
 
         public ChunkIndex(Vector3 position)
         {
-            X = (int)Math.Floor((double)position.X / (double)Constants.ChunkSize);
-            Y = (int)Math.Floor((double)position.Y / (double)Constants.ChunkSize);
-            Z = (int)Math.Floor((double)position.Z / (double)Constants.ChunkSize);
+            X = (int)Math.Floor((double)position.X / (double)Constants.World.ChunkSize);
+            Y = (int)Math.Floor((double)position.Y / (double)Constants.World.ChunkSize);
+            Z = (int)Math.Floor((double)position.Z / (double)Constants.World.ChunkSize);
         }
 
         public BlockIndex ToBlockIndex()
         {
-            return new BlockIndex(X * Constants.ChunkSize, Y * Constants.ChunkSize, Z * Constants.ChunkSize);
+            return new BlockIndex(X * Constants.World.ChunkSize, Y * Constants.World.ChunkSize, Z * Constants.World.ChunkSize);
         }
 
         public float DistanceFromOrigo()
         {
-            return (float)Math.Sqrt(Math.Pow(X * Constants.ChunkSize, 2) + Math.Pow(Y * Constants.ChunkSize, 2) + Math.Pow(Z * Constants.ChunkSize, 2));
+            return (float)Math.Sqrt(Math.Pow(X * Constants.World.ChunkSize, 2) + Math.Pow(Y * Constants.World.ChunkSize, 2) + Math.Pow(Z * Constants.World.ChunkSize, 2));
         }
 
         public static ChunkIndex Zero { get { return new ChunkIndex(0, 0, 0); } }
@@ -181,7 +182,7 @@ namespace Umbra.Definitions
 
         public static ChunkIndex operator +(ChunkIndex part1, WorldIndex part2)
         {
-            return new ChunkIndex(part1.X + (int)(part2.X * Constants.WorldSize), part1.Y + (int)(part2.Y * Constants.WorldSize), part1.Z + (int)(part2.Y * Constants.WorldSize));
+            return new ChunkIndex(part1.X + (int)(part2.X * Constants.World.WorldSize), part1.Y + (int)(part2.Y * Constants.World.WorldSize), part1.Z + (int)(part2.Y * Constants.World.WorldSize));
         }
 
         public static ChunkIndex operator -(ChunkIndex part1, ChunkIndex part2)
@@ -191,7 +192,7 @@ namespace Umbra.Definitions
 
         public static ChunkIndex operator -(ChunkIndex part1, WorldIndex part2)
         {
-            return new ChunkIndex(part1.X - (int)(part2.X * Constants.WorldSize), part1.Y - (int)(part2.Y * Constants.WorldSize), part1.Z - (int)(part2.Y * Constants.WorldSize));
+            return new ChunkIndex(part1.X - (int)(part2.X * Constants.World.WorldSize), part1.Y - (int)(part2.Y * Constants.World.WorldSize), part1.Z - (int)(part2.Y * Constants.World.WorldSize));
         }
 
         public static ChunkIndex operator *(ChunkIndex part1, int part2)
@@ -277,7 +278,7 @@ namespace Umbra.Definitions
 
         public ChunkIndex ToChunkIndex()
         {
-            return new ChunkIndex((int)Math.Floor((float)X / Constants.ChunkSize), (int)Math.Floor((float)Y / Constants.ChunkSize), (int)Math.Floor((float)Z / Constants.ChunkSize));
+            return new ChunkIndex((int)Math.Floor((float)X / Constants.World.ChunkSize), (int)Math.Floor((float)Y / Constants.World.ChunkSize), (int)Math.Floor((float)Z / Constants.World.ChunkSize));
         }
 
         public AABB GetBoundingBox()
@@ -292,7 +293,7 @@ namespace Umbra.Definitions
 
         public static BlockIndex operator +(BlockIndex part1, ChunkIndex part2)
         {
-            return new BlockIndex(part1.X + part2.X * Constants.ChunkSize, part1.Y + part2.Y * Constants.ChunkSize, part1.Z + part2.Z * Constants.ChunkSize);
+            return new BlockIndex(part1.X + part2.X * Constants.World.ChunkSize, part1.Y + part2.Y * Constants.World.ChunkSize, part1.Z + part2.Z * Constants.World.ChunkSize);
         }
 
         public static BlockIndex operator -(BlockIndex part1, BlockIndex part2)
@@ -302,7 +303,7 @@ namespace Umbra.Definitions
 
         public static BlockIndex operator -(BlockIndex part1, ChunkIndex part2)
         {
-            return new BlockIndex(part1.X - part2.X * Constants.ChunkSize, part1.Y - part2.Y * Constants.ChunkSize, part1.Z - part2.Z * Constants.ChunkSize);
+            return new BlockIndex(part1.X - part2.X * Constants.World.ChunkSize, part1.Y - part2.Y * Constants.World.ChunkSize, part1.Z - part2.Z * Constants.World.ChunkSize);
         }
 
         public static BlockIndex operator *(BlockIndex part1, int part2)
@@ -312,7 +313,7 @@ namespace Umbra.Definitions
 
         public static BlockIndex operator *(BlockIndex part1, ChunkIndex part2)
         {
-            return new BlockIndex(part1.X * part2.X * Constants.ChunkSize, part1.Y * part2.Y * Constants.ChunkSize, part1.Z * part2.Z * Constants.ChunkSize);
+            return new BlockIndex(part1.X * part2.X * Constants.World.ChunkSize, part1.Y * part2.Y * Constants.World.ChunkSize, part1.Z * part2.Z * Constants.World.ChunkSize);
         }
 
         public static BlockIndex operator /(BlockIndex part1, int part2)

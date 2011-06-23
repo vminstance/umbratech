@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Engines
@@ -34,7 +35,7 @@ namespace Umbra.Engines
 
         protected override void LoadContent()
         {
-            Constants.IsInitialized = true;
+            Variables.Game.IsInitialized = true;
             base.LoadContent();
         }
     }

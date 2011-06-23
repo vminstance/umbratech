@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Engines
@@ -50,7 +51,7 @@ namespace Umbra.Engines
         private void UpdateVelocity(PhysicsObject currentObject, GameTime gameTime)
         {
             // Gravity
-            currentObject.ApplyForce(Vector3.Down * Constants.Gravity * currentObject.Mass);
+            currentObject.ApplyForce(Vector3.Down * Constants.Physics.Gravity * currentObject.Mass);
 
             // Buoyancy
             currentObject.ApplyForce(Vector3.Up * GetBuoyancyForce(currentObject));
@@ -66,7 +67,7 @@ namespace Umbra.Engines
             // Surface friction
             if (IsOnGround(currentObject) && currentObject.Velocity != Vector3.Zero)
             {
-                currentObject.ApplyForce(-(Vector3.Normalize(currentObject.Velocity) * GetAverageFrictionCoefficient(currentObject) * new Vector3(1, 0, 1) * currentObject.Mass * Constants.Gravity) * Math.Min(currentObject.Velocity.Length(), 1));
+                currentObject.ApplyForce(-(Vector3.Normalize(currentObject.Velocity) * GetAverageFrictionCoefficient(currentObject) * new Vector3(1, 0, 1) * currentObject.Mass * Constants.Physics.Gravity) * Math.Min(currentObject.Velocity.Length(), 1));
             }
 
             // Update velocity
@@ -79,10 +80,10 @@ namespace Umbra.Engines
 
             foreach (BlockIndex index in obj.BoundingBox.IntersectionIndices)
             {
-                buoyancy += Constants.CurrentWorld.GetBlock(index).Density * obj.BoundingBox.IntersectionVolume(index.GetBoundingBox());
+                buoyancy += Constants.World.Current.GetBlock(index).Density * obj.BoundingBox.IntersectionVolume(index.GetBoundingBox());
             }
 
-            return (2 * Constants.Gravity * obj.Mass * buoyancy) / (obj.Mass + buoyancy);
+            return (2 * Constants.Physics.Gravity * obj.Mass * buoyancy) / (obj.Mass + buoyancy);
         }
 
         private float GetAverageViscosity(PhysicsObject obj)
@@ -91,7 +92,7 @@ namespace Umbra.Engines
 
             foreach (BlockIndex index in obj.BoundingBox.IntersectionIndices)
             {
-                average += Constants.CurrentWorld.GetBlock(index).Viscosity * (index.GetBoundingBox().IntersectionVolume(obj.BoundingBox) / obj.Volume);
+                average += Constants.World.Current.GetBlock(index).Viscosity * (index.GetBoundingBox().IntersectionVolume(obj.BoundingBox) / obj.Volume);
             }
 
             return average;
@@ -103,7 +104,7 @@ namespace Umbra.Engines
 
             foreach (BlockIndex index in BlocksBeneath(obj))
             {
-                average += Constants.CurrentWorld.GetBlock(index).FrictionCoefficient;
+                average += Constants.World.Current.GetBlock(index).FrictionCoefficient;
             }
 
             return average / BlocksBeneath(obj).Count;
@@ -141,7 +142,7 @@ namespace Umbra.Engines
         {
             foreach (BlockIndex index in obj.BoundingBox.At(position).IntersectionIndices)
             {
-                if (Constants.CurrentWorld.GetBlock(index).Solidity)
+                if (Constants.World.Current.GetBlock(index).Solidity)
                 {
                     return false;
                 }
@@ -180,7 +181,7 @@ namespace Umbra.Engines
 
         public bool IsOnGround(PhysicsObject obj)
         {
-            return !PlaceFree(obj, obj.Position + Vector3.Down * Constants.PlayerMinDistanceToGround);
+            return !PlaceFree(obj, obj.Position + Vector3.Down * Constants.Player.MinDistanceToGround);
         }
     }
 }

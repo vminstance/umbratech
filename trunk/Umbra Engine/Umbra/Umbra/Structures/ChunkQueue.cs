@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
@@ -91,7 +92,7 @@ namespace Umbra.Structures
                 ChunkIndex modified = chunk.Index * new ChunkIndex(1, 1, 1);
                 if (tempChunk != null)
                 {
-                    int val = ((modified.Position - Constants.Physics.Player.Position).LengthSquared()).CompareTo((tempChunk.Index.Position - Constants.Physics.Player.Position).LengthSquared());
+                    int val = ((modified.Position - Constants.Engine_Physics.Player.Position).LengthSquared()).CompareTo((tempChunk.Index.Position - Constants.Engine_Physics.Player.Position).LengthSquared());
 
                     if (val > 0)
                     {

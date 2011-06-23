@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Engines
@@ -41,27 +42,27 @@ namespace Umbra.Engines
 
 
             //Load textures
-            Textures = ContentManager.Load<Texture2D>(Constants.TerrainTextureFilename);
+            Textures = ContentManager.Load<Texture2D>(Constants.Content.Textures.TerrainFilename);
 
             BlankTexture = new Texture2D(GraphicsDevice, 1, 1);
             BlankTexture.SetData<Color>(new Color[] { Color.White });
 
-            CrosshairTexture = ContentManager.Load<Texture2D>(Constants.CrosshairTextureFilename);
+            CrosshairTexture = ContentManager.Load<Texture2D>(Constants.Content.Textures.CrosshairFilename);
 
-            CompassTextures = ContentManager.Load<Texture2D>(Constants.CompassTextureFilename);
+            CompassTextures = ContentManager.Load<Texture2D>(Constants.Content.Textures.CompassFilename);
 
             //Load fonts
-            Console.Font = ContentManager.Load<SpriteFont>(Constants.ConsoleFontFilename);
-            Constants.Overlay.DebugFont = ContentManager.Load<SpriteFont>(Constants.DebugFontFilename);
-            Popup.Font = ContentManager.Load<SpriteFont>(Constants.PopupFontFilename);
+            Console.Font = ContentManager.Load<SpriteFont>(Constants.Content.Fonts.ConsoleFilename);
+            Constants.Engine_Overlay.DebugFont = ContentManager.Load<SpriteFont>(Constants.Content.Fonts.DebugFilename);
+            Popup.Font = ContentManager.Load<SpriteFont>(Constants.Content.Fonts.PopupFilename);
 
             // Load Effects
-            Constants.Graphics.MainEffect = ContentManager.Load<Effect>("effects/main");
+            Constants.Engine_Graphics.MainEffect = ContentManager.Load<Effect>("effects/main");
 
             // Load Sounds
-            Constants.Sound.MainMusic = ContentManager.Load<Song>("sounds/mainsong1");
-            Constants.Sound.AddBlock = ContentManager.Load<SoundEffect>("sounds/snap");
-            Constants.Sound.Walk = ContentManager.Load<SoundEffect>("sounds/walk");
+            Constants.Engine_Sound.MainMusic = ContentManager.Load<Song>(Constants.Content.Sounds.SongFilename + Variables.Sounds.CurrentTrack);
+            Constants.Engine_Sound.AddBlock = ContentManager.Load<SoundEffect>(Constants.Content.Sounds.BlockEditFilename);
+            Constants.Engine_Sound.Walk = ContentManager.Load<SoundEffect>(Constants.Content.Sounds.WalkFilename);
 
             base.LoadContent();
         }

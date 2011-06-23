@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Implementations
@@ -65,7 +66,7 @@ namespace Umbra.Implementations
             vertices[22] = new CursorVertex(UnitX + UnitZ + currentAimPosition, Color.Black);
             vertices[23] = new CursorVertex(One + currentAimPosition, Color.Black);
 
-            VertexBuffer returnVal = new VertexBuffer(Constants.Graphics.GraphicsDevice, VertexPositionColor.VertexDeclaration, 24, BufferUsage.None);
+            VertexBuffer returnVal = new VertexBuffer(Constants.Engine_Graphics.GraphicsDevice, VertexPositionColor.VertexDeclaration, 24, BufferUsage.None);
             returnVal.SetData(vertices.ToArray());
 
             return returnVal;
@@ -74,13 +75,13 @@ namespace Umbra.Implementations
         static public BlockIndex GetToDestroy()
         {
             Vector3 outVar;
-            return Cursor(Constants.PlayerReach, out outVar);
+            return Cursor(Constants.Player.BlockEditing.Reach, out outVar);
         }
 
         static public BlockIndex GetToCreate()
         {
             Vector3 intersection;
-            BlockIndex targetBlock = Cursor(Constants.PlayerReach, out intersection);
+            BlockIndex targetBlock = Cursor(Constants.Player.BlockEditing.Reach, out intersection);
 
             if (targetBlock == null)
             {
@@ -108,56 +109,56 @@ namespace Umbra.Implementations
 
         static private BlockIndex Cursor(float maxReach, out Vector3 intersectionPoint)
         {
-            Vector3 direction = Vector3.Transform(Vector3.Forward, Constants.Physics.Player.FirstPersonCamera.Rotation);
-            Vector3 startPosition = Constants.Physics.Player.FirstPersonCamera.Position;
+            Vector3 direction = Vector3.Transform(Vector3.Forward, Constants.Engine_Physics.Player.FirstPersonCamera.Rotation);
+            Vector3 startPosition = Constants.Engine_Physics.Player.FirstPersonCamera.Position;
             Ray ray = new Ray(startPosition, direction);
             float distance = 0.0F;
             BlockIndex index;
             float? intersect;
 
-            while(distance <= Constants.PlayerReach)
+            while(distance <= Constants.Player.BlockEditing.Reach)
             {
                 index = new BlockIndex(direction * distance + startPosition);
 
                 intersect = index.GetBoundingBox().Intersects(ray);
-                if (intersect.HasValue && Constants.CurrentWorld.GetBlock(index).Solidity)
+                if (intersect.HasValue && Constants.World.Current.GetBlock(index).Solidity)
                 {
                     intersectionPoint = intersect.Value * direction + startPosition;
                     return index;
                 }
 
                 intersect = (index + BlockIndex.UnitX).GetBoundingBox().Intersects(ray);
-                if (intersect != null && Constants.CurrentWorld.GetBlock(index + BlockIndex.UnitX).Solidity)
+                if (intersect != null && Constants.World.Current.GetBlock(index + BlockIndex.UnitX).Solidity)
                 {
                     intersectionPoint = intersect.Value * direction + startPosition;
                     return index + BlockIndex.UnitX;
                 }
                 intersect = (index - BlockIndex.UnitX).GetBoundingBox().Intersects(ray);
-                if (intersect != null && Constants.CurrentWorld.GetBlock(index - BlockIndex.UnitX).Solidity)
+                if (intersect != null && Constants.World.Current.GetBlock(index - BlockIndex.UnitX).Solidity)
                 {
                     intersectionPoint = intersect.Value * direction + startPosition;
                     return index - BlockIndex.UnitX;
                 }
                 intersect = (index + BlockIndex.UnitY).GetBoundingBox().Intersects(ray);
-                if (intersect != null && Constants.CurrentWorld.GetBlock(index + BlockIndex.UnitY).Solidity)
+                if (intersect != null && Constants.World.Current.GetBlock(index + BlockIndex.UnitY).Solidity)
                 {
                     intersectionPoint = intersect.Value * direction + startPosition;
                     return index + BlockIndex.UnitY;
                 }
                 intersect = (index - BlockIndex.UnitY).GetBoundingBox().Intersects(ray);
-                if (intersect != null && Constants.CurrentWorld.GetBlock(index - BlockIndex.UnitY).Solidity)
+                if (intersect != null && Constants.World.Current.GetBlock(index - BlockIndex.UnitY).Solidity)
                 {
                     intersectionPoint = intersect.Value * direction + startPosition;
                     return index - BlockIndex.UnitY;
                 }
                 intersect = (index + BlockIndex.UnitZ).GetBoundingBox().Intersects(ray);
-                if (intersect != null && Constants.CurrentWorld.GetBlock(index + BlockIndex.UnitZ).Solidity)
+                if (intersect != null && Constants.World.Current.GetBlock(index + BlockIndex.UnitZ).Solidity)
                 {
                     intersectionPoint = intersect.Value * direction + startPosition;
                     return index + BlockIndex.UnitZ;
                 }
                 intersect = (index - BlockIndex.UnitZ).GetBoundingBox().Intersects(ray);
-                if (intersect != null && Constants.CurrentWorld.GetBlock(index - BlockIndex.UnitZ).Solidity)
+                if (intersect != null && Constants.World.Current.GetBlock(index - BlockIndex.UnitZ).Solidity)
                 {
                     intersectionPoint = intersect.Value * direction + startPosition;
                     return index - BlockIndex.UnitZ;

@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Engines
@@ -38,7 +39,7 @@ namespace Umbra.Engines
 
         public override void Update(GameTime gameTime)
         {
-            if (!IsPlaying && Constants.MusicEnabled)
+            if (!IsPlaying && Variables.Sounds.MusicEnabled)
             {
                 MediaPlayer.Play(MainMusic);
                 IsPlaying = true;
@@ -48,7 +49,7 @@ namespace Umbra.Engines
 
         public void PlayerBlockRemoval()
         {
-            if (Constants.InteractSoundEnabled)
+            if (Variables.Sounds.InteractSoundEnabled)
             {
                 AddBlock.Play();
             }
@@ -56,7 +57,7 @@ namespace Umbra.Engines
 
         public void PlayerBlockAdd()
         {
-            if (Constants.InteractSoundEnabled)
+            if (Variables.Sounds.InteractSoundEnabled)
             {
                 AddBlock.Play();
             }
@@ -64,7 +65,7 @@ namespace Umbra.Engines
 
         public void PlayerWalk()
         {
-            if (Constants.WalkSoundEnabled)
+            if (Variables.Sounds.WalkSoundEnabled)
             {
                 Walk.Play((float)(Random.NextDouble() * 0.3F) + 0.7F, (float)(Random.NextDouble() * 0.5F) - 0.25F, 0.0F);
             }

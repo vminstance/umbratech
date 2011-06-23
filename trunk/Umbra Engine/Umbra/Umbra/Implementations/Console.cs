@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Implementations
@@ -25,7 +26,7 @@ namespace Umbra.Implementations
         static public bool IsActive { get; private set; }
 
         static ConsoleState State = ConsoleState.Closed;
-        static int StateCounter = Constants.ConsoleFadeSpeed;
+        static int StateCounter = Constants.Overlay.Console.FadeSpeed;
 
         static double LastTimeStamp = 0;
 
@@ -117,8 +118,8 @@ namespace Umbra.Implementations
 
             if (State == ConsoleState.FadeOut)
             {
-                StateCounter += (int)Math.Min(gameTime.ElapsedGameTime.TotalMilliseconds, Constants.ConsoleFadeSpeed - StateCounter);
-                if (StateCounter >= Constants.ConsoleFadeSpeed)
+                StateCounter += (int)Math.Min(gameTime.ElapsedGameTime.TotalMilliseconds, Constants.Overlay.Console.FadeSpeed - StateCounter);
+                if (StateCounter >= Constants.Overlay.Console.FadeSpeed)
                 {
                     State = ConsoleState.Closed;
                 }
@@ -134,16 +135,16 @@ namespace Umbra.Implementations
 
             if (State == ConsoleState.Open || State == ConsoleState.FadeIn)
             {
-                Constants.GameIsActive = false;
+                Variables.Game.IsActive = false;
                 IsActive = true;
             }
             else
             {
                 if (State == ConsoleState.FadeOut)
                 {
-                    Constants.Input.ResetMouse();
+                    Constants.Engine_Input.ResetMouse();
                 }
-                Constants.GameIsActive = true;
+                Variables.Game.IsActive = true;
                 IsActive = false;
             }
 
@@ -179,26 +180,26 @@ namespace Umbra.Implementations
 
         static public void Draw(GameTime gameTime)
         {
-            MessageQuantity = (int)(((float)Constants.ConsoleArea.Height - 30.0F) / 18.0F);
+            MessageQuantity = (int)(((float)Variables.Overlay.Console.Area.Height - 30.0F) / 18.0F);
 
             // gives a floating point number between 0 and 1 indicating how much the console is open
-            float normalizedState = (((float)Constants.ConsoleFadeSpeed - (float)StateCounter) / (float)Constants.ConsoleFadeSpeed);
+            float normalizedState = (((float)Constants.Overlay.Console.FadeSpeed - (float)StateCounter) / (float)Constants.Overlay.Console.FadeSpeed);
 
-            Constants.Overlay.SpriteBatch.Draw(Constants.Content.BlankTexture, new Rectangle(Constants.ConsoleArea.X, Constants.ConsoleArea.Y, Constants.ConsoleArea.Width, Constants.ConsoleArea.Height), new Color(20, 20, 20, (int)(normalizedState * 100.0F)));
-            Constants.Overlay.SpriteBatch.Draw(Constants.Content.BlankTexture, new Rectangle(Constants.ConsoleArea.X, Constants.ConsoleArea.Y + Constants.ConsoleArea.Height - 25, Constants.ConsoleArea.Width, 25), new Color(20, 20, 20, (int)(normalizedState * 100.0F)));
-            Constants.Overlay.SpriteBatch.Draw(Constants.Content.BlankTexture, new Rectangle(Constants.ConsoleArea.X, Constants.ConsoleArea.Y, 15, Constants.ConsoleArea.Height - 25), new Color(20, 20, 20, (int)(normalizedState * 100.0F)));
-            Constants.Overlay.SpriteBatch.Draw(Constants.Content.BlankTexture, new Rectangle(Constants.ConsoleArea.X + 15, Constants.ConsoleArea.Y, Constants.ConsoleArea.Width - 15, 5), new Color(20, 20, 20, (int)(normalizedState * 100.0F)));
-            Constants.Overlay.SpriteBatch.Draw(Constants.Content.BlankTexture, new Rectangle(Constants.ConsoleArea.Width - 5, Constants.ConsoleArea.Y, 5, Constants.ConsoleArea.Height - 25), new Color(20, 20, 20, (int)(normalizedState * 100.0F)));
+            Constants.Engine_Overlay.SpriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(Variables.Overlay.Console.Area.X, Variables.Overlay.Console.Area.Y, Variables.Overlay.Console.Area.Width, Variables.Overlay.Console.Area.Height), new Color(20, 20, 20, (int)(normalizedState * 100.0F)));
+            Constants.Engine_Overlay.SpriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(Variables.Overlay.Console.Area.X, Variables.Overlay.Console.Area.Y + Variables.Overlay.Console.Area.Height - 25, Variables.Overlay.Console.Area.Width, 25), new Color(20, 20, 20, (int)(normalizedState * 100.0F)));
+            Constants.Engine_Overlay.SpriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(Variables.Overlay.Console.Area.X, Variables.Overlay.Console.Area.Y, 15, Variables.Overlay.Console.Area.Height - 25), new Color(20, 20, 20, (int)(normalizedState * 100.0F)));
+            Constants.Engine_Overlay.SpriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(Variables.Overlay.Console.Area.X + 15, Variables.Overlay.Console.Area.Y, Variables.Overlay.Console.Area.Width - 15, 5), new Color(20, 20, 20, (int)(normalizedState * 100.0F)));
+            Constants.Engine_Overlay.SpriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(Variables.Overlay.Console.Area.Width - 5, Variables.Overlay.Console.Area.Y, 5, Variables.Overlay.Console.Area.Height - 25), new Color(20, 20, 20, (int)(normalizedState * 100.0F)));
 
-            int characterLimit = (Constants.ConsoleArea.Width - 30) / 8;
+            int characterLimit = (Variables.Overlay.Console.Area.Width - 30) / 8;
             string inputString = InputString;
 
             if (inputString.Length > characterLimit)
             {
                 inputString = inputString.Substring(inputString.Length - characterLimit, characterLimit);
             }
-            Constants.Overlay.SpriteBatch.DrawString(Font, "> " + inputString, new Vector2(Constants.ConsoleArea.X + 5, Constants.ConsoleArea.Y + Constants.ConsoleArea.Height - 20), new Color(255, 255, 255, (int)(normalizedState * 255.0F)));
-            Constants.Overlay.SpriteBatch.DrawString(Font, "|", new Vector2(Constants.ConsoleArea.X + 3 + Font.MeasureString("> " + inputString.Substring(0, CursorPosition)).X, Constants.ConsoleArea.Y + Constants.ConsoleArea.Height - 20), new Color(255, 255, 255, (int)((Math.Sin((float)(gameTime.TotalGameTime.TotalMilliseconds) / 100.0F) * 255.0F) * normalizedState)));
+            Constants.Engine_Overlay.SpriteBatch.DrawString(Font, "> " + inputString, new Vector2(Variables.Overlay.Console.Area.X + 5, Variables.Overlay.Console.Area.Y + Variables.Overlay.Console.Area.Height - 20), new Color(255, 255, 255, (int)(normalizedState * 255.0F)));
+            Constants.Engine_Overlay.SpriteBatch.DrawString(Font, "|", new Vector2(Variables.Overlay.Console.Area.X + 3 + Font.MeasureString("> " + inputString.Substring(0, CursorPosition)).X, Variables.Overlay.Console.Area.Y + Variables.Overlay.Console.Area.Height - 20), new Color(255, 255, 255, (int)((Math.Sin((float)(gameTime.TotalGameTime.TotalMilliseconds) / 100.0F) * 255.0F) * normalizedState)));
 
 
             if (Buffer.Count > 0)
@@ -219,10 +220,10 @@ namespace Umbra.Implementations
 
                     if (message.Length > 5)
                     {
-                        message = message.Substring(0, (int)Math.Min(Math.Max(Console.Font.MeasureString("12345").X, Constants.ConsoleArea.Width - 30) / 8, message.Length));
+                        message = message.Substring(0, (int)Math.Min(Math.Max(Console.Font.MeasureString("12345").X, Variables.Overlay.Console.Area.Width - 30) / 8, message.Length));
                     }
 
-                    int closedAlpha = (int)(255 - (int)Math.Min(Math.Max(LastTimeStamp - Constants.ConsoleTimeout - Buffer.ElementAt(i).Timestamp, 0) / 5.0F, 255));
+                    int closedAlpha = (int)(255 - (int)Math.Min(Math.Max(LastTimeStamp - Constants.Overlay.Console.Timeout - Buffer.ElementAt(i).Timestamp, 0) / 5.0F, 255));
 
                     if (Console.State == ConsoleState.Open)
                     {
@@ -237,7 +238,7 @@ namespace Umbra.Implementations
                         color = new Color(255, 255, 255, closedAlpha);
                     }
 
-                    Constants.Overlay.SpriteBatch.DrawString(Font, message, new Vector2(Constants.ConsoleArea.X + 20, Constants.ConsoleArea.Y + Constants.ConsoleArea.Height + heightOffset), color);
+                    Constants.Engine_Overlay.SpriteBatch.DrawString(Font, message, new Vector2(Variables.Overlay.Console.Area.X + 20, Variables.Overlay.Console.Area.Y + Variables.Overlay.Console.Area.Height + heightOffset), color);
                     count++;
                 }
 

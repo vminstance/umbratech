@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
@@ -29,7 +30,7 @@ namespace Umbra.Structures
 
         public Octree(Block[, ,] data, Chunk parentChunk)
         {
-            SetupOctree(Constants.ChunkSize, data, BlockIndex.Zero, BlockIndex.Zero, parentChunk);
+            SetupOctree((byte)Constants.World.ChunkSize, data, BlockIndex.Zero, BlockIndex.Zero, parentChunk);
         }
 
         public Octree(byte size, Block[, ,] data, BlockIndex absoluteBlockIndex, BlockIndex localPosition, Chunk parentChunk)
@@ -228,7 +229,7 @@ namespace Umbra.Structures
         {
             nextIndex = new BlockIndex(currentIndex.Position + DirOperators.GetVector3(faceDirection));
 
-            validation = FaceList.GetFaceValidation(Constants.CurrentWorld.GetBlock(currentIndex + ParentChunk.Index), Constants.CurrentWorld.GetBlock(nextIndex + ParentChunk.Index));
+            validation = FaceList.GetFaceValidation(Constants.World.Current.GetBlock(currentIndex + ParentChunk.Index), Constants.World.Current.GetBlock(nextIndex + ParentChunk.Index));
 
             if (validation == FaceValidation.ThisFace || validation == FaceValidation.BothFaces)
             {
@@ -236,7 +237,7 @@ namespace Umbra.Structures
             }
             if (validation == FaceValidation.OtherFace || validation == FaceValidation.BothFaces)
             {
-                faceList.AddFace(nextIndex, DirOperators.Opposite(faceDirection), Constants.CurrentWorld.GetBlock(nextIndex + ParentChunk.Index.ToBlockIndex()).GetFace(DirOperators.Opposite(faceDirection)), DirOperators.GetFaceShade(DirOperators.Opposite(faceDirection)));
+                faceList.AddFace(nextIndex, DirOperators.Opposite(faceDirection), Constants.World.Current.GetBlock(nextIndex + ParentChunk.Index.ToBlockIndex()).GetFace(DirOperators.Opposite(faceDirection)), DirOperators.GetFaceShade(DirOperators.Opposite(faceDirection)));
             }
         }
     }

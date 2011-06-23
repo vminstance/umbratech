@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Implementations
@@ -23,10 +24,10 @@ namespace Umbra.Implementations
         static float Time;
         static public void SetTimeOfDayGraphics(GameTime gameTime)
         {
-            if (Constants.DayNightCycleEnabled)
+            if (Variables.Graphics.DayNight.CycleEnabled)
             {
 
-                Time += MathHelper.Lerp(0, 360, (float)gameTime.ElapsedGameTime.TotalSeconds / Constants.TotalDuration);
+                Time += MathHelper.Lerp(0, 360, (float)gameTime.ElapsedGameTime.TotalSeconds / Constants.Graphics.DayNight.TotalDuration);
                 if (Time > 360)
                 {
                     Time = 0;
@@ -35,47 +36,47 @@ namespace Umbra.Implementations
 
             if (GetCurrentTimeOfDay() == TimeOfDay.Night)
             {
-                Constants.ScreenClearColor = Constants.NightColor;
+                Variables.Graphics.ScreenClearColor = Constants.Graphics.DayNight.NightColor;
 
-                Constants.CurrentFogColor = new float[] { Constants.ScreenClearColor.R / 255F, Constants.ScreenClearColor.G / 255F, Constants.ScreenClearColor.B / 255F, 1F };
-                Constants.CurrentFogStart = Constants.NightFogStart;
-                Constants.CurrentFogEnd = Constants.NightFogEnd;
-                Constants.CurrentFaceLightCoef = Constants.NightFaceLightCoef;
+                Variables.Graphics.Fog.CurrentColor = new float[] { Variables.Graphics.ScreenClearColor.R / 255F, Variables.Graphics.ScreenClearColor.G / 255F, Variables.Graphics.ScreenClearColor.B / 255F, 1F };
+                Variables.Graphics.Fog.CurrentStart = Constants.Graphics.Fog.NightFogStart;
+                Variables.Graphics.Fog.CurrentEnd = Constants.Graphics.Fog.NightFogEnd;
+                Variables.Graphics.DayNight.CurrentFaceLightCoef = Constants.Graphics.Lighting.NightFaceLightCoef;
             }
             else if (GetCurrentTimeOfDay() == TimeOfDay.SunRise)
             {
-                float sunDegreeRelative = (Time * (Constants.DayDuration + Constants.NightDuration + 2 * Constants.TransitionDuration) / 360) - (Constants.NightDuration / 2);
-                Constants.ScreenClearColor = new Color(
-                    MathHelper.Lerp(Constants.NightColor.R, Constants.DayColor.R, sunDegreeRelative / Constants.TransitionDuration) / 255F,
-                    MathHelper.Lerp(Constants.NightColor.G, Constants.DayColor.G, sunDegreeRelative / Constants.TransitionDuration) / 255F,
-                    MathHelper.Lerp(Constants.NightColor.B, Constants.DayColor.B, sunDegreeRelative / Constants.TransitionDuration) / 255F
+                float sunDegreeRelative = (Time * (Constants.Graphics.DayNight.DayDuration + Constants.Graphics.DayNight.NightDuration + 2 * Constants.Graphics.DayNight.TransitionDuration) / 360) - (Constants.Graphics.DayNight.NightDuration / 2);
+                Variables.Graphics.ScreenClearColor = new Color(
+                    MathHelper.Lerp(Constants.Graphics.DayNight.NightColor.R, Constants.Graphics.DayNight.DayColor.R, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration) / 255F,
+                    MathHelper.Lerp(Constants.Graphics.DayNight.NightColor.G, Constants.Graphics.DayNight.DayColor.G, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration) / 255F,
+                    MathHelper.Lerp(Constants.Graphics.DayNight.NightColor.B, Constants.Graphics.DayNight.DayColor.B, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration) / 255F
                 );
-                Constants.CurrentFogColor = new float[] { Constants.ScreenClearColor.R / 255F, Constants.ScreenClearColor.G / 255F, Constants.ScreenClearColor.B / 255F, 1F };
-                Constants.CurrentFogStart = MathHelper.Lerp(Constants.NightFogStart, Constants.DayFogStart, sunDegreeRelative / Constants.TransitionDuration);
-                Constants.CurrentFogEnd = MathHelper.Lerp(Constants.NightFogEnd, Constants.DayFogEnd, sunDegreeRelative / Constants.TransitionDuration);
-                Constants.CurrentFaceLightCoef = MathHelper.Lerp(Constants.NightFaceLightCoef, Constants.DayFaceLightCoef, sunDegreeRelative / Constants.TransitionDuration);
+                Variables.Graphics.Fog.CurrentColor = new float[] { Variables.Graphics.ScreenClearColor.R / 255F, Variables.Graphics.ScreenClearColor.G / 255F, Variables.Graphics.ScreenClearColor.B / 255F, 1F };
+                Variables.Graphics.Fog.CurrentStart = MathHelper.Lerp(Constants.Graphics.Fog.NightFogStart, Constants.Graphics.Fog.DayFogStart, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration);
+                Variables.Graphics.Fog.CurrentEnd = MathHelper.Lerp(Constants.Graphics.Fog.NightFogEnd, Constants.Graphics.Fog.DayFogEnd, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration);
+                Variables.Graphics.DayNight.CurrentFaceLightCoef = MathHelper.Lerp(Constants.Graphics.Lighting.NightFaceLightCoef, Constants.Graphics.Lighting.DayFaceLightCoef, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration);
             }
             else if (GetCurrentTimeOfDay() == TimeOfDay.Day)
             {
-                Constants.ScreenClearColor = Constants.DayColor;
+                Variables.Graphics.ScreenClearColor = Constants.Graphics.DayNight.DayColor;
 
-                Constants.CurrentFogColor = new float[] { Constants.ScreenClearColor.R / 255F, Constants.ScreenClearColor.G / 255F, Constants.ScreenClearColor.B / 255F, 1F };
-                Constants.CurrentFogStart = Constants.DayFogStart;
-                Constants.CurrentFogEnd = Constants.DayFogEnd;
-                Constants.CurrentFaceLightCoef = Constants.DayFaceLightCoef;
+                Variables.Graphics.Fog.CurrentColor = new float[] { Variables.Graphics.ScreenClearColor.R / 255F, Variables.Graphics.ScreenClearColor.G / 255F, Variables.Graphics.ScreenClearColor.B / 255F, 1F };
+                Variables.Graphics.Fog.CurrentStart = Constants.Graphics.Fog.DayFogStart;
+                Variables.Graphics.Fog.CurrentEnd = Constants.Graphics.Fog.DayFogEnd;
+                Variables.Graphics.DayNight.CurrentFaceLightCoef = Constants.Graphics.Lighting.DayFaceLightCoef;
             }
             else if (GetCurrentTimeOfDay() == TimeOfDay.SunSet)
             {
-                float sunDegreeRelative = (Time * (Constants.DayDuration + Constants.NightDuration + 2 * Constants.TransitionDuration) / 360) - (Constants.NightDuration / 2 + Constants.TransitionDuration + Constants.DayDuration);
-                Constants.ScreenClearColor = new Color(
-                    MathHelper.Lerp(Constants.DayColor.R, Constants.NightColor.R, sunDegreeRelative / Constants.TransitionDuration) / 255F,
-                    MathHelper.Lerp(Constants.DayColor.G, Constants.NightColor.G, sunDegreeRelative / Constants.TransitionDuration) / 255F,
-                    MathHelper.Lerp(Constants.DayColor.B, Constants.NightColor.B, sunDegreeRelative / Constants.TransitionDuration) / 255F
+                float sunDegreeRelative = (Time * (Constants.Graphics.DayNight.DayDuration + Constants.Graphics.DayNight.NightDuration + 2 * Constants.Graphics.DayNight.TransitionDuration) / 360) - (Constants.Graphics.DayNight.NightDuration / 2 + Constants.Graphics.DayNight.TransitionDuration + Constants.Graphics.DayNight.DayDuration);
+                Variables.Graphics.ScreenClearColor = new Color(
+                    MathHelper.Lerp(Constants.Graphics.DayNight.DayColor.R, Constants.Graphics.DayNight.NightColor.R, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration) / 255F,
+                    MathHelper.Lerp(Constants.Graphics.DayNight.DayColor.G, Constants.Graphics.DayNight.NightColor.G, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration) / 255F,
+                    MathHelper.Lerp(Constants.Graphics.DayNight.DayColor.B, Constants.Graphics.DayNight.NightColor.B, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration) / 255F
                 );
-                Constants.CurrentFogColor = new float[] { Constants.ScreenClearColor.R / 255F, Constants.ScreenClearColor.G / 255F, Constants.ScreenClearColor.B / 255F, 1F };
-                Constants.CurrentFogStart = MathHelper.Lerp(Constants.DayFogStart, Constants.NightFogStart, sunDegreeRelative / Constants.TransitionDuration);
-                Constants.CurrentFogEnd = MathHelper.Lerp(Constants.DayFogEnd, Constants.NightFogEnd, sunDegreeRelative / Constants.TransitionDuration);
-                Constants.CurrentFaceLightCoef = MathHelper.Lerp(Constants.DayFaceLightCoef, Constants.NightFaceLightCoef, sunDegreeRelative / Constants.TransitionDuration);
+                Variables.Graphics.Fog.CurrentColor = new float[] { Variables.Graphics.ScreenClearColor.R / 255F, Variables.Graphics.ScreenClearColor.G / 255F, Variables.Graphics.ScreenClearColor.B / 255F, 1F };
+                Variables.Graphics.Fog.CurrentStart = MathHelper.Lerp(Constants.Graphics.Fog.DayFogStart, Constants.Graphics.Fog.NightFogStart, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration);
+                Variables.Graphics.Fog.CurrentEnd = MathHelper.Lerp(Constants.Graphics.Fog.DayFogEnd, Constants.Graphics.Fog.NightFogEnd, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration);
+                Variables.Graphics.DayNight.CurrentFaceLightCoef = MathHelper.Lerp(Constants.Graphics.Lighting.DayFaceLightCoef, Constants.Graphics.Lighting.NightFaceLightCoef, sunDegreeRelative / Constants.Graphics.DayNight.TransitionDuration);
             }
         }
 
@@ -84,15 +85,15 @@ namespace Umbra.Implementations
             switch (timeOfDay)
             {
                 case TimeOfDay.SunRise:
-                    SetTimeOfDay((Constants.NightDuration / 2 + Constants.TransitionDuration / 2) / Constants.TotalDuration * 360);
+                SetTimeOfDay((Constants.Graphics.DayNight.NightDuration / 2 + Constants.Graphics.DayNight.TransitionDuration / 2) / Constants.Graphics.DayNight.TotalDuration * 360);
                     break;
 
                 case TimeOfDay.Day:
-                    SetTimeOfDay((Constants.NightDuration / 2 + Constants.TransitionDuration + Constants.DayDuration / 2) / Constants.TotalDuration * 360);
+                    SetTimeOfDay((Constants.Graphics.DayNight.NightDuration / 2 + Constants.Graphics.DayNight.TransitionDuration + Constants.Graphics.DayNight.DayDuration / 2) / Constants.Graphics.DayNight.TotalDuration * 360);
                     break;
 
                 case TimeOfDay.SunSet:
-                    SetTimeOfDay((Constants.NightDuration / 2 + Constants.TransitionDuration + Constants.DayDuration + Constants.TransitionDuration / 2) / Constants.TotalDuration * 360);
+                    SetTimeOfDay((Constants.Graphics.DayNight.NightDuration / 2 + Constants.Graphics.DayNight.TransitionDuration + Constants.Graphics.DayNight.DayDuration + Constants.Graphics.DayNight.TransitionDuration / 2) / Constants.Graphics.DayNight.TotalDuration * 360);
                     break;
 
                 default: // Day
@@ -113,22 +114,22 @@ namespace Umbra.Implementations
 
         static private TimeOfDay GetTimeOfDay(float time)
         {
-            float totalDuration = Constants.DayDuration + Constants.NightDuration + 2 * Constants.TransitionDuration;
+            float totalDuration = Constants.Graphics.DayNight.DayDuration + Constants.Graphics.DayNight.NightDuration + 2 * Constants.Graphics.DayNight.TransitionDuration;
             float sunDegreeRelative = Time * totalDuration / 360;
 
-            if (sunDegreeRelative < Constants.NightDuration / 2)
+            if (sunDegreeRelative < Constants.Graphics.DayNight.NightDuration / 2)
             {
                 return TimeOfDay.Night;
             }
-            else if (sunDegreeRelative < Constants.NightDuration / 2 + Constants.TransitionDuration)
+            else if (sunDegreeRelative < Constants.Graphics.DayNight.NightDuration / 2 + Constants.Graphics.DayNight.TransitionDuration)
             {
                 return TimeOfDay.SunRise;
             }
-            else if (sunDegreeRelative < Constants.NightDuration / 2 + Constants.TransitionDuration + Constants.DayDuration)
+            else if (sunDegreeRelative < Constants.Graphics.DayNight.NightDuration / 2 + Constants.Graphics.DayNight.TransitionDuration + Constants.Graphics.DayNight.DayDuration)
             {
                 return TimeOfDay.Day;
             }
-            else if (sunDegreeRelative < Constants.NightDuration / 2 + Constants.TransitionDuration + Constants.DayDuration + Constants.TransitionDuration)
+            else if (sunDegreeRelative < Constants.Graphics.DayNight.NightDuration / 2 + Constants.Graphics.DayNight.TransitionDuration + Constants.Graphics.DayNight.DayDuration + Constants.Graphics.DayNight.TransitionDuration)
             {
                 return TimeOfDay.SunSet;
             }

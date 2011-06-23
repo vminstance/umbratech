@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Engines
@@ -28,9 +29,9 @@ namespace Umbra.Engines
             : base(main)
         {
             GraphicsDeviceManager = new GraphicsDeviceManager(main);
-            GraphicsDeviceManager.PreferredBackBufferWidth = (int)Constants.ScreenResolution.X;
-            GraphicsDeviceManager.PreferredBackBufferHeight = (int)Constants.ScreenResolution.Y;
-            GraphicsDeviceManager.IsFullScreen = Constants.EnableFullScreen;
+            GraphicsDeviceManager.PreferredBackBufferWidth = (int)Constants.Graphics.ScreenResolution.X;
+            GraphicsDeviceManager.PreferredBackBufferHeight = (int)Constants.Graphics.ScreenResolution.Y;
+            GraphicsDeviceManager.IsFullScreen = Constants.Graphics.EnableFullScreen;
         }
 
         protected override void LoadContent()
@@ -40,8 +41,8 @@ namespace Umbra.Engines
 
         public override void Draw(GameTime gameTime)
         {
-            GraphicsDeviceManager.PreferMultiSampling = Constants.AntiAliasingEnabled;
-            GraphicsDevice.Clear(Constants.ScreenClearColor);
+            GraphicsDeviceManager.PreferMultiSampling = Constants.Graphics.AntiAliasingEnabled;
+            GraphicsDevice.Clear(Variables.Graphics.ScreenClearColor);
 
             // Fucking reset the fucking RenderStates after fucking drawing with fucking SpriteBatches, so it fucking doesn't fucking fuck up. FUCK!
             GraphicsDevice.DepthStencilState = DepthStencilState.None;
@@ -58,22 +59,22 @@ namespace Umbra.Engines
 
             //Setup Effect
             MainEffect.CurrentTechnique = MainEffect.Techniques["Voxel"];
-            MainEffect.Parameters["xView"].SetValue(Constants.Physics.Player.GetViewMatrix());
-            MainEffect.Parameters["xProjection"].SetValue(Constants.Physics.Player.GetProjectionMatrix());
-            MainEffect.Parameters["xTexture"].SetValue(Constants.Content.Textures);
-            MainEffect.Parameters["xViewPort"].SetValue(new float[] { Constants.ScreenResolution.X, Constants.ScreenResolution.Y });
-            MainEffect.Parameters["xFlashEnabled"].SetValue(Constants.FlashLightEnabled);
+            MainEffect.Parameters["xView"].SetValue(Constants.Engine_Physics.Player.GetViewMatrix());
+            MainEffect.Parameters["xProjection"].SetValue(Constants.Engine_Physics.Player.GetProjectionMatrix());
+            MainEffect.Parameters["xTexture"].SetValue(Constants.Engine_Content.Textures);
+            MainEffect.Parameters["xViewPort"].SetValue(new float[] { Constants.Graphics.ScreenResolution.X, Constants.Graphics.ScreenResolution.Y });
+            MainEffect.Parameters["xFlashEnabled"].SetValue(Variables.Graphics.Lighting.FlashLightEnabled);
 
             ClockTime.SetTimeOfDayGraphics(gameTime);
-            MainEffect.Parameters["xFogColor"].SetValue(Constants.CurrentFogColor);
-            MainEffect.Parameters["xFogStart"].SetValue(Constants.CurrentFogStart);
-            MainEffect.Parameters["xFogEnd"].SetValue(Constants.CurrentFogEnd);
-            MainEffect.Parameters["xFogEnabled"].SetValue(Constants.FogEnabled);
-            MainEffect.Parameters["xFaceLightCoef"].SetValue(Constants.CurrentFaceLightCoef);
+            MainEffect.Parameters["xFogColor"].SetValue(Variables.Graphics.Fog.CurrentColor);
+            MainEffect.Parameters["xFogStart"].SetValue(Variables.Graphics.Fog.CurrentStart);
+            MainEffect.Parameters["xFogEnd"].SetValue(Variables.Graphics.Fog.CurrentEnd);
+            MainEffect.Parameters["xFogEnabled"].SetValue(Variables.Graphics.Fog.Enabled);
+            MainEffect.Parameters["xFaceLightCoef"].SetValue(Variables.Graphics.DayNight.CurrentFaceLightCoef);
 
 
-            MainEffect.Parameters["xTranslucentBlocks"].SetValue(Constants.TranslucentBlocks);
-            MainEffect.Parameters["xIsUnderWater"].SetValue(Constants.CurrentWorld.GetBlock(new BlockIndex(Constants.Physics.Player.Position + Constants.PlayerEyeHeight * Vector3.UnitY)).Type == (byte)BlockType.Water);
+            MainEffect.Parameters["xTranslucentBlocks"].SetValue(Constants.Graphics.TranslucentBlocks);
+            MainEffect.Parameters["xIsUnderWater"].SetValue(Constants.World.Current.GetBlock(new BlockIndex(Constants.Engine_Physics.Player.Position + Constants.Player.Physics.EyeHeight * Vector3.UnitY)).Type == (byte)BlockType.Water);
             MainEffect.Parameters["xTime"].SetValue((int)gameTime.TotalGameTime.TotalMilliseconds);
             
 
@@ -81,7 +82,7 @@ namespace Umbra.Engines
 
             foreach (EffectPass pass in MainEffect.CurrentTechnique.Passes)
             {
-                foreach (Chunk c in Constants.CurrentWorld.GetChunks())
+                foreach (Chunk c in Constants.World.Current.GetChunks())
                 {
                     if (
                         c == null ||
@@ -96,7 +97,7 @@ namespace Umbra.Engines
                     }
 
                     MainEffect.Parameters["xWorld"].SetValue(Matrix.CreateTranslation(c.Index.Position));
-                    MainEffect.Parameters["xCameraPos"].SetValue(Constants.Physics.Player.FirstPersonCamera.Position - c.Index.Position);
+                    MainEffect.Parameters["xCameraPos"].SetValue(Constants.Engine_Physics.Player.FirstPersonCamera.Position - c.Index.Position);
 
                     GraphicsDevice.SetVertexBuffers(c.VertexBuffer);
                     pass.Apply();
