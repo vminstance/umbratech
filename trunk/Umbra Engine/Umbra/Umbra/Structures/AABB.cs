@@ -38,9 +38,8 @@ namespace Umbra.Structures
                         {
                             if(Intersects(new BlockIndex(x,y,z).GetBoundingBox()))
                             {
-
+                                returnList.Add(new BlockIndex(x, y, z));
                             }
-                            returnList.Add(new BlockIndex(x, y, z));
                         }
                     }
                 }

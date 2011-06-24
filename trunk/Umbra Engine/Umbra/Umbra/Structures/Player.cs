@@ -43,8 +43,6 @@ namespace Umbra.Structures
 
         public override void Update(GameTime gameTime)
         {
-            ResetForceAccumulator();
-
             PhysicsEnabled = !Variables.Player.NoclipEnabled;
 
             // Add player movement
@@ -54,15 +52,22 @@ namespace Umbra.Structures
             }
             else
             {
-                Vector3 walkForce = Vector3.Transform(Constants.Engine_Input.WalkingDirection(), Matrix.CreateRotationY(FirstPersonCamera.Direction)) * Constants.Player.Movement.WalkAcceleration;
-                if (walkForce != Vector3.Zero)
+
+
+                Vector3 horizontalVelocity = Velocity * new Vector3(1, 0, 1);
+
+                Vector3 newVelocity = horizontalVelocity + Vector3.Transform(Constants.Engine_Input.WalkingDirection(), Matrix.CreateRotationY(FirstPersonCamera.Direction)) * Constants.Player.Movement.WalkAcceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (newVelocity != Vector3.Zero)
                 {
-                    walkForce = Vector3.Normalize(walkForce + Velocity) * Math.Min((walkForce + Velocity).Length(), Constants.Player.Movement.MaxSpeed);
-                    walkForce = walkForce - Velocity;
-                    ApplyForce(walkForce * new Vector3(1, 0, 1) * Mass);
+                    newVelocity = Vector3.Normalize(newVelocity) * Math.Min(newVelocity.Length(), Constants.Player.Movement.MaxSpeed);
                 }
 
-                if (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.Space) && Constants.Engine_Physics.IsOnGround(this))
+                ApplyForce((newVelocity - horizontalVelocity) * Mass);
+
+                
+
+                if (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.Space) && Constants.Engine_Physics.IsOnGround(this) &&  Math.Round(Velocity.Y, 4) == 0)
                 {
                     ApplyForce(Vector3.Up * Constants.Player.Movement.JumpForce);
                 }

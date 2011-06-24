@@ -177,7 +177,7 @@ namespace Umbra.Structures
             }
         }
 
-        public float FrictionCoefficient
+        public float KineticFrictionCoefficient
         {
             get
             {
@@ -187,7 +187,7 @@ namespace Umbra.Structures
                 case (byte)BlockType.Grass: return 1.0F;
                 case (byte)BlockType.Stone: return 1.0F;
                 case (byte)BlockType.Dirt: return 1.0F;
-                case (byte)BlockType.Water: return 0.0F;
+                case (byte)BlockType.Water: return 1.0F;
                 case (byte)BlockType.Glass: return 0.94F;
                 case (byte)BlockType.Bookshelf: return 1.0F;
                 case (byte)BlockType.Log: return 1.0F;
@@ -196,14 +196,14 @@ namespace Umbra.Structures
                 case (byte)BlockType.Slab: return 1.0F;
                 case (byte)BlockType.CraftingTable: return 1.0F;
                 case (byte)BlockType.Furnace: return 1.0F;
-                case (byte)BlockType.Sand: return 1.3F;
+                case (byte)BlockType.Sand: return 1;//1.3F;
                 case (byte)BlockType.Leaves: return 1.2F;
                 case (byte)BlockType.Lava: return 0.0F;
                 case (byte)BlockType.Brick: return 1.0F;
                 case (byte)BlockType.Cobblestone: return 1.0F;
                 case (byte)BlockType.Ice: return 0.15F;
                 case (byte)BlockType.Vacuum: return 0.0F;
-                default: return float.NaN;
+                default: return 0.0F;
                 }
             }
         }
