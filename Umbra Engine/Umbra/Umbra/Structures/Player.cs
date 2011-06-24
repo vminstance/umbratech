@@ -53,21 +53,20 @@ namespace Umbra.Structures
             else
             {
 
-
                 Vector3 horizontalVelocity = Velocity * new Vector3(1, 0, 1);
 
-                Vector3 newVelocity = horizontalVelocity + Vector3.Transform(Constants.Engine_Input.WalkingDirection(), Matrix.CreateRotationY(FirstPersonCamera.Direction)) * Constants.Player.Movement.WalkForce * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Vector3 newVelocity = horizontalVelocity + Vector3.Transform(Constants.Engine_Input.WalkingDirection(), Matrix.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Movement.WalkForce / Mass * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
                 if (newVelocity != Vector3.Zero)
                 {
                     newVelocity = Vector3.Normalize(newVelocity) * Math.Min(newVelocity.Length(), Constants.Player.Movement.MaxSpeed);
                 }
 
-                ApplyForce((newVelocity - horizontalVelocity) * Mass);
+                ApplyForce((newVelocity - horizontalVelocity) * Mass / (float)gameTime.ElapsedGameTime.TotalSeconds * GripCoefficient * Constants.Player.Movement.GripSignificance);
 
-                
 
-                if (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.Space) && Constants.Engine_Physics.IsOnGround(this) &&  Math.Round(Velocity.Y, 4) == 0)
+
+                if (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.Space) && Constants.Engine_Physics.IsOnGround(this) && Math.Round(Velocity.Y, 2) == 0)
                 {
                     ApplyForce(Vector3.Up * Constants.Player.Movement.JumpForce);
                 }

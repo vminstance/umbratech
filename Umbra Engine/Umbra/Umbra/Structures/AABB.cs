@@ -69,17 +69,17 @@ namespace Umbra.Structures
 
         public bool Intersects(AABB box)
         {
-            if (box.Min.X >= Max.X || box.Min.X >= Max.X)
+            if (box.Min.X >= Max.X || box.Max.X <= Min.X)
             {
                 return false;
             }
 
-            if (box.Min.Y >= Max.Y || box.Min.Y >= Max.Y)
+            if (box.Min.Y >= Max.Y || box.Max.Y <= Min.Y)
             {
                 return false;
             }
 
-            if (box.Min.Z >= Max.Z || box.Min.Z >= Max.Z)
+            if (box.Min.Z >= Max.Z || box.Max.Z <= Min.Z)
             {
                 return false;
             }

@@ -71,7 +71,7 @@ namespace Umbra.Engines
 
             if (IsOnGround(currentObject) && horizontalVelocity != Vector3.Zero)
             {
-                //currentObject.ApplyForce(-Vector3.Normalize(horizontalVelocity) * currentObject.KineticFrictionCoefficient * currentObject.Mass * Constants.Physics.Gravity);
+                currentObject.ApplyForce((-Vector3.Normalize(horizontalVelocity) * currentObject.KineticFrictionCoefficient * currentObject.Mass * Constants.Physics.Gravity) * horizontalVelocity.Length() * Constants.Physics.FrictionSignificance);
             }
 
             // Update velocity
@@ -142,7 +142,7 @@ namespace Umbra.Engines
             {
                 for (int z = (int)Math.Floor(obj.BoundingBox.Min.Z); z <= Math.Floor(obj.BoundingBox.Max.Z); z++)
                 {
-                    returnList.Add(new BlockIndex(x, (int)obj.Position.Y - 1, z));
+                    returnList.Add(new BlockIndex(x, (int)(obj.Position.Y - Constants.Player.MinDistanceToGround), z));
                 }
             }
 

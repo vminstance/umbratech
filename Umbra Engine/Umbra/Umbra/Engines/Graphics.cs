@@ -76,12 +76,25 @@ namespace Umbra.Engines
             MainEffect.Parameters["xTranslucentBlocks"].SetValue(Constants.Graphics.TranslucentBlocks);
             MainEffect.Parameters["xIsUnderWater"].SetValue(Constants.World.Current.GetBlock(new BlockIndex(Constants.Engine_Physics.Player.Position + Constants.Player.Physics.EyeHeight * Vector3.UnitY)).Type == (byte)BlockType.Water);
             MainEffect.Parameters["xTime"].SetValue((int)gameTime.TotalGameTime.TotalMilliseconds);
-            
 
-            GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
 
-            foreach (EffectPass pass in MainEffect.CurrentTechnique.Passes)
+
+
+
+            for (int passNumber = 0; passNumber < MainEffect.CurrentTechnique.Passes.Count; passNumber++)
             {
+                if (passNumber == 0)
+                {
+                    GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
+                }
+                else if (passNumber == 1)
+                {
+                    GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+                }
+
+
+                EffectPass pass = MainEffect.CurrentTechnique.Passes[passNumber];
+
                 foreach (Chunk c in Constants.World.Current.GetChunks())
                 {
                     if (
@@ -90,7 +103,7 @@ namespace Umbra.Engines
                         c.VertexBuffer.IsDisposed ||
                         c.VertexBuffer.VertexCount == 0 ||
                         c.SetupState == 0 ||
-                        c.SetupState == 4 
+                        c.SetupState == 4
                         )
                     {
                         continue;

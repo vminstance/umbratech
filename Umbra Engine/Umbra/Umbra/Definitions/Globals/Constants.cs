@@ -169,7 +169,7 @@ namespace Umbra.Definitions.Globals
         static public class Physics
         {
             static public float Gravity = 9.81F;
-            static public float AirFriction = 0.015F;
+            static public float FrictionSignificance = 1F;
         }
 
         static public class Landscape
@@ -195,7 +195,7 @@ namespace Umbra.Definitions.Globals
                     static public float Height = 1.8F;
                 }
 
-                static public float EyeHeight = 1.7F;
+                static public float EyeHeight = 1.5F;
             }
 
             static public class Camera
@@ -211,9 +211,11 @@ namespace Umbra.Definitions.Globals
             {
                 static public float NoclipSpeed = 0.3F;
 
-                static public float WalkForce = 40.0F * Physics.Mass;
+                static public float WalkForce = 24.0F * Physics.Mass;
                 static public float MaxSpeed = 4.0F;
                 static public float JumpForce = Physics.Mass * 5.42F * 60.0F;
+
+                static public float GripSignificance = 3F;
             }
 
             static public class BlockEditing
