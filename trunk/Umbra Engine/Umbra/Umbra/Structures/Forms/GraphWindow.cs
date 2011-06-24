@@ -59,16 +59,6 @@ namespace Umbra.Structures
             {
                 OldValues.Dequeue();
                 OldValues.Enqueue(GetValue(graphingVariable));
-
-                if (GetValue(graphingVariable) < Min)
-                {
-                    Min = GetValue(graphingVariable);
-                }
-
-                if (GetValue(graphingVariable) > Max)
-                {
-                    Max = GetValue(graphingVariable);
-                }
             }
             else
             {
