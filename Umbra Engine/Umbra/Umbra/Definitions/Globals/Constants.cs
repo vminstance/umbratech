@@ -41,10 +41,10 @@ namespace Umbra.Definitions.Globals
             Engine_Sound = new Engines.Sound(main);
 
             Engine_Main.Components.Add(Engine_Content);
-            Engine_Main.Components.Add(Engine_Graphics);
             Engine_Main.Components.Add(Engine_Input);
-            Engine_Main.Components.Add(Engine_Overlay);
             Engine_Main.Components.Add(Engine_Physics);
+            Engine_Main.Components.Add(Engine_Graphics);
+            Engine_Main.Components.Add(Engine_Overlay);
             Engine_Main.Components.Add(Engine_Sound);
 
             World.Current = new Structures.World("default");
@@ -211,7 +211,7 @@ namespace Umbra.Definitions.Globals
             {
                 static public float NoclipSpeed = 0.3F;
 
-                static public float WalkAcceleration = 1.0F;
+                static public float WalkAcceleration = 40.0F;
                 static public float MaxSpeed = 4.0F;
                 static public float JumpForce = Physics.Mass * 5.42F * 60.0F;
             }

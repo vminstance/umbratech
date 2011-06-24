@@ -25,7 +25,7 @@ namespace Umbra.Structures
 
         public Vector3 Position;
         public Vector3 Velocity;
-        private Vector3 ForceAccumulator;
+        public Vector3 ForceAccumulator { get; protected set; }
         public AABB BoundingBox { get { return new AABB(Position, Position + Dimensions); } }
         public Vector3 Dimensions { get; protected set; }
 
@@ -33,6 +33,54 @@ namespace Umbra.Structures
         public float Mass { get; protected set; }
         public float DragCoefficient { get; protected set; }
         public float SurfaceFrictionCoefficient { get; protected set; }
+
+        public float BuoyancyMagnitude
+        {
+            get
+            {
+                float buoyancy = 0;
+
+                foreach (BlockIndex index in BoundingBox.IntersectionIndices)
+                {
+                    buoyancy += Constants.World.Current.GetBlock(index).Density * BoundingBox.IntersectionVolume(index.GetBoundingBox());
+                }
+
+                return (2 * Constants.Physics.Gravity * Mass * buoyancy) / (Mass + buoyancy);
+            }
+        }
+
+        public float AverageViscosity
+        {
+            get
+            {
+                float average = 0;
+
+                foreach (BlockIndex index in BoundingBox.IntersectionIndices)
+                {
+                    average += Constants.World.Current.GetBlock(index).Viscosity * (index.GetBoundingBox().IntersectionVolume(BoundingBox) / Volume);
+                }
+
+                return average;
+            }
+        }
+
+        public float KineticFrictionCoefficient
+        {
+            get
+            {
+                float maxFriction = 0;
+
+                foreach (BlockIndex index in Constants.Engine_Physics.BlocksBeneath(this))
+                {
+                    if (maxFriction < Constants.World.Current.GetBlock(index).KineticFrictionCoefficient)
+                    {
+                        maxFriction = Constants.World.Current.GetBlock(index).KineticFrictionCoefficient;
+                    }
+                }
+
+                return maxFriction;
+            }
+        }
 
         public PhysicsObject(Vector3 position, float mass)
         {

@@ -37,6 +37,7 @@ namespace Umbra.Engines
         {
             foreach (PhysicsObject currentObject in PhysicsObjects)
             {
+                currentObject.ResetForceAccumulator();
                 currentObject.Update(gameTime);
                 if (currentObject.PhysicsEnabled)
                 {
@@ -50,72 +51,36 @@ namespace Umbra.Engines
 
         private void UpdateVelocity(PhysicsObject currentObject, GameTime gameTime)
         {
+
             // Gravity
             currentObject.ApplyForce(Vector3.Down * Constants.Physics.Gravity * currentObject.Mass);
 
             // Buoyancy
-            currentObject.ApplyForce(Vector3.Up * GetBuoyancyForce(currentObject));
+            currentObject.ApplyForce(Vector3.Up * currentObject.BuoyancyMagnitude);
 
             // Drag
             currentObject.ApplyForce(-0.5F *
-                GetAverageViscosity(currentObject) *
+                currentObject.AverageViscosity *
                 currentObject.BoundingBox.SurfaceArea *
                 currentObject.DragCoefficient *
                 (float)currentObject.Velocity.LengthSquared() *
                 (currentObject.Velocity == Vector3.Zero ? Vector3.One : Vector3.Normalize(currentObject.Velocity)));
-
+            
             // Surface friction
-            if (IsOnGround(currentObject) && currentObject.Velocity != Vector3.Zero)
+            Vector3 horizontalVelocity = (currentObject.Velocity * new Vector3(1, 0, 1));
+
+            if (IsOnGround(currentObject) && horizontalVelocity != Vector3.Zero)
             {
-                currentObject.ApplyForce(-(Vector3.Normalize(currentObject.Velocity) * GetAverageFrictionCoefficient(currentObject) * new Vector3(1, 0, 1) * currentObject.Mass * Constants.Physics.Gravity) * Math.Min(currentObject.Velocity.Length(), 1));
+                currentObject.ApplyForce(-Vector3.Normalize(horizontalVelocity) * currentObject.KineticFrictionCoefficient * currentObject.Mass * Constants.Physics.Gravity);
             }
 
             // Update velocity
             currentObject.UpdateVelocity((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
-        private float GetBuoyancyForce(PhysicsObject obj)
-        {
-            float buoyancy = 0;
-
-            foreach (BlockIndex index in obj.BoundingBox.IntersectionIndices)
-            {
-                buoyancy += Constants.World.Current.GetBlock(index).Density * obj.BoundingBox.IntersectionVolume(index.GetBoundingBox());
-            }
-
-            return (2 * Constants.Physics.Gravity * obj.Mass * buoyancy) / (obj.Mass + buoyancy);
-        }
-
-        private float GetAverageViscosity(PhysicsObject obj)
-        {
-            float average = 0;
-
-            foreach (BlockIndex index in obj.BoundingBox.IntersectionIndices)
-            {
-                average += Constants.World.Current.GetBlock(index).Viscosity * (index.GetBoundingBox().IntersectionVolume(obj.BoundingBox) / obj.Volume);
-            }
-
-            return average;
-        }
-
-        private float GetAverageFrictionCoefficient(PhysicsObject obj)
-        {
-            float average = 0;
-
-            foreach (BlockIndex index in BlocksBeneath(obj))
-            {
-                average += Constants.World.Current.GetBlock(index).FrictionCoefficient;
-            }
-
-            return average / BlocksBeneath(obj).Count;
-        }
-
         private void UpdatePosition(PhysicsObject obj, GameTime gameTime)
         {
             Vector3 newPos = obj.Position + obj.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector3 newPosX = obj.Position + obj.Velocity.X * Vector3.UnitX * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector3 newPosY = obj.Position + obj.Velocity.Y * Vector3.UnitY * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector3 newPosZ = obj.Position + obj.Velocity.Z * Vector3.UnitZ * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (PlaceFree(obj, newPos))
             {
@@ -123,17 +88,17 @@ namespace Umbra.Engines
             }
             else
             {
-                UpdatePositionOneDimension(obj, newPosY, ref obj.Position.Y, ref obj.Velocity.Y);
+                UpdatePositionOneDimension(obj, ref obj.Position.Y, ref obj.Velocity.Y, Vector3.UnitY, gameTime);
 
                 if (Math.Abs(obj.Velocity.X) > Math.Abs(obj.Velocity.Z))
                 {
-                    UpdatePositionOneDimension(obj, newPosX, ref obj.Position.X, ref obj.Velocity.X);
-                    UpdatePositionOneDimension(obj, newPosZ, ref obj.Position.Z, ref obj.Velocity.Z);
+                    UpdatePositionOneDimension(obj, ref obj.Position.X, ref obj.Velocity.X, Vector3.UnitX, gameTime);
+                    UpdatePositionOneDimension(obj, ref obj.Position.Z, ref obj.Velocity.Z, Vector3.UnitZ, gameTime);
                 }
                 else
                 {
-                    UpdatePositionOneDimension(obj, newPosZ, ref obj.Position.Z, ref obj.Velocity.Z);
-                    UpdatePositionOneDimension(obj, newPosX, ref obj.Position.X, ref obj.Velocity.X);
+                    UpdatePositionOneDimension(obj, ref obj.Position.Z, ref obj.Velocity.Z, Vector3.UnitZ, gameTime);
+                    UpdatePositionOneDimension(obj, ref obj.Position.X, ref obj.Velocity.X, Vector3.UnitX, gameTime);
                 }
             }
         }
@@ -151,17 +116,22 @@ namespace Umbra.Engines
             return true;
         }
 
-        private void UpdatePositionOneDimension(PhysicsObject obj, Vector3 newPosition, ref float position, ref float velocity)
+        private void UpdatePositionOneDimension(PhysicsObject obj, ref float position, ref float velocity, Vector3 axis, GameTime gameTime)
         {
-            if (velocity != 0)
+            while (!PlaceFree(obj, velocity * axis * (float)gameTime.ElapsedGameTime.TotalSeconds + obj.Position))
             {
-                if (!PlaceFree(obj, newPosition))
+                if (Math.Round(velocity, 4) != 0.0F)
                 {
-                    velocity = Math.Min(Math.Abs(velocity), 0.0F) * Math.Sign(velocity);
+                    velocity = velocity / 1.5F;
+                }
+                else
+                {
+                    velocity = 0.0F;
+                    return;
                 }
             }
 
-            position += velocity;
+            position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public List<BlockIndex> BlocksBeneath(PhysicsObject obj)

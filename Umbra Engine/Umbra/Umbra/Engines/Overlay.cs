@@ -60,14 +60,35 @@ namespace Umbra.Engines
                 SpriteBatch.DrawString(DebugFont, memoryUsage, new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(memoryUsage).X - 10, 100), Color.Yellow);
 
                 // Position
-                string[] position = { "Px: " + Math.Round(Constants.Engine_Physics.Player.Position.X, 1), "Py: " + Math.Round(Constants.Engine_Physics.Player.Position.Y, 1), "Pz: " + Math.Round(Constants.Engine_Physics.Player.Position.Z, 1) };
+                string[] position = { 
+                                        "Px: " + Math.Round(Constants.Engine_Physics.Player.Position.X, 1), 
+                                        "Py: " + Math.Round(Constants.Engine_Physics.Player.Position.Y, 1), 
+                                        "Pz: " + Math.Round(Constants.Engine_Physics.Player.Position.Z, 1) 
+                                    };
                 
                 SpriteBatch.DrawString(DebugFont, position[0], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(position[0]).X - 10, 130), Color.Yellow);
                 SpriteBatch.DrawString(DebugFont, position[1], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(position[1]).X - 10, 150), Color.Yellow);
                 SpriteBatch.DrawString(DebugFont, position[2], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(position[2]).X - 10, 170), Color.Yellow);
 
+                // Acceleration
+                string[] acceleration = { 
+                                            "Ax: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.X / Constants.Engine_Physics.Player.Mass, 2), 
+                                            "Ay: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Y / Constants.Engine_Physics.Player.Mass, 2), 
+                                            "Az: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Z / Constants.Engine_Physics.Player.Mass, 2) 
+                                        };
+
+
+                SpriteBatch.DrawString(DebugFont, acceleration[0], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(acceleration[0]).X - 10, 270), Color.Yellow);
+                SpriteBatch.DrawString(DebugFont, acceleration[1], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(acceleration[1]).X - 10, 290), Color.Yellow);
+                SpriteBatch.DrawString(DebugFont, acceleration[2], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(acceleration[2]).X - 10, 310), Color.Yellow);
+            
+
                 // Velocity
-                string[] velocity = { "Vx: " + Math.Round(Constants.Engine_Physics.Player.Velocity.X, 1), "Vy: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Y, 1), "Vz: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Z, 1) };
+                string[] velocity = { 
+                                        "Vx: " + Math.Round(Constants.Engine_Physics.Player.Velocity.X, 2), 
+                                        "Vy: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Y, 2), 
+                                        "Vz: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Z, 2) 
+                                    };
 
                 SpriteBatch.DrawString(DebugFont, velocity[0], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(velocity[0]).X - 10, 200), Color.Yellow);
                 SpriteBatch.DrawString(DebugFont, velocity[1], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(velocity[1]).X - 10, 220), Color.Yellow);
