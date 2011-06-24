@@ -23,8 +23,6 @@ namespace Umbra.Structures
 
     class GraphWindow : Window
     {
-        float Max;
-        float Min;
         float Speed;
         double TimeSinceLastDatapoint;
         GraphingVariable graphingVariable;
