@@ -58,6 +58,7 @@ VertexToPixelBlock TexturedVS( float4 inPos : POSITION0, float4 inColor : COLOR0
     Output.Color			= float4((float)inColor.x / 255, (float)inColor.y / 255, (float)inColor.z / 255, 1);
     Output.OriginalPos		= inPos;
     Output.ScreenPos		= float2(Output.Position.x, Output.Position.y);
+
     bool IsTransparent = false;
     for(int i = 0; i < 4; i++)
 	{
@@ -172,8 +173,6 @@ VertexToPixelBlock TexturedVSAlpha( float4 inPos : POSITION0, float4 inColor : C
 	{
         Output.Color.a *= 0.5;
     }
-
-
 	else
 	{
         Output.Position = float4(-1,-1,-1,-1);

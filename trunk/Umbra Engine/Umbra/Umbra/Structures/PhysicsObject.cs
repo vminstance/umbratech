@@ -82,6 +82,24 @@ namespace Umbra.Structures
             }
         }
 
+        public float GripCoefficient
+        {
+            get
+            {
+                float maxGrip = 0;
+
+                foreach (BlockIndex index in Constants.Engine_Physics.BlocksBeneath(this))
+                {
+                    if (maxGrip < Constants.World.Current.GetBlock(index).GripCoefficient)
+                    {
+                        maxGrip = Constants.World.Current.GetBlock(index).GripCoefficient;
+                    }
+                }
+
+                return maxGrip;
+            }
+        }
+
         public PhysicsObject(Vector3 position, float mass)
         {
             Position = position;
@@ -91,6 +109,7 @@ namespace Umbra.Structures
             Volume = Dimensions.X * Dimensions.Y * Dimensions.Z;
             Mass = mass;
             PhysicsEnabled = true;
+            DragCoefficient = 1;
         }
 
         public PhysicsObject(Vector3 position, Vector3 dimension, float mass)
@@ -102,6 +121,7 @@ namespace Umbra.Structures
             Volume = Dimensions.X * Dimensions.Y * Dimensions.Z;
             Mass = mass;
             PhysicsEnabled = true;
+            DragCoefficient = 1;
         }
 
         public PhysicsObject(Vector3 position, Vector3 dimension, float mass, float volume)
@@ -113,6 +133,7 @@ namespace Umbra.Structures
             Volume = volume;
             Mass = mass;
             PhysicsEnabled = true;
+            DragCoefficient = 1;
         }
 
         public void ResetForceAccumulator()

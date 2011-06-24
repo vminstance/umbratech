@@ -86,7 +86,7 @@ namespace Umbra.Engines
                 // Velocity
                 string[] velocity = { 
                                         "Vx: " + Math.Round(Constants.Engine_Physics.Player.Velocity.X, 2), 
-                                        "Vy: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Y, 2), 
+                                        "Vy: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Y, 6), 
                                         "Vz: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Z, 2) 
                                     };
 
