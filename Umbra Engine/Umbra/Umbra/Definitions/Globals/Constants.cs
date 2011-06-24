@@ -211,7 +211,7 @@ namespace Umbra.Definitions.Globals
             {
                 static public float NoclipSpeed = 0.3F;
 
-                static public float WalkAcceleration = 40.0F;
+                static public float WalkForce = 40.0F * Physics.Mass;
                 static public float MaxSpeed = 4.0F;
                 static public float JumpForce = Physics.Mass * 5.42F * 60.0F;
             }

@@ -56,7 +56,7 @@ namespace Umbra.Structures
 
                 Vector3 horizontalVelocity = Velocity * new Vector3(1, 0, 1);
 
-                Vector3 newVelocity = horizontalVelocity + Vector3.Transform(Constants.Engine_Input.WalkingDirection(), Matrix.CreateRotationY(FirstPersonCamera.Direction)) * Constants.Player.Movement.WalkAcceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Vector3 newVelocity = horizontalVelocity + Vector3.Transform(Constants.Engine_Input.WalkingDirection(), Matrix.CreateRotationY(FirstPersonCamera.Direction)) * Constants.Player.Movement.WalkForce * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 if (newVelocity != Vector3.Zero)
                 {

@@ -71,7 +71,7 @@ namespace Umbra.Engines
 
             if (IsOnGround(currentObject) && horizontalVelocity != Vector3.Zero)
             {
-                currentObject.ApplyForce(-Vector3.Normalize(horizontalVelocity) * currentObject.KineticFrictionCoefficient * currentObject.Mass * Constants.Physics.Gravity);
+                //currentObject.ApplyForce(-Vector3.Normalize(horizontalVelocity) * currentObject.KineticFrictionCoefficient * currentObject.Mass * Constants.Physics.Gravity);
             }
 
             // Update velocity
