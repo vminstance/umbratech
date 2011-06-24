@@ -132,6 +132,7 @@
     <Compile Include="Implementations\BlockCursor.cs" />
     <Compile Include="Implementations\Compass.cs" />
     <Compile Include="Implementations\ClockTime.cs" />
+    <Compile Include="Structures\GraphWindow.cs" />
     <Compile Include="Structures\Player.cs" />
     <Compile Include="Implementations\Popup.cs" />
     <Compile Include="Implementations\LandscapeGenerator.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Structures\GridElement.cs" />
     <Compile Include="Structures\GridLayer.cs" />
     <Compile Include="Structures\PhysicsObject.cs" />
+    <Compile Include="Structures\Window.cs" />
     <Compile Include="Utilities\Landscape Generation\BicubicArea.cs" />
     <Compile Include="Utilities\EventInput.cs" />
     <Compile Include="Utilities\Landscape Generation\Interpolation.cs" />

@@ -54,6 +54,28 @@ namespace Umbra.Definitions
         FadeOut
     }
 
+    public enum BlockVisibility
+    {
+        Invisible,
+        Translucent,
+        Opaque
+    }
+
+    public enum GraphingVariable
+    {
+        PlayerPositionX,
+        PlayerPositionY,
+        PlayerPositionZ,
+        PlayerVelocityX,
+        PlayerVelocityY,
+        PlayerVelocityZ,
+        PlayerAccelerationX,
+        PlayerAccelerationY,
+        PlayerAccelerationZ
+    }
+
+    // Operators:
+
     public struct ConsoleMessage
     {
         public string Message;
@@ -111,12 +133,5 @@ namespace Umbra.Definitions
             default: return 0;
             }
         }
-    }
-
-    public enum BlockVisibility
-    {
-        Invisible,
-        Translucent,
-        Opaque
     }
 }
