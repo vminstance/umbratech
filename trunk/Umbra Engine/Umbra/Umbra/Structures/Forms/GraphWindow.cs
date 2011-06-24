@@ -23,6 +23,8 @@ namespace Umbra.Structures
 
     class GraphWindow : Window
     {
+        float Max;
+        float Min;
         float Speed;
         double TimeSinceLastDatapoint;
         GraphingVariable graphingVariable;
@@ -57,6 +59,16 @@ namespace Umbra.Structures
             {
                 OldValues.Dequeue();
                 OldValues.Enqueue(GetValue(graphingVariable));
+
+                if (GetValue(graphingVariable) < Min)
+                {
+                    Min = GetValue(graphingVariable);
+                }
+
+                if (GetValue(graphingVariable) > Max)
+                {
+                    Max = GetValue(graphingVariable);
+                }
             }
             else
             {
