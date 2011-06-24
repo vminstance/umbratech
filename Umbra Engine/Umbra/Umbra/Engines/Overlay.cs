@@ -24,6 +24,8 @@ namespace Umbra.Engines
         public SpriteBatch SpriteBatch { get; private set; }
         public SpriteFont DebugFont { get; set; }
 
+        List<Window> Windows;
+
         public Overlay(Main main) 
             : base(main)
         {
@@ -32,13 +34,29 @@ namespace Umbra.Engines
         public override void Initialize()
         {
             SpriteBatch = new SpriteBatch(Constants.Engine_Graphics.GraphicsDevice);
+
+            Windows = new List<Window>();
+
+            Windows.Add(new GraphWindow(new Rectangle(100, 50, 100, 50), 4.0F, Color.DarkGray, Color.Red, GraphingVariable.PlayerPositionY));
+            //Windows.Add(new GraphWindow(new Rectangle(100, 101, 400, 200), 4.0F, Color.DarkGray, Color.Red, GraphingVariable.PlayerVelocityY));
+
             base.Initialize();
+        }
+
+        private float GetVel()
+        {
+            return Constants.Engine_Physics.Player.Velocity.Y;
         }
 
         public override void Update(GameTime gameTime)
         {
             Console.Update(gameTime);
             Popup.Update(gameTime);
+
+            foreach (Window wind in Windows)
+            {
+                wind.Update(gameTime);
+            }
             base.Update(gameTime);
         }
 
@@ -86,7 +104,7 @@ namespace Umbra.Engines
                 // Velocity
                 string[] velocity = { 
                                         "Vx: " + Math.Round(Constants.Engine_Physics.Player.Velocity.X, 2), 
-                                        "Vy: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Y, 6), 
+                                        "Vy: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Y, 2), 
                                         "Vz: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Z, 2) 
                                     };
 
@@ -94,6 +112,12 @@ namespace Umbra.Engines
                 SpriteBatch.DrawString(DebugFont, velocity[1], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(velocity[1]).X - 10, 220), Color.Yellow);
                 SpriteBatch.DrawString(DebugFont, velocity[2], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(velocity[2]).X - 10, 240), Color.Yellow);
             }
+
+            foreach (Window wind in Windows)
+            {
+                SpriteBatch.Draw(wind.GetContent(GraphicsDevice), wind.Frame, Color.White);
+            }
+
             SpriteBatch.End();
             base.Draw(gameTime);
         }
