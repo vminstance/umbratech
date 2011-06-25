@@ -23,12 +23,42 @@ namespace Umbra.Engines
     {
         public SpriteBatch SpriteBatch { get; private set; }
         public SpriteFont DebugFont { get; set; }
-
         List<Window> Windows;
 
         public Overlay(Main main) 
             : base(main)
         {
+        }
+
+        public void DebugWindow(string title)
+        {
+            switch(title)
+            {
+            case "scroolWheel": Windows.Add(new GraphWindow(title, new Rectangle(100, 50, 400, 100), 10.0F, Color.Green, (GraphFunction)(() => new float[] { 
+                    Constants.Engine_Input.MouseCurrentState.ScrollWheelValue
+                }))); break;
+            case "position": Windows.Add(new GraphWindow(title, new Rectangle(100, 50, 400, 100), 10.0F, Color.Green, (GraphFunction)(() => new float[] { 
+                    Constants.Engine_Physics.Player.Position.X,
+                    Constants.Engine_Physics.Player.Position.Y,
+                    Constants.Engine_Physics.Player.Position.Z
+                }))); break;
+            case "velocity": Windows.Add(new GraphWindow(title, new Rectangle(100, 50, 400, 100), 10.0F, Color.Green, (GraphFunction)(() => new float[] { 
+                    Constants.Engine_Physics.Player.Velocity.X,
+                    Constants.Engine_Physics.Player.Velocity.Y,
+                    Constants.Engine_Physics.Player.Velocity.Z
+                }))); break;
+            }
+        }
+
+        public void CloseAllWindows()
+        {
+            Windows.Clear();
+        }
+
+        public void GiveFocus(Window window)
+        {
+            Windows.Remove(window);
+            Windows.Add(window);
         }
 
         public override void Initialize()
@@ -37,11 +67,14 @@ namespace Umbra.Engines
 
             Windows = new List<Window>();
 
-            Windows.Add(new GraphWindow("Y-Pos, Y-Vel", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
+            Windows.Add(new GraphWindow("Scroll wheel value", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
                 (GraphFunction)(() => new float[] { 
-                    Constants.Engine_Physics.Player.Position.Y,
-                    Constants.Engine_Physics.Player.Velocity.Y
-                } )));
+                    Constants.Engine_Input.MouseCurrentState.ScrollWheelValue
+                })));
+            Windows.Add(new GraphWindow("Negative scroll wheel value", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
+                (GraphFunction)(() => new float[] { 
+                    -Constants.Engine_Input.MouseCurrentState.ScrollWheelValue
+                })));
 
             base.Initialize();
         }
@@ -51,10 +84,11 @@ namespace Umbra.Engines
             Console.Update(gameTime);
             Popup.Update(gameTime);
 
-            foreach (Window wind in Windows)
+            for (int i = 0; i < Windows.Count; i++)
             {
-                wind.Update(gameTime);
+                Windows.ElementAt(i).Update(gameTime);
             }
+
             base.Update(gameTime);
         }
 

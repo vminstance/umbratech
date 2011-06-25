@@ -96,6 +96,9 @@ namespace Umbra.Engines
         public override void Update(GameTime gameTime)
         {
 
+            KeyboardLastState = KeyboardCurrentState;
+            MouseLastState = MouseCurrentState;
+
             KeyboardCurrentState = Keyboard.GetState();
             MouseCurrentState = Mouse.GetState();
 
@@ -166,9 +169,6 @@ namespace Umbra.Engines
 
                 Game.IsMouseVisible = false;
             }
-
-            KeyboardLastState = KeyboardCurrentState;
-            MouseLastState = MouseCurrentState;
 
             base.Update(gameTime);
         }

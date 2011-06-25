@@ -26,7 +26,7 @@ namespace Umbra.Structures
         float Speed;
         double TimeSinceLastDatapoint;
         GraphFunction GraphFunction;
-        Queue<float[]> OldValues;
+        LinkedList<float[]> OldValues;
         Color GraphColor;
         SpriteFont Font;
         Rectangle ContentFrame;
@@ -47,21 +47,21 @@ namespace Umbra.Structures
             GraphFunction = graphFunction;
             float[] setupValue = graphFunction.Invoke();
 
-            OldValues = new Queue<float[]>();
+            OldValues = new LinkedList<float[]>();
 
-            for (int x = 0; x < ContentFrame.Width; x++)
-            {
-                OldValues.Enqueue(setupValue);
-            }
+            FillQueue();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            FillQueue();
+
             if (TimeSinceLastDatapoint >= 1 / Speed)
             {
-                OldValues.Dequeue();
-                OldValues.Enqueue(GraphFunction.Invoke());
+                OldValues.RemoveLast();
+                OldValues.AddFirst(GraphFunction.Invoke());
             }
             else
             {
@@ -71,6 +71,10 @@ namespace Umbra.Structures
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            FillQueue();
+
+            ContentFrame = new Rectangle(Frame.X + 35, Frame.Y + 20, Frame.Width - 37, Frame.Height - 22);
+
             base.Draw(spriteBatch);
 
             string arrow = ">";
@@ -83,7 +87,7 @@ namespace Umbra.Structures
 
             foreach (float[] values in OldValues)
             {
-                for (int i = 0; i < OldValues.Last().Length; i++)
+                for (int i = 0; i < OldValues.First().Length; i++)
                 {
                     float value = values[i];
                     if (value < min)
@@ -113,11 +117,14 @@ namespace Umbra.Structures
 
                 for (int i = 0; i < OldValues.Last().Length; i++)
                 {
-                    float value = OldValues.ElementAt(ContentFrame.Width - (x + 1))[i];
+                    float value = OldValues.Count > x ? OldValues.ElementAt(x)[i] : OldValues.Last()[i];
 
                     int height = (int)MathHelper.Clamp((int)(((value - min) / (max - min)) * (ContentFrame.Height - 1)), 0, ContentFrame.Height - 1);
 
                     data[x + (ContentFrame.Height - height - 1) * ContentFrame.Width] = GraphColor;
+
+
+
                 }
             }
 
@@ -133,15 +140,28 @@ namespace Umbra.Structures
             spriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(Frame.X + 35, Frame.Y + Frame.Height - 17, 35, 15), new Color(20, 20, 20, 100));
             spriteBatch.DrawString(Font, Math.Round(min, 1) + "", new Vector2(Frame.X + 37, Frame.Y + Frame.Height - 15), Color.White);
 
-            for (int i = 0; i < OldValues.Last().Length; i++)
+            for (int i = 0; i < OldValues.First().Length; i++)
             {
-                float value = OldValues.Last()[i];
+                float value = OldValues.First()[i];
                 int height = (ContentFrame.Height - (int)MathHelper.Clamp((int)(((value - min) / (max - min)) * (ContentFrame.Height - 1)), 0, ContentFrame.Height - 1) - 1);
 
                 string stringValue = Math.Round(value, 1) + "";
 
                 spriteBatch.DrawString(Font, arrow, new Vector2(Frame.X + 34 - Font.MeasureString(arrow).X, height + Frame.Y + 15), Color.White);
                 spriteBatch.DrawString(Font, stringValue, new Vector2(Frame.X + 26 - Font.MeasureString(stringValue).X, MathHelper.Clamp(height, Font.MeasureString(stringValue).Y / 2, ContentFrame.Height - Font.MeasureString(stringValue).Y / 2) + Frame.Y + 15), Color.White);
+            }
+        }
+
+        void FillQueue()
+        {
+            while (OldValues.Count < ContentFrame.Width)
+            {
+                OldValues.AddLast(GraphFunction.Invoke());
+            }
+
+            while (OldValues.Count > ContentFrame.Width)
+            {
+                OldValues.RemoveLast();
             }
         }
     }

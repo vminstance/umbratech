@@ -133,6 +133,7 @@
     <Compile Include="Implementations\Compass.cs" />
     <Compile Include="Implementations\ClockTime.cs" />
     <Compile Include="Structures\Forms\GraphWindow.cs" />
+    <Compile Include="Structures\Forms\WindowManager.cs" />
     <Compile Include="Structures\Player.cs" />
     <Compile Include="Implementations\Popup.cs" />
     <Compile Include="Implementations\LandscapeGenerator.cs" />

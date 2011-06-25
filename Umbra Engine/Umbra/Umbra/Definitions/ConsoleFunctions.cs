@@ -336,6 +336,12 @@ namespace Umbra.Definitions
                 Popup.Post("Block cursor set to " + args[0] + ".");
                 return false;
             });
+        
+            ConsoleCommands["window"] = (ConsoleFunction)((string command, string[] args, string original) =>
+            {
+                Constants.Engine_Overlay.DebugWindow("scrollWheel");
+                return false;
+            });
         }
 
         static private bool? Boolify(string input)

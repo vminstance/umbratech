@@ -28,7 +28,7 @@ namespace Umbra.Structures
         protected bool Resizeable;
         string Title;
 
-        bool DragHold;
+        Point? DragHold;
         bool ResizeHold;
 
         public Window(string title, Rectangle frame)
@@ -37,31 +37,60 @@ namespace Umbra.Structures
             ResizeHandle = new Rectangle(frame.X + frame.Width - 7, frame.Y + frame.Height - 7, 11, 11);
             DragHandle = new Rectangle(frame.X, frame.Y, frame.Width, 20);
 
-            DragHold = false;
+            DragHold = null;
             ResizeHold = false;
         }
 
         virtual public void Update(GameTime gameTime)
         {
             MouseState mouse = Constants.Engine_Input.MouseCurrentState;
+            MouseState lMouse = Constants.Engine_Input.MouseLastState;
 
-            if (mouse.LeftButton == ButtonState.Pressed)
+            if (mouse.LeftButton == ButtonState.Pressed && lMouse.LeftButton == ButtonState.Released)
             {
-                if (DragHandle.Contains(new Point(mouse.X, mouse.Y)))
+                if (Frame.Contains(new Point(mouse.X, mouse.Y)))
                 {
-                    DragHold = true;
+                    Constants.Engine_Overlay.GiveFocus(this);
+
+                    if (DragHandle.Contains(new Point(mouse.X, mouse.Y)))
+                    {
+                        DragHold = new Point(mouse.X - DragHandle.Location.X, mouse.Y - DragHandle.Location.Y);
+                    }
+
+                    if (ResizeHandle.Contains(new Point(mouse.X, mouse.Y)))
+                    {
+                        ResizeHold = true;
+                    }
                 }
             }
-            else
+
+            else if (mouse.LeftButton == ButtonState.Released)
             {
-                DragHold = false;
+                DragHold = null;
+                ResizeHold = false;
             }
 
-            if (DragHold)
+            if (DragHold.HasValue)
             {
-                Frame.X = mouse.X - 5;
-                Frame.Y = mouse.Y - 5;
+                Frame.X = mouse.X - DragHold.Value.X;
+                Frame.Y = mouse.Y - DragHold.Value.Y;
+
+                UpdateSubFrames();
             }
+
+            if (ResizeHold)
+            {
+                Frame.Width = Math.Max(mouse.X - Frame.X, Constants.Graphics.Forms.MinimumWidth);
+                Frame.Height = Math.Max(mouse.Y - Frame.Y, Constants.Graphics.Forms.MinimumHeight);
+
+                UpdateSubFrames();
+            }
+        }
+
+        void UpdateSubFrames()
+        {
+            ResizeHandle = new Rectangle(Frame.X + Frame.Width - 7, Frame.Y + Frame.Height - 7, 11, 11);
+            DragHandle = new Rectangle(Frame.X, Frame.Y, Frame.Width, 20);
         }
 
         virtual public void Draw(SpriteBatch spriteBatch)
@@ -70,6 +99,10 @@ namespace Umbra.Structures
             drag.Inflate(-2, -2);
             Rectangle resize = ResizeHandle;
             resize.Inflate(-4, -4);
+            if (ResizeHandle.Contains(new Point(Constants.Engine_Input.MouseCurrentState.X, Constants.Engine_Input.MouseCurrentState.Y)) || ResizeHold)
+            {
+                resize.Inflate(4, 4);
+            }
 
             spriteBatch.Draw(Constants.Engine_Content.BlankTexture, Frame, new Color(20, 20, 20, 100));
             spriteBatch.Draw(Constants.Engine_Content.BlankTexture, resize, new Color(20, 20, 20, 100));
