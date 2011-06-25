@@ -71,7 +71,17 @@ namespace Umbra.Definitions
         PlayerVelocityZ,
         PlayerAccelerationX,
         PlayerAccelerationY,
-        PlayerAccelerationZ
+        PlayerAccelerationZ,
+        RAM
+    }
+
+    public enum ScalingMode
+    {
+        NoScaling,
+        ScaleToFit,
+        FreeMove,
+        FreeZoom,
+        FullFree
     }
 
     // Operators:

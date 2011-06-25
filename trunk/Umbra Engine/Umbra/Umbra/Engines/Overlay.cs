@@ -37,9 +37,10 @@ namespace Umbra.Engines
 
             Windows = new List<Window>();
 
-            Windows.Add(new GraphWindow("Y-Position", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
+            Windows.Add(new GraphWindow("Y-Pos, Y-Vel", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
                 (GraphFunction)(() => new float[] { 
-                    Constants.Engine_Physics.Player.Position.Y
+                    Constants.Engine_Physics.Player.Position.Y,
+                    Constants.Engine_Physics.Player.Velocity.Y
                 } )));
 
             base.Initialize();
