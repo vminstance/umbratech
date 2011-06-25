@@ -37,15 +37,12 @@ namespace Umbra.Engines
 
             Windows = new List<Window>();
 
-            Windows.Add(new GraphWindow(new Rectangle(100, 50, 100, 50), 4.0F, Color.DarkGray, Color.Red, GraphingVariable.PlayerPositionY));
-            //Windows.Add(new GraphWindow(new Rectangle(100, 101, 400, 200), 4.0F, Color.DarkGray, Color.Red, GraphingVariable.PlayerVelocityY));
+            Windows.Add(new GraphWindow("Y-Position", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
+                (GraphFunction)(() => new float[] { 
+                    Constants.Engine_Physics.Player.Position.Y
+                } )));
 
             base.Initialize();
-        }
-
-        private float GetVel()
-        {
-            return Constants.Engine_Physics.Player.Velocity.Y;
         }
 
         public override void Update(GameTime gameTime)
@@ -115,7 +112,7 @@ namespace Umbra.Engines
 
             foreach (Window wind in Windows)
             {
-                SpriteBatch.Draw(wind.GetContent(GraphicsDevice), wind.Frame, Color.White);
+                wind.Draw(SpriteBatch);
             }
 
             SpriteBatch.End();

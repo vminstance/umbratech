@@ -19,35 +19,38 @@ using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
 {
-    delegate float ContentFunc();
+    public delegate float[] GraphFunction();
 
-    class GraphWindow : Window
+    public class GraphWindow : Window
     {
         float Speed;
         double TimeSinceLastDatapoint;
-        GraphingVariable graphingVariable;
-        Queue<float> OldValues;
+        GraphFunction GraphFunction;
+        Queue<float[]> OldValues;
+        Color GraphColor;
+        SpriteFont Font;
+        Rectangle ContentFrame;
 
-        Color BackgroundColor;
-        Color GraphColors;
-
-        public GraphWindow(Rectangle frame, float speed, Color backgroundColor, Color graphColors, GraphingVariable gVal)
+        public GraphWindow(string title, Rectangle frame, float speed, Color graphColors, GraphFunction graphFunction)
+            : base(title)
         {
             Frame = frame;
+            ContentFrame = new Rectangle(Frame.X + 35, Frame.Y + 20, Frame.Width - 37, Frame.Height - 22);
+
             Dragable = true;
             TimeSinceLastDatapoint = 0.0F;
             Speed = speed;
+            GraphColor = graphColors;
+            Font = Constants.Engine_Content.DefaultFont;
 
-            BackgroundColor = backgroundColor;
-            GraphColors = graphColors;
+            GraphFunction = graphFunction;
+            float[] setupValue = graphFunction.Invoke();
 
-            graphingVariable = gVal;
+            OldValues = new Queue<float[]>();
 
-            OldValues = new Queue<float>();
-
-            for (int x = 0; x < Frame.Width; x++)
+            for (int x = 0; x < ContentFrame.Width; x++)
             {
-                OldValues.Enqueue(0.0F);
+                OldValues.Enqueue(setupValue);
             }
         }
 
@@ -56,7 +59,7 @@ namespace Umbra.Structures
             if (TimeSinceLastDatapoint >= 1 / Speed)
             {
                 OldValues.Dequeue();
-                OldValues.Enqueue(GetValue(graphingVariable));
+                OldValues.Enqueue(GraphFunction.Invoke());
             }
             else
             {
@@ -64,41 +67,79 @@ namespace Umbra.Structures
             }
         }
 
-        public override Texture2D GetContent(GraphicsDevice graphicsDevice)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D contents = new Texture2D(graphicsDevice, Frame.Width, Frame.Height);
-            Color[] data = new Color[Frame.Width * Frame.Height];
+            base.Draw(spriteBatch);
 
-            for (int x = 0; x < Frame.Width; x++)
+            string arrow = ">";
+
+            Texture2D contents = new Texture2D(spriteBatch.GraphicsDevice, ContentFrame.Width, ContentFrame.Height);
+            Color[] data = new Color[ContentFrame.Width * ContentFrame.Height];
+
+            float min = float.MaxValue;
+            float max = float.MinValue;
+
+            foreach (float[] values in OldValues)
             {
-                for (int y = 0; y < Frame.Height; y++)
+                for (int i = 0; i < OldValues.Last().Length; i++)
                 {
-                    data[x + y * Frame.Width] = BackgroundColor;
+                    float value = values[i];
+                    if (value < min)
+                    {
+                        min = value;
+                    }
+
+                    if (value > max)
+                    {
+                        max = value;
+                    }
+                }
+            }
+
+            if (min == max)
+            {
+                max++;
+                min--;
+            }
+
+            for (int x = 0; x < ContentFrame.Width; x++)
+            {
+                for (int y = 0; y < ContentFrame.Height; y++)
+                {
+                    data[x + y * ContentFrame.Width] = Color.Transparent;
                 }
 
-                data[x + (int)MathHelper.Clamp((float)Math.Round(OldValues.ElementAt(x) * -1.0F) + 25, 0, Frame.Height - 1) * Frame.Width] = GraphColors;
+                for (int i = 0; i < OldValues.Last().Length; i++)
+                {
+                    float value = OldValues.ElementAt(ContentFrame.Width - (x + 1))[i];
+
+                    int height = (int)MathHelper.Clamp((int)(((value - min) / (max - min)) * (ContentFrame.Height - 1)), 0, ContentFrame.Height - 1);
+
+                    data[x + (ContentFrame.Height - height - 1) * ContentFrame.Width] = GraphColor;
+                }
             }
 
             contents.SetData(data);
-            return contents;
-        }
 
-        float GetValue(GraphingVariable variable)
-        {
-            Player player = Constants.Engine_Physics.Player;
 
-            switch (variable)
+            spriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(Frame.X + 2, Frame.Y + 20, 31, Frame.Height - 22), Color.DarkGray);
+            spriteBatch.Draw(Constants.Engine_Content.BlankTexture, ContentFrame, Color.DarkGray);
+            spriteBatch.Draw(contents, ContentFrame, Color.White);
+
+            spriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(Frame.X + 35, Frame.Y + 20, 35, 15), new Color(20, 20, 20, 100));
+            spriteBatch.DrawString(Font, Math.Round(max, 1) + "", new Vector2(Frame.X + 37, Frame.Y + 22), Color.White);
+            spriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(Frame.X + 35, Frame.Y + Frame.Height - 17, 35, 15), new Color(20, 20, 20, 100));
+            spriteBatch.DrawString(Font, Math.Round(min, 1) + "", new Vector2(Frame.X + 37, Frame.Y + Frame.Height - 15), Color.White);
+
+            for (int i = 0; i < OldValues.Last().Length; i++)
             {
-                case GraphingVariable.PlayerAccelerationX: return player.ForceAccumulator.X / player.Mass;
-                case GraphingVariable.PlayerAccelerationY: return player.ForceAccumulator.Y / player.Mass;
-                case GraphingVariable.PlayerAccelerationZ: return player.ForceAccumulator.Z / player.Mass;
-                case GraphingVariable.PlayerVelocityX: return player.Velocity.X;
-                case GraphingVariable.PlayerVelocityY: return player.Velocity.Y;
-                case GraphingVariable.PlayerVelocityZ: return player.Velocity.Z;
-                case GraphingVariable.PlayerPositionX: return player.Position.X;
-                case GraphingVariable.PlayerPositionY: return player.Position.Y;
-                case GraphingVariable.PlayerPositionZ: return player.Position.Z;
-                default: return float.NaN;
+                float value = OldValues.Last()[i];
+                int height = (ContentFrame.Height - (int)MathHelper.Clamp((int)(((value - min) / (max - min)) * (ContentFrame.Height - 1)), 0, ContentFrame.Height - 1) - 1);
+
+                string stringValue = Math.Round(value, 1) + "";
+
+                spriteBatch.DrawString(Font, arrow, new Vector2(Frame.X + 34 - Font.MeasureString(arrow).X, height + Frame.Y + 15), Color.White);
+                spriteBatch.DrawString(Font, stringValue, new Vector2(Frame.X + 26 - Font.MeasureString(stringValue).X, MathHelper.Clamp(height, Font.MeasureString(stringValue).Y / 2, ContentFrame.Height - Font.MeasureString(stringValue).Y / 2) + Frame.Y + 15), Color.White);
             }
         }
     }
