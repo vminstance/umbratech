@@ -32,12 +32,13 @@ namespace Umbra.Structures
         Rectangle ContentFrame;
 
         public GraphWindow(string title, Rectangle frame, float speed, Color graphColors, GraphFunction graphFunction)
-            : base(title)
+            : base(title, frame)
         {
             Frame = frame;
             ContentFrame = new Rectangle(Frame.X + 35, Frame.Y + 20, Frame.Width - 37, Frame.Height - 22);
 
             Dragable = true;
+            Resizeable = true;
             TimeSinceLastDatapoint = 0.0F;
             Speed = speed;
             GraphColor = graphColors;
@@ -56,6 +57,7 @@ namespace Umbra.Structures
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             if (TimeSinceLastDatapoint >= 1 / Speed)
             {
                 OldValues.Dequeue();
