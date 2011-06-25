@@ -46,15 +46,14 @@ namespace Umbra.Engines
 
             BlankTexture = new Texture2D(GraphicsDevice, 1, 1);
             BlankTexture.SetData<Color>(new Color[] { Color.White });
-
             CrosshairTexture = ContentManager.Load<Texture2D>(Constants.Content.Textures.CrosshairFilename);
-
             CompassTextures = ContentManager.Load<Texture2D>(Constants.Content.Textures.CompassFilename);
 
             //Load fonts
             Console.Font = ContentManager.Load<SpriteFont>(Constants.Content.Fonts.ConsoleFilename);
             Constants.Engine_Overlay.DebugFont = ContentManager.Load<SpriteFont>(Constants.Content.Fonts.DebugFilename);
             Popup.Font = ContentManager.Load<SpriteFont>(Constants.Content.Fonts.PopupFilename);
+            DefaultFont = ContentManager.Load<SpriteFont>("fonts/default");
 
             // Load Effects
             Constants.Engine_Graphics.MainEffect = ContentManager.Load<Effect>("effects/main");

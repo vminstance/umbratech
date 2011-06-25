@@ -19,12 +19,22 @@ using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
 {
-    abstract class Window
+    abstract public class Window
     {
         public Rectangle Frame { get; protected set; }
         protected bool Dragable;
+        string Title;
 
-        abstract public Texture2D GetContent(GraphicsDevice graphicsDevice);
+        public Window(string title)
+        {
+            Title = title;
+        }
+
         abstract public void Update(GameTime gameTime);
+        virtual public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Constants.Engine_Content.BlankTexture, Frame, new Color(20, 20, 20, 100));
+            spriteBatch.DrawString(Constants.Engine_Content.DefaultFont, Title, new Vector2(Frame.X + (int)((Frame.Width - Constants.Engine_Content.DefaultFont.MeasureString(Title).X) / 2), Frame.Y + 10 - Constants.Engine_Content.DefaultFont.MeasureString(Title).Y / 2), Color.White);
+        }
     }
 }
