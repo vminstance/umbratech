@@ -153,13 +153,19 @@ namespace Umbra.Definitions.Globals
                 static public float TransitionDuration = 1;     //Happens twice every cycle
                 static public float TotalDuration = DayDuration + NightDuration + 2 * TransitionDuration;
             }
+
+            static public class Forms
+            {
+                static public int MinimumHeight = 52;
+                static public int MinimumWidth = 60;
+            }
         }
 
         static public class World
         {
             static public Structures.World Current;
             static public int ChunkSize = 32;
-            static public int WorldSize = 8;
+            static public int WorldSize = 2;
             static public float UpdateChunksMoveLength = ChunkSize * ChunkSize / 4;
             static public float UpdateGridsMoveLength = ChunkSize * WorldSize * ChunkSize * WorldSize / 6;
             static public bool DynamicWorld = true;
