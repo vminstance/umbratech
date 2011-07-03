@@ -17,7 +17,7 @@ using Umbra.Implementations;
 using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
-namespace Umbra.Structures
+namespace Umbra.Structures.Forms
 {
     public delegate float[] GraphFunction();
 
@@ -52,9 +52,9 @@ namespace Umbra.Structures
             FillQueue();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void OnUpdate(GameTime gameTime, object[] args)
         {
-            base.Update(gameTime);
+            base.OnUpdate(gameTime, args);
 
             FillQueue();
 
@@ -69,13 +69,15 @@ namespace Umbra.Structures
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void OnPaint(GameTime gameTime, object[] args)
         {
+            SpriteBatch spriteBatch = (SpriteBatch)args[0];
+        
             FillQueue();
 
             ContentFrame = new Rectangle(Frame.X + 35, Frame.Y + 20, Frame.Width - 37, Frame.Height - 22);
 
-            base.Draw(spriteBatch);
+            base.OnPaint(gameTime, args);
 
             string arrow = ">";
 

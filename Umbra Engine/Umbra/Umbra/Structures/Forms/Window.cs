@@ -17,89 +17,43 @@ using Umbra.Implementations;
 using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
-namespace Umbra.Structures
+namespace Umbra.Structures.Forms
 {
-    abstract public class Window
+    abstract public class Window : WindowComponent
     {
-        public Rectangle Frame;
-        Rectangle DragHandle;
-        Rectangle ResizeHandle;
         protected bool Dragable;
         protected bool Resizeable;
         string Title;
 
-        Point? DragHold;
-        bool ResizeHold;
-
         public Window(string title, Rectangle frame)
+            : base()
         {
             Title = title;
-            ResizeHandle = new Rectangle(frame.X + frame.Width - 7, frame.Y + frame.Height - 7, 11, 11);
-            DragHandle = new Rectangle(frame.X, frame.Y, frame.Width, 20);
+            Handles.Add("resize", new Handle(frame.X + frame.Width - 5, frame.Y + frame.Height - 5, 7, 7));
+            Handles.Add("drag", new Handle(frame.X, frame.Y, frame.Width, 20));
 
-            DragHold = null;
-            ResizeHold = false;
+            Event_OnPaint += OnPaint;
+            Event_OnUpdate += OnUpdate;
         }
 
-        virtual public void Update(GameTime gameTime)
+        virtual public void OnUpdate(GameTime gameTime, object[] args)
         {
-            MouseState mouse = Constants.Engine_Input.MouseCurrentState;
-            MouseState lMouse = Constants.Engine_Input.MouseLastState;
-
-            if (mouse.LeftButton == ButtonState.Pressed && lMouse.LeftButton == ButtonState.Released)
+            foreach (KeyValuePair<string, Handle> handle in Handles)
             {
-                if (Frame.Contains(new Point(mouse.X, mouse.Y)))
-                {
-                    Constants.Engine_Overlay.GiveFocus(this);
-
-                    if (DragHandle.Contains(new Point(mouse.X, mouse.Y)))
-                    {
-                        DragHold = new Point(mouse.X - DragHandle.Location.X, mouse.Y - DragHandle.Location.Y);
-                    }
-
-                    if (ResizeHandle.Contains(new Point(mouse.X, mouse.Y)))
-                    {
-                        ResizeHold = true;
-                    }
-                }
-            }
-
-            else if (mouse.LeftButton == ButtonState.Released)
-            {
-                DragHold = null;
-                ResizeHold = false;
-            }
-
-            if (DragHold.HasValue)
-            {
-                Frame.X = mouse.X - DragHold.Value.X;
-                Frame.Y = mouse.Y - DragHold.Value.Y;
-
-                UpdateSubFrames();
-            }
-
-            if (ResizeHold)
-            {
-                Frame.Width = Math.Max(mouse.X - Frame.X, Constants.Graphics.Forms.MinimumWidth);
-                Frame.Height = Math.Max(mouse.Y - Frame.Y, Constants.Graphics.Forms.MinimumHeight);
-
-                UpdateSubFrames();
+                handle.Value.Update();
             }
         }
 
-        void UpdateSubFrames()
+        virtual public void OnPaint(GameTime gameTime, object[] args)
         {
-            ResizeHandle = new Rectangle(Frame.X + Frame.Width - 7, Frame.Y + Frame.Height - 7, 11, 11);
-            DragHandle = new Rectangle(Frame.X, Frame.Y, Frame.Width, 20);
-        }
+            SpriteBatch spriteBatch = (SpriteBatch)args[0];
 
-        virtual public void Draw(SpriteBatch spriteBatch)
-        {
-            Rectangle drag = DragHandle;
+            Rectangle drag = Handles["drag"].Bound;
             drag.Inflate(-2, -2);
-            Rectangle resize = ResizeHandle;
+            Rectangle resize = Handles["resize"].Bound;
             resize.Inflate(-4, -4);
-            if (ResizeHandle.Contains(new Point(Constants.Engine_Input.MouseCurrentState.X, Constants.Engine_Input.MouseCurrentState.Y)) || ResizeHold)
+
+            if (Handles["resize"].MouseOver || Handles["resize"].MouseHold)
             {
                 resize.Inflate(4, 4);
             }

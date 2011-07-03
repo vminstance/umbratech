@@ -14,6 +14,7 @@ using Umbra.Utilities;
 using Umbra.Structures;
 using Umbra.Definitions;
 using Umbra.Implementations;
+using Umbra.Structures.Forms;
 using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Console;
 
@@ -86,7 +87,7 @@ namespace Umbra.Engines
 
             for (int i = 0; i < Windows.Count; i++)
             {
-                Windows.ElementAt(i).Update(gameTime);
+                Windows.ElementAt(i).Event_OnUpdate.Invoke(gameTime, new object[0]);
             }
 
             base.Update(gameTime);
@@ -145,9 +146,9 @@ namespace Umbra.Engines
                 SpriteBatch.DrawString(DebugFont, velocity[2], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(velocity[2]).X - 10, 240), Color.Yellow);
             }
 
-            foreach (Window wind in Windows)
+            for (int i = 0; i < Windows.Count; i++)
             {
-                wind.Draw(SpriteBatch);
+                Windows.ElementAt(i).Event_OnPaint.Invoke(gameTime, new object[]{SpriteBatch});
             }
 
             SpriteBatch.End();

@@ -165,7 +165,7 @@ namespace Umbra.Definitions.Globals
         {
             static public Structures.World Current;
             static public int ChunkSize = 32;
-            static public int WorldSize = 2;
+            static public int WorldSize = 0;
             static public float UpdateChunksMoveLength = ChunkSize * ChunkSize / 4;
             static public float UpdateGridsMoveLength = ChunkSize * WorldSize * ChunkSize * WorldSize / 6;
             static public bool DynamicWorld = true;
