@@ -142,11 +142,8 @@
     <Compile Include="Implementations\Threads.cs" />
     <Compile Include="Structures\AABB.cs" />
     <Compile Include="Structures\ChunkQueue.cs" />
-    <Compile Include="Structures\GridElement.cs" />
-    <Compile Include="Structures\GridLayer.cs" />
     <Compile Include="Structures\PhysicsObject.cs" />
     <Compile Include="Structures\Forms\Window.cs" />
-    <Compile Include="Utilities\Landscape Generation\BicubicArea.cs" />
     <Compile Include="Utilities\EventInput.cs" />
     <Compile Include="Utilities\Landscape Generation\Interpolation.cs" />
     <Compile Include="Utilities\Landscape Generation\Perlin.cs" />

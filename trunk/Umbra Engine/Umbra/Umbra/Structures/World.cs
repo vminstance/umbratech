@@ -22,7 +22,7 @@ namespace Umbra.Structures
     public class World
     {
         Chunk[, ,] LoadedChunks;
-        static float[,] ChunkValues;
+        //static float[,] ChunkValues;
 
         public ChunkIndex Offset { get; private set; }
 
@@ -41,8 +41,6 @@ namespace Umbra.Structures
 
             LoadedChunks = new Chunk[Constants.World.WorldSize, Constants.World.WorldSize, Constants.World.WorldSize];
             Offset = ChunkIndex.One * (-Constants.World.WorldSize / 2);
-
-            ChunkValues = new float[Constants.World.WorldSize + 3, Constants.World.WorldSize + 3];
         }
 
         public void Initialize()
@@ -58,39 +56,6 @@ namespace Umbra.Structures
                             LoadedChunks[x, y, z] = ChunkManager.ObtainChunk(Offset + new ChunkIndex(x, y, z));
                         }
                     }
-                    ChunkValues[x, y] = ((float)LandscapeGenerator.Random.NextDouble() * Constants.Landscape.BicubicAmplitude) - Constants.Landscape.BicubicAmplitude / 2;
-                }
-            }
-        }
-
-        public void GetLandscape(ChunkIndex chunkIndex, ref float[,] returnValue)
-        {
-            returnValue = new float[Constants.World.ChunkSize, Constants.World.ChunkSize];
-            ChunkIndex localIndex = chunkIndex - Offset;
-
-
-            if (localIndex.X < 0 || localIndex.X >= Constants.World.WorldSize + 3 || localIndex.Z < 0 || localIndex.Z >= Constants.World.WorldSize + 3)
-            {
-                return;
-            }
-
-            float[,] points = new float[4, 4];
-
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                      points[i, j] = ChunkValues[i + localIndex.X, j + localIndex.Z];
-                }
-            }
-
-            Interpolation.UpdateBicubicCoefficients(points);
-
-            for (int x = 0; x < Constants.World.ChunkSize; x++)
-            {
-                for (int y = 0; y < Constants.World.ChunkSize; y++)
-                {
-                    returnValue[x, y] = Interpolation.BicubicInterpolation((float)x / (float)Constants.World.ChunkSize, (float)y / (float)Constants.World.ChunkSize);
                 }
             }
         }
@@ -105,7 +70,6 @@ namespace Umbra.Structures
             Offset += offset;
 
             Chunk[, ,] newArray = new Chunk[Constants.World.WorldSize, Constants.World.WorldSize, Constants.World.WorldSize];
-            float[,] newValueArray = new float[Constants.World.WorldSize + 3, Constants.World.WorldSize + 3];
 
             for (int x = 0; x < Constants.World.WorldSize + 3; x++)
             {
@@ -139,30 +103,10 @@ namespace Umbra.Structures
                             }
                         }
                     }
-
-                    if (new ChunkIndex(offset.X, 0, offset.Z) != ChunkIndex.Zero)
-                    {
-                        int newValueX = x + offset.X;
-                        int newValueY = y + offset.Z;
-
-                        if (newValueX < 0 || newValueX >= Constants.World.WorldSize + 3 || newValueY < 0 || newValueY >= Constants.World.WorldSize + 3)
-                        {
-                            newValueArray[x, y] = ((float)LandscapeGenerator.Random.NextDouble() * Constants.Landscape.BicubicAmplitude) - Constants.Landscape.BicubicAmplitude / 2;
-                        }
-                        else
-                        {
-                            newValueArray[x, y] = ChunkValues[newValueX, newValueY];
-                        }
-                    }
                 }
             }
 
             LoadedChunks = newArray;
-
-            if (new ChunkIndex(offset.X, 0, offset.Z) != ChunkIndex.Zero)
-            {
-                ChunkValues = newValueArray;
-            }
         }
 
         public Chunk GetChunk(ChunkIndex index)

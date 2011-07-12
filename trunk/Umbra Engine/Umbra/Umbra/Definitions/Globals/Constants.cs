@@ -54,7 +54,6 @@ namespace Umbra.Definitions.Globals
             ChunkManager.InitializeThreads();
             LandscapeGenerator.Initialize(Landscape.WorldSeed);
             World.Current.Initialize();
-            LandscapeGenerator.GenerateTerrain();
             ClockTime.SetTimeOfDay(TimeOfDay.Day);
         }
 
@@ -166,8 +165,7 @@ namespace Umbra.Definitions.Globals
             static public Structures.World Current;
             static public int ChunkSize = 32;
             static public int WorldSize = 0;
-            static public float UpdateChunksMoveLength = ChunkSize * ChunkSize / 4;
-            static public float UpdateGridsMoveLength = ChunkSize * WorldSize * ChunkSize * WorldSize / 6;
+            static public float UpdateChunksMoveLength = ChunkSize / 4;
             static public bool DynamicWorld = true;
             static public bool SaveDynamicWorld = false;
         }
