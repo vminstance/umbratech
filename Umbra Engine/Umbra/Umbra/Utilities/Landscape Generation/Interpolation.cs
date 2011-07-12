@@ -22,21 +22,9 @@ namespace Umbra.Utilities
     static public class Interpolation
     {
 
-        static public float Weight(float x, float y)
+        static public float BilinearInterpolation(float[,] Data, float x, float y)
         {
-            float relativeX = (2 * x) - 1;
-            float relativeY = (2 * y) - 1;
-
-            int exponent = 2;
-
-            float returnVal = (float)(((-1.0F * Math.Pow(relativeX, exponent)) + 1.0F) * ((-1.0F * Math.Pow(relativeY, exponent)) + 1.0F));
-
-            return returnVal;
-        }
-
-        static public float BilinearInterpolation(float[,] p, float x, float y)
-        {
-            return p[0, 0] * (1 - x) * (1 - y) + p[1, 0] * x * (1 - y) + p[0, 1] * (1 - x) * y + p[1, 1] * x * y;
+            return Data[0, 0] * (1 - x) * (1 - y) + Data[1, 0] * x * (1 - y) + Data[0, 1] * (1 - x) * y + Data[1, 1] * x * y;
         }
 
         static public float BicubicInterpolation(float x, float y)

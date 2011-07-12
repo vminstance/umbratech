@@ -21,85 +21,66 @@ namespace Umbra.Implementations
 {
     static public class LandscapeGenerator
     {
-        static public Random Random;
-        static public int Size = Constants.World.WorldSize * Constants.World.ChunkSize;
-
-        static GridLayer[] Layers;
+        static private int Seed;
 
         static public void Initialize(string seed)
         {
-            if (seed != "time")
-            {
-                Random = new Random(seed.GetHashCode());
-            }
-            else
-            {
-                Random = new Random((int)System.Diagnostics.Stopwatch.GetTimestamp());
-            }
-            int layerCount = 4;
-            Layers = new GridLayer[layerCount];
-            for (int x = 0; x < layerCount; x++)
-            {
-                Layers[x] = new GridLayer(GridElementType.Bicubic, 3, (float)Random.NextDouble() * 5.0F);
-            }
+            Seed = seed.GetHashCode();
         }
 
-        static public void GenerateTerrain()
+        static private float[,] GetLandscapeHeight(ChunkIndex index)
         {
+            int realX = (int)index.Position.X;
+            int realY = (int)index.Position.Z;
 
-            Layers[0].FixedOffset = WorldIndex.Zero;
-            Layers[1].FixedOffset = WorldIndex.UnitX / 2.0F;
-            Layers[2].FixedOffset = WorldIndex.UnitY / 2.0F;
-            Layers[3].FixedOffset = WorldIndex.One / 2.0F;
+            float[,] dataPoints = new float[4, 4];
 
-            Layers[0].CurrentOffset = WorldIndex.Zero;
-            Layers[1].CurrentOffset = WorldIndex.Zero;
-            Layers[2].CurrentOffset = WorldIndex.Zero;
-            Layers[3].CurrentOffset = WorldIndex.Zero;
-        }
+            dataPoints[0, 0] = Perlin.GetPerlin(realX - Constants.World.ChunkSize, realY - Constants.World.ChunkSize, 5, Seed);
+            dataPoints[0, 1] = Perlin.GetPerlin(realX - Constants.World.ChunkSize, realY, 5, Seed);
+            dataPoints[0, 2] = Perlin.GetPerlin(realX - Constants.World.ChunkSize, realY + Constants.World.ChunkSize, 5, Seed);
+            dataPoints[0, 3] = Perlin.GetPerlin(realX - Constants.World.ChunkSize, realY + (Constants.World.ChunkSize * 2), 5, Seed);
 
-        static public void OffsetLayerGrids(WorldIndex currentOffset)
-        {
-            foreach (GridLayer layer in Layers)
+            dataPoints[1, 0] = Perlin.GetPerlin(realX, realY - Constants.World.ChunkSize, 5, Seed);
+            dataPoints[1, 1] = Perlin.GetPerlin(realX, realY, 5, Seed);
+            dataPoints[1, 2] = Perlin.GetPerlin(realX, realY + Constants.World.ChunkSize, 5, Seed);
+            dataPoints[1, 3] = Perlin.GetPerlin(realX, realY + (Constants.World.ChunkSize * 2), 5, Seed);
+
+            dataPoints[2, 0] = Perlin.GetPerlin(realX + Constants.World.ChunkSize, realY - Constants.World.ChunkSize, 5, Seed);
+            dataPoints[2, 1] = Perlin.GetPerlin(realX + Constants.World.ChunkSize, realY, 5, Seed);
+            dataPoints[2, 2] = Perlin.GetPerlin(realX + Constants.World.ChunkSize, realY + Constants.World.ChunkSize, 5, Seed);
+            dataPoints[2, 3] = Perlin.GetPerlin(realX + Constants.World.ChunkSize, realY + (Constants.World.ChunkSize * 2), 5, Seed);
+
+            dataPoints[3, 0] = Perlin.GetPerlin(realX + (Constants.World.ChunkSize * 2), realY - Constants.World.ChunkSize, 5, Seed);
+            dataPoints[3, 1] = Perlin.GetPerlin(realX + (Constants.World.ChunkSize * 2), realY, 5, Seed);
+            dataPoints[3, 2] = Perlin.GetPerlin(realX + (Constants.World.ChunkSize * 2), realY + Constants.World.ChunkSize, 5, Seed);
+            dataPoints[3, 3] = Perlin.GetPerlin(realX + (Constants.World.ChunkSize * 2), realY + (Constants.World.ChunkSize * 2), 5, Seed);
+
+            Interpolation.UpdateBicubicCoefficients(dataPoints);
+
+
+            float[,] data = new float[Constants.World.ChunkSize, Constants.World.ChunkSize];
+
+            for (int x = 0; x < Constants.World.ChunkSize; x++)
             {
-                layer.OffsetGridElements(currentOffset);
+                for (int y = 0; y < Constants.World.ChunkSize; y++)
+                {
+                    data[x, y] = Perlin.GetPerlin(x + realX, y + realY, 5, Seed) * Interpolation.BicubicInterpolation((float)x / (float)Constants.World.ChunkSize, (float)y / (float)Constants.World.ChunkSize);
+                }
             }
-        }
 
-        static private float GetLandscapeHeight(int x, int y, ChunkIndex index)
-        {
-            ChunkIndex relativeIndex;
-            float weight;
-            float totalWeight;
-
-            float returnVal = 0;
-            totalWeight = 0;
-
-            foreach (GridLayer layer in Layers)
-            {
-                relativeIndex = index + layer.FixedOffset;
-                weight = Interpolation.Weight((float)((((relativeIndex.X % Constants.World.WorldSize) + Constants.World.WorldSize) % Constants.World.WorldSize) * Constants.World.ChunkSize + x) / (float)(Constants.World.WorldSize * Constants.World.ChunkSize), (float)(((((relativeIndex.Z % Constants.World.WorldSize) + Constants.World.WorldSize) % Constants.World.WorldSize) * Constants.World.ChunkSize + y) / (float)(Constants.World.WorldSize * Constants.World.ChunkSize)));
-
-                relativeIndex = index - layer.CurrentOffset + layer.FixedOffset;
-                returnVal += layer.GetLandscapePoint(relativeIndex, new BlockIndex(x, 0, y)) * weight;
-                totalWeight += weight;
-            }
-            returnVal /= totalWeight;
-
-            return returnVal * 10;
+            return data;
         }
 
         static public void SetChunkTerrain(Chunk chunk)
         {
-            int height;
+            float[,] heightData = GetLandscapeHeight(chunk.Index);
             int absoluteHeight;
 
             for (int x = 0; x < Constants.World.ChunkSize; x++)
             {
                 for (int z = 0; z < Constants.World.ChunkSize; z++)
                 {
-                    height = (int)GetLandscapeHeight(x, z, chunk.Index) + Constants.Landscape.WorldHeightOffset;
-
+                    int height = (int)(heightData[x, z] * 50.0F) + Constants.Landscape.WorldHeightOffset;
                     for (int y = 0; y < Constants.World.ChunkSize; y++)
                     {
                         absoluteHeight = y + (int)(chunk.Index).Position.Y;
