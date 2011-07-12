@@ -19,114 +19,6 @@ using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Definitions
 {
-    public class WorldIndex
-    {
-        public float X;
-        public float Y;
-
-        public Vector3 Position
-        {
-            get { return new Vector3(X * Constants.World.ChunkSize * Constants.World.WorldSize, 0, Y * Constants.World.ChunkSize * Constants.World.WorldSize); }
-        }
-
-        public WorldIndex(float x, float y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public WorldIndex(Vector2 position)
-        {
-            X = (int)Math.Floor((double)position.X / (double)(Constants.World.ChunkSize * Constants.World.WorldSize));
-            Y = (int)Math.Floor((double)position.Y / (double)(Constants.World.ChunkSize * Constants.World.WorldSize));
-        }
-
-        public WorldIndex(Vector3 position)
-        {
-            X = (int)Math.Floor((double)position.X / (double)(Constants.World.ChunkSize * Constants.World.WorldSize));
-            Y = (int)Math.Floor((double)position.Z / (double)(Constants.World.ChunkSize * Constants.World.WorldSize));
-        }
-
-        public WorldIndex(ChunkIndex index)
-        {
-            X = (int)Math.Floor((double)index.X / (double)Constants.World.WorldSize);
-            Y = (int)Math.Floor((double)index.Z / (double)Constants.World.WorldSize);
-        }
-
-        public BlockIndex ToBlockIndex()
-        {
-            return new BlockIndex((int)(X * Constants.World.ChunkSize * Constants.World.WorldSize), 0, (int)(Y * Constants.World.ChunkSize * Constants.World.WorldSize));
-        }
-
-        public float DistanceFromOrigo()
-        {
-            return (float)Math.Sqrt(Math.Pow(X * Constants.World.ChunkSize * Constants.World.WorldSize, 2) + Math.Pow(Y * Constants.World.ChunkSize * Constants.World.WorldSize, 2));
-        }
-
-        public static WorldIndex Zero { get { return new WorldIndex(0, 0); } }
-        public static WorldIndex UnitX { get { return new WorldIndex(1, 0); } }
-        public static WorldIndex UnitY { get { return new WorldIndex(0, 1); } }
-        public static WorldIndex One { get { return new WorldIndex(1, 1); } }
-
-        public static WorldIndex operator +(WorldIndex part1, WorldIndex part2)
-        {
-            return new WorldIndex(part1.X + part2.X, part1.Y + part2.Y);
-        }
-
-        public static WorldIndex operator +(WorldIndex part1, ChunkIndex part2)
-        {
-            return new WorldIndex(part1.X - (float)part2.X / (float)Constants.World.WorldSize, part1.Y - (float)part2.Z / (float)Constants.World.WorldSize);
-        }
-
-        public static WorldIndex operator -(WorldIndex part1, WorldIndex part2)
-        {
-            return new WorldIndex(part1.X - part2.X, part1.Y - part2.Y);
-        }
-
-        public static WorldIndex operator *(WorldIndex part1, int part2)
-        {
-            return new WorldIndex(part1.X * part2, part1.Y * part2);
-        }
-
-        public static WorldIndex operator *(WorldIndex part1, float part2)
-        {
-            return new WorldIndex((int)((float)part1.X * part2), (int)((float)part1.Y * part2));
-        }
-
-        public static WorldIndex operator *(WorldIndex part1, WorldIndex part2)
-        {
-            return new WorldIndex(part1.X * part2.X, part1.Y * part2.Y);
-        }
-
-        public static WorldIndex operator /(WorldIndex part1, float part2)
-        {
-            return new WorldIndex(part1.X / part2, part1.Y / part2);
-        }
-        public static WorldIndex operator %(WorldIndex part1, int part2)
-        {
-            return new WorldIndex(part1.X % part2, part1.Y % part2);
-        }
-
-        public static bool operator ==(WorldIndex part1, WorldIndex part2)
-        {
-            return (part1.X == part2.X && part1.Y == part2.Y);
-        }
-
-        public static bool operator !=(WorldIndex part1, WorldIndex part2)
-        {
-            return !(part1.X == part2.X && part1.Y == part2.Y);
-        }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-    }
     public class ChunkIndex
     {
         public int X;
@@ -180,19 +72,9 @@ namespace Umbra.Definitions
             return new ChunkIndex(part1.X + part2.X, part1.Y + part2.Y, part1.Z + part2.Z);
         }
 
-        public static ChunkIndex operator +(ChunkIndex part1, WorldIndex part2)
-        {
-            return new ChunkIndex(part1.X + (int)(part2.X * Constants.World.WorldSize), part1.Y + (int)(part2.Y * Constants.World.WorldSize), part1.Z + (int)(part2.Y * Constants.World.WorldSize));
-        }
-
         public static ChunkIndex operator -(ChunkIndex part1, ChunkIndex part2)
         {
             return new ChunkIndex(part1.X - part2.X, part1.Y - part2.Y, part1.Z - part2.Z);
-        }
-
-        public static ChunkIndex operator -(ChunkIndex part1, WorldIndex part2)
-        {
-            return new ChunkIndex(part1.X - (int)(part2.X * Constants.World.WorldSize), part1.Y - (int)(part2.Y * Constants.World.WorldSize), part1.Z - (int)(part2.Y * Constants.World.WorldSize));
         }
 
         public static ChunkIndex operator *(ChunkIndex part1, int part2)

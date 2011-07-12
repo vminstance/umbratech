@@ -24,8 +24,6 @@ namespace Umbra.Structures
         public Camera FirstPersonCamera { get; private set; }
         float CurrentAlterDelay;
 
-        Chunk LastChunk;
-
         public Player()
             : base(Constants.Player.Spawn, new Vector3(Constants.Player.Physics.Box.Width, Constants.Player.Physics.Box.Height, Constants.Player.Physics.Box.Width), Constants.Player.Physics.Mass)
         {
@@ -73,17 +71,14 @@ namespace Umbra.Structures
                     ApplyForce(Vector3.Up * Constants.Player.Movement.JumpForce);
                 }
 
-                Chunk thisChunk = Constants.World.Current.GetChunk(new ChunkIndex(Position));
+                Vector3 currentWorldCenter = Constants.World.Current.Offset.Position + Vector3.One * ((float)Constants.World.WorldSize / 2.0F) * (float)Constants.World.ChunkSize;
 
-                if (LastChunk == null)
+                if (new ChunkIndex(Position) != new ChunkIndex(currentWorldCenter))
                 {
-                    LastChunk = thisChunk;
-                }
-
-                if (LastChunk != Constants.World.Current.GetChunk(new ChunkIndex(Position)))
-                {
-                    Constants.World.Current.OffsetChunks(thisChunk.Index - LastChunk.Index);
-                    LastChunk = thisChunk;
+                    if ((Position - currentWorldCenter).Length() > Constants.World.UpdateLengthFromCenter)
+                    {
+                        Constants.World.Current.OffsetChunks(new ChunkIndex(Position - currentWorldCenter));
+                    }
                 }
             }
 

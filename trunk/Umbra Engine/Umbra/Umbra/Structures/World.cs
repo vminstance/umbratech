@@ -22,7 +22,6 @@ namespace Umbra.Structures
     public class World
     {
         Chunk[, ,] LoadedChunks;
-        //static float[,] ChunkValues;
 
         public ChunkIndex Offset { get; private set; }
 
