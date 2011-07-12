@@ -164,9 +164,10 @@ namespace Umbra.Definitions.Globals
         {
             static public Structures.World Current;
             static public int ChunkSize = 32;
-            static public int WorldSize = 8;
+            static public int WorldSize = 7;
             static public bool DynamicWorld = true;
             static public bool SaveDynamicWorld = false;
+            static public int UpdateLengthFromCenter = ChunkSize * 3 / 2;
         }
 
         static public class Physics
@@ -177,15 +178,16 @@ namespace Umbra.Definitions.Globals
 
         static public class Landscape
         {
-            static public int PerlinNoiseAmplitude = World.WorldSize * World.ChunkSize / 8;
-            static public int BicubicAmplitude = World.WorldSize * World.ChunkSize / 1;
-            static public string WorldSeed = "time";
-            static public int WorldHeightOffset = 0;
+            static public string WorldSeed = "";
+            static public int PerlinOctaves = 7;            // Area taken into account = 2^octaves, currently 128 blocks;
+            static public float PerlinBicubicWeight = 0.6F; // 0.0F = Total perlin, 1.0F = Total Bicubic
+            static public float WorldHeightAmplitude = 120.0F;
+            static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F);
         }
 
         static public class Player
         {
-            static public Vector3 Spawn = new Vector3(0, 0, 0);
+            static public Vector3 Spawn = new Vector3(16, 16, 16);
             static public float MinDistanceToGround = 0.02F;
 
             static public class Physics
@@ -214,7 +216,7 @@ namespace Umbra.Definitions.Globals
             {
                 static public float NoclipSpeed = 0.3F;
 
-                static public float WalkForce = 24.0F * Physics.Mass;
+                static public float WalkForce = 36.0F * Physics.Mass;
                 static public float MaxSpeed = 4.0F;
                 static public float JumpForce = Physics.Mass * 5.42F * 60.0F;
 

@@ -68,14 +68,14 @@ namespace Umbra.Engines
 
             Windows = new List<Window>();
 
-            Windows.Add(new GraphWindow("Scroll wheel value", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
-                (GraphFunction)(() => new float[] { 
-                    Constants.Engine_Input.MouseCurrentState.ScrollWheelValue
-                })));
-            Windows.Add(new GraphWindow("Negative scroll wheel value", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
-                (GraphFunction)(() => new float[] { 
-                    -Constants.Engine_Input.MouseCurrentState.ScrollWheelValue
-                })));
+            //Windows.Add(new GraphWindow("Scroll wheel value", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
+            //    (GraphFunction)(() => new float[] { 
+            //        Constants.Engine_Input.MouseCurrentState.ScrollWheelValue
+            //    })));
+            //Windows.Add(new GraphWindow("Negative scroll wheel value", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
+            //    (GraphFunction)(() => new float[] { 
+            //        -Constants.Engine_Input.MouseCurrentState.ScrollWheelValue
+            //    })));
 
             base.Initialize();
         }

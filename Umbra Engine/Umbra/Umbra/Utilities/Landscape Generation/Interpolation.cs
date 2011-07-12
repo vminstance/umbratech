@@ -22,6 +22,29 @@ namespace Umbra.Utilities
     static public class Interpolation
     {
 
+        static public int GetFloored(int value, int floor)
+        {
+            if (value > 0)
+            {
+                return value % floor;
+            }
+            else if (value < 0)
+            {
+                if (value % floor == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return floor + (value % floor);
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         static public float BilinearInterpolation(float[,] Data, float x, float y)
         {
             return Data[0, 0] * (1 - x) * (1 - y) + Data[1, 0] * x * (1 - y) + Data[0, 1] * (1 - x) * y + Data[1, 1] * x * y;
