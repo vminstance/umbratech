@@ -179,9 +179,9 @@ namespace Umbra.Definitions.Globals
         static public class Landscape
         {
             static public string WorldSeed = "";
-            static public int PerlinOctaves = 7;            // Area taken into account = 2^octaves, currently 128 blocks;
+            static public int PerlinOctaves = 8;            // Area taken into account = 2^octaves, currently 256 blocks;
             static public float PerlinBicubicWeight = 0.6F; // 0.0F = Total perlin, 1.0F = Total Bicubic
-            static public float WorldHeightAmplitude = 120.0F;
+            static public float WorldHeightAmplitude = 160.0F;
             static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F);
         }
 
