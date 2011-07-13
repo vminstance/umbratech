@@ -26,6 +26,11 @@ namespace Umbra.Implementations
         static public void Initialize(string seed)
         {
             Seed = seed.GetHashCode();
+
+            if (seed == "")
+            {
+                Seed = (int)System.Diagnostics.Stopwatch.GetTimestamp();
+            }
         }
 
         static private float[,] GetLandscapeHeight(ChunkIndex index)
