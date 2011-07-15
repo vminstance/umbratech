@@ -59,7 +59,8 @@ namespace Umbra.Structures
             switch (Type)
             {
                 case (byte)BlockType.Air: return 253;                                                            
-                case (byte)BlockType.Grass: return new byte[] { 3, 3, 0, 2, 3, 3 }[(byte)direction];               
+                case (byte)BlockType.Grass: return new byte[] { 3, 3, 0, 2, 3, 3 }[(byte)direction];  
+                //case (byte)BlockType.Grass: return 0;
                 case (byte)BlockType.Stone: return 1;                                                              
                 case (byte)BlockType.Dirt: return 2;                                                               
                 case (byte)BlockType.Water: return 205;                                                            

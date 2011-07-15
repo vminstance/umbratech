@@ -25,6 +25,8 @@ namespace Umbra.Implementations
     {
         ChunkQueue LoadQueue;
         ChunkQueue GenerationQueue;
+        ChunkQueue VegetationQueue;
+        ChunkQueue BuildQueue;
         ChunkQueue SetupQueue;
         ChunkQueue UnloadQueue;
 
@@ -36,6 +38,16 @@ namespace Umbra.Implementations
         public void AddToGeneration(Chunk chunk)
         {
             GenerationQueue.Enqueue(chunk);
+        }
+
+        public void AddToVegetation(Chunk chunk)
+        {
+            VegetationQueue.Enqueue(chunk);
+        }
+
+        public void AddToBuild(Chunk chunk)
+        {
+            BuildQueue.Enqueue(chunk);
         }
 
         public void AddToSetup(Chunk chunk)
@@ -52,6 +64,8 @@ namespace Umbra.Implementations
 
             LoadQueue.Remove(chunk);
             GenerationQueue.Remove(chunk);
+            VegetationQueue.Remove(chunk);
+            BuildQueue.Remove(chunk);
             SetupQueue.Remove(chunk);
 
             chunk.WillBeUnloaded = true;
@@ -61,6 +75,8 @@ namespace Umbra.Implementations
         {
             LoadQueue = new ChunkQueue();
             GenerationQueue = new ChunkQueue();
+            VegetationQueue = new ChunkQueue();
+            BuildQueue = new ChunkQueue();
             SetupQueue = new ChunkQueue();
             UnloadQueue = new ChunkQueue();
 
@@ -139,12 +155,65 @@ namespace Umbra.Implementations
                     // Generate Chunk
 
                     LandscapeGenerator.SetChunkTerrain(currentChunk);
-                    currentChunk.BuildOctree();
-                    currentChunk.HasData = true;
 
                     Console.Write("GenerationQueue: " + GenerationQueue.Count);
 
                     // End Generate Chunk
+
+                    if (VegetationQueue.Contains(currentChunk))
+                    {
+                        VegetationQueue.Remove(currentChunk);
+                        VegetationQueue.Enqueue(currentChunk);
+                    }
+                    else
+                    {
+                        AddToVegetation(currentChunk);
+                    }
+                }
+                else if (VegetationQueue.Count > 0)
+                {
+                    currentChunk = VegetationQueue.Dequeue();
+
+                    if (currentChunk == null)
+                    {
+                        continue;
+                    }
+
+                    // Vegetate Chunk
+
+                    Vegetation.Vegetate(currentChunk);
+
+                    Console.Write("VegetationQueue: " + VegetationQueue.Count);
+
+                    // End Vegetate Chunk
+
+                    if (BuildQueue.Contains(currentChunk))
+                    {
+                        BuildQueue.Remove(currentChunk);
+                        BuildQueue.Enqueue(currentChunk);
+                    }
+                    else
+                    {
+                        AddToBuild(currentChunk);
+                    }
+                }
+                else if (BuildQueue.Count > 0)
+                {
+                    currentChunk = BuildQueue.Dequeue();
+
+                    if (currentChunk == null)
+                    {
+                        continue;
+                    }
+
+                    // Build Chunk
+
+                    currentChunk.BuildOctree();
+                    currentChunk.HasData = true;
+
+                    Console.Write("BuildQueue: " + BuildQueue.Count);
+
+                    // End Build Chunk
 
                     if (SetupQueue.Contains(currentChunk))
                     {

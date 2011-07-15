@@ -164,6 +164,7 @@
     <Compile Include="Structures\FaceList.cs" />
     <Compile Include="Structures\Octree.cs" />
     <Compile Include="Structures\World.cs" />
+    <Compile Include="Utilities\Landscape Generation\Vegetation.cs" />
     <Compile Include="Utilities\VertexDeclaration.cs" />
   </ItemGroup>
   <ItemGroup>
