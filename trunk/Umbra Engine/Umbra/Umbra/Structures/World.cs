@@ -143,11 +143,23 @@ namespace Umbra.Structures
 
         public void SetBlock(BlockIndex index, Block type)
         {
+            SetBlock(index, type, true);
+        }
+
+        public void SetBlock(BlockIndex index, Block type, bool rebuildOctree)
+        {
             Chunk chunk = GetChunk(new ChunkIndex(index.Position));
 
             if (chunk != null)
             {
-                chunk.SetBlock(index - chunk.Index, type, true);
+                if (rebuildOctree)
+                {
+                    chunk.SetBlock(index - chunk.Index, type, true);
+                }
+                else
+                {
+                    chunk[index - chunk.Index] = type;
+                }
             }
         }
 

@@ -31,6 +31,8 @@ namespace Umbra.Implementations
             {
                 Seed = (int)System.Diagnostics.Stopwatch.GetTimestamp();
             }
+
+            Vegetation.Initialize(Seed);
         }
 
         static private float[,] GetLandscapeHeight(ChunkIndex index)
@@ -85,6 +87,8 @@ namespace Umbra.Implementations
                         Interpolation.BicubicInterpolation((float)xBlockInSquare / (float)squareSize, (float)yBlockInSquare / (float)squareSize),
                         Constants.Landscape.PerlinBicubicWeight
                         );
+
+                    data[blockX, blockY] =  (data[blockX, blockY] * Constants.Landscape.WorldHeightAmplitude) + (float)Constants.Landscape.WorldHeightOffset;
                 }
             }
 
@@ -94,13 +98,16 @@ namespace Umbra.Implementations
         static public void SetChunkTerrain(Chunk chunk)
         {
             float[,] heightData = GetLandscapeHeight(chunk.Index);
+
             int absoluteHeight;
 
             for (int x = 0; x < Constants.World.ChunkSize; x++)
             {
                 for (int z = 0; z < Constants.World.ChunkSize; z++)
                 {
-                    int height = (int)(heightData[x, z] * Constants.Landscape.WorldHeightAmplitude) + Constants.Landscape.WorldHeightOffset;
+
+                    float height = heightData[x, z];
+
                     for (int y = 0; y < Constants.World.ChunkSize; y++)
                     {
                         absoluteHeight = y + (int)(chunk.Index).Position.Y;

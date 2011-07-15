@@ -124,7 +124,7 @@ namespace Umbra.Definitions.Globals
             static public class Lighting
             {
                 static public byte UpShade = 250;
-                static public byte DownShade = 250;
+                static public byte DownShade = 100;
                 static public byte LeftShade = 200;
                 static public byte RightShade = 200;
                 static public byte ForwardShade = 150;
@@ -164,7 +164,7 @@ namespace Umbra.Definitions.Globals
         {
             static public Structures.World Current;
             static public int ChunkSize = 32;
-            static public int WorldSize = 7;
+            static public int WorldSize = 9;
             static public bool DynamicWorld = true;
             static public bool SaveDynamicWorld = false;
             static public int UpdateLengthFromCenter = ChunkSize * 3 / 2;
@@ -183,6 +183,14 @@ namespace Umbra.Definitions.Globals
             static public float PerlinBicubicWeight = 0.6F; // 0.0F = Total perlin, 1.0F = Total Bicubic
             static public float WorldHeightAmplitude = 160.0F;
             static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F);
+
+
+            static public class Vegetation
+            {
+                static public float TreeMinHeight = 7.0F;   // Tree height = (random) * TreeVaryHeight + TreeMinHeight
+                static public float TreeVaryHeight = 8.0F;  // Tree height will vary from TreeMinHeight to TreeVaryHeight + TreeMinHeight
+                static public float TreeChance = 0.05F;     // If a tree can be placed at a location, this is the chance that it will grow there.
+            }
         }
 
         static public class Player
