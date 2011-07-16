@@ -196,6 +196,11 @@ namespace Umbra.Implementations
                     {
                         AddToBuild(currentChunk);
                     }
+
+                    if (VegetationQueue.Count == 0 && !Constants.Engine_Physics.Player.IsInitialized)
+                    {
+                        Constants.Engine_Physics.Player.Initialize();
+                    }
                 }
                 else if (BuildQueue.Count > 0)
                 {

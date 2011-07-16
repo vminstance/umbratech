@@ -122,8 +122,8 @@ PixelToFrame TexturedPS(VertexToPixelBlock PSIn)
 	}
 	if(xIsUnderWater)
 	{
-		float timeCoef = float(xTime) / 10000;
-		Output.Color.rg /= 2.1 + (sin(PSIn.OriginalPos.x * 1.5) * cos(PSIn.OriginalPos.z * 1.5)) / 4 * sin(PSIn.OriginalPos.x * timeCoef) * cos(PSIn.OriginalPos.y * timeCoef);
+		float timeCoef = float(xTime) / 100000;
+		Output.Color.rg /= 2.1 + (sin(PSIn.OriginalPos.x * 6 * timeCoef) * cos(PSIn.OriginalPos.z * 12 * timeCoef)) / 4;
 
 		float amount = saturate((depth)/(min(xFogEnd / 2, 10)));
 		Output.Color = lerp(Output.Color, xFogColor, amount);
@@ -133,6 +133,10 @@ PixelToFrame TexturedPS(VertexToPixelBlock PSIn)
 			float amount = saturate((depth-xFogStart)/(xFogEnd-xFogStart));
 			Output.Color = lerp(Output.Color, xFogColor, amount);
     }
+	if(Output.Color.a == 0)
+	{
+		discard;
+	}
 
 
 
@@ -168,10 +172,12 @@ VertexToPixelBlock TexturedVSAlpha( float4 inPos : POSITION0, float4 inColor : C
 
 
 	}
-
+	
+    float depth = length(inPos - xCameraPos);
 	if(IsTransparent)
 	{
         Output.Color.a *= 0.5;
+		//Output.Color.a = lerp(Output.Color.a, 1, min(depth / 5, 1));
     }
 	else
 	{

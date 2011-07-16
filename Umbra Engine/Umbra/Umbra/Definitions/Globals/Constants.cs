@@ -164,7 +164,7 @@ namespace Umbra.Definitions.Globals
         {
             static public Structures.World Current;
             static public int ChunkSize = 32;
-            static public int WorldSize = 9;
+            static public int WorldSize = 5;
             static public bool DynamicWorld = true;
             static public bool SaveDynamicWorld = false;
             static public int UpdateLengthFromCenter = ChunkSize * 3 / 2;
@@ -180,14 +180,14 @@ namespace Umbra.Definitions.Globals
         {
             static public string WorldSeed = "";
             static public int PerlinOctaves = 8;            // Area taken into account = 2^octaves, currently 256 blocks;
-            static public float PerlinBicubicWeight = 0.6F; // 0.0F = Total perlin, 1.0F = Total Bicubic
-            static public float WorldHeightAmplitude = 160.0F;
+            static public float PerlinBicubicWeight = 0.7F; // 0.0F = Total perlin, 1.0F = Total Bicubic
+            static public float WorldHeightAmplitude = 256.0F;
             static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F);
 
 
             static public class Vegetation
             {
-                static public float TreeMinHeight = 7.0F;   // Tree height = (random) * TreeVaryHeight + TreeMinHeight
+                static public float TreeMinHeight = 7.0F;   // Tree height = (random 0-1) * TreeVaryHeight + TreeMinHeight
                 static public float TreeVaryHeight = 8.0F;  // Tree height will vary from TreeMinHeight to TreeVaryHeight + TreeMinHeight
                 static public float TreeChance = 0.05F;     // If a tree can be placed at a location, this is the chance that it will grow there.
             }
@@ -195,12 +195,12 @@ namespace Umbra.Definitions.Globals
 
         static public class Player
         {
-            static public Vector3 Spawn = new Vector3(16, 16, 16);
+            static public Vector3 Spawn = new Vector3(16, 0, 16);
             static public float MinDistanceToGround = 0.02F;
 
             static public class Physics
             {
-                static public float Mass = 75.0F;
+                static public float Mass = 400.0F;
 
                 static public class Box
                 {
@@ -226,7 +226,8 @@ namespace Umbra.Definitions.Globals
 
                 static public float WalkForce = 36.0F * Physics.Mass;
                 static public float MaxSpeed = 4.0F;
-                static public float JumpForce = Physics.Mass * 5.42F * 60.0F;
+                static public float JumpForce = Physics.Mass * 4.9F * 60.0F;
+                static public float SwimForce = 30.0F * Physics.Mass;
 
                 static public float GripSignificance = 3F;
             }

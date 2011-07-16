@@ -46,50 +46,10 @@ namespace Umbra.Engines
             {
                 return;
             }
-
-            if (e.Character == '\b')
-            {
-                Console.InputString = Console.InputString.Substring(0, Math.Max(Console.InputString.Length - 1, 0));
-                Console.CursorPosition--;
-            }
-            else if (e.Character == '\r')
-            {
-                if (Console.InputString != null && Console.InputString != "")
-                {
-                    if (Console.InputString[0] == '/')
-                    {
-                        Console.ExecuteCurrentInput();
-                    }
-                    else
-                    {
-                        Console.WriteCurrentInput();
-                    }
-                }
-                Console.InputString = "";
-                Console.CursorPosition = 0;
-                if (!(Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.LeftShift) || Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.RightShift)))
-                {
-                    Console.Close();
-                }
-            }
-            else if (e.Character == (char)27)
-            {
-                Console.Toggle();
-                Console.CursorPosition = 0;
-            }
-            else if (e.Character == '\t')
-            {
-                Console.InputString = "    ";
-                Console.CursorPosition += 4;
-            }
             else
             {
-                Console.InputString = Console.InputString + e.Character;
-                Console.CursorPosition++;
+                Console.Input(e);
             }
-
-            Console.CursorPosition = Math.Max(Console.CursorPosition, 0);
-            Console.CursorPosition = Math.Min(Console.CursorPosition, Console.InputString.Length);
         }
 
 
@@ -175,30 +135,40 @@ namespace Umbra.Engines
 
         public Vector3 NoclipDirection()
         {
-            Vector3 returnVector = new Vector3((Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.D) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.A) ? 1 : 0),
-                (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.Space) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.LeftShift) ? 1 : 0),
-                (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.S) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.W) ? 1 : 0));
+            Vector3 returnVector = Vector3.Zero;
 
-            if (returnVector == Vector3.Zero)
+            if (Variables.Game.IsActive && !Console.IsActive)
             {
-                return Vector3.Zero;
+                returnVector = new Vector3((Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.D) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.A) ? 1 : 0),
+                    (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.Space) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.LeftShift) ? 1 : 0),
+                    (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.S) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.W) ? 1 : 0));
             }
 
-            return Vector3.Normalize(returnVector);
+            if (returnVector != Vector3.Zero)
+            {
+                returnVector = Vector3.Normalize(returnVector);
+            }
+
+            return returnVector;
         }
 
         public Vector3 WalkingDirection()
         {
-            Vector3 returnVector = new Vector3((Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.D) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.A) ? 1 : 0),
+            Vector3 returnVector = Vector3.Zero;
+
+            if (Variables.Game.IsActive && !Console.IsActive)
+            {
+                returnVector = new Vector3((Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.D) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.A) ? 1 : 0),
                 0,
                 (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.S) ? 1 : 0) - (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.W) ? 1 : 0));
-
-            if (returnVector == Vector3.Zero)
-            {
-                return Vector3.Zero;
             }
 
-            return Vector3.Normalize(returnVector);
+            if (returnVector != Vector3.Zero)
+            {
+                returnVector = Vector3.Normalize(returnVector);
+            }
+
+            return returnVector;
         }
 
         public bool IsRunning()
