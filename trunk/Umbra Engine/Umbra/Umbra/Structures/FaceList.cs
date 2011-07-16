@@ -222,6 +222,16 @@ namespace Umbra.Structures
             BlockVisibility thisBlockVisibility = thisBlock.Visibility;
             BlockVisibility nextBlockVisibility = nextBlock.Visibility;
 
+            // Special cases:
+
+            if (thisBlock.Type == Block.Leaves.Type && nextBlock.Type == Block.Leaves.Type)
+            {
+                return FaceValidation.BothFaces;
+            }
+
+
+            // Normal
+
             if (thisBlockVisibility == BlockVisibility.Invisible && nextBlockVisibility == BlockVisibility.Invisible)
             {
                 return FaceValidation.NoFaces;

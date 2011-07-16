@@ -51,6 +51,10 @@ namespace Umbra.Engines
 
         private void UpdateVelocity(PhysicsObject currentObject, GameTime gameTime)
         {
+            // To avoid errors, remove velocity if too small.
+            currentObject.Velocity.X = (float)Math.Round(currentObject.Velocity.X, 4);
+            currentObject.Velocity.Y = (float)Math.Round(currentObject.Velocity.Y, 4);
+            currentObject.Velocity.Z = (float)Math.Round(currentObject.Velocity.Z, 4);
 
             // Gravity
             currentObject.ApplyForce(Vector3.Down * Constants.Physics.Gravity * currentObject.Mass);
@@ -142,7 +146,7 @@ namespace Umbra.Engines
             {
                 for (int z = (int)Math.Floor(obj.BoundingBox.Min.Z); z <= Math.Floor(obj.BoundingBox.Max.Z); z++)
                 {
-                    returnList.Add(new BlockIndex(x, (int)(obj.Position.Y - Constants.Player.MinDistanceToGround), z));
+                    returnList.Add(new BlockIndex(x, (int)Math.Floor(obj.Position.Y - Constants.Player.MinDistanceToGround), z));
                 }
             }
 

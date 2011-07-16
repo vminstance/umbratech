@@ -93,7 +93,7 @@ namespace Umbra.Utilities
                 }
             }
 
-            if (Perlin.GetByValues(point.X * point.X * point.Z + point.Y * point.Z, chunk.Index.X * chunk.Index.X * chunk.Index.Z + chunk.Index.Y * chunk.Index.Z, Seed) > Constants.Landscape.Vegetation.TreeChance)
+            if (Perlin.GetByValues(point.X * point.X * point.Z + point.Y * point.Z, chunk.Index.X * chunk.Index.X * chunk.Index.Z + chunk.Index.Y * chunk.Index.Z, Seed) < Constants.Landscape.Vegetation.TreeChance)
             {
                 return;
             }

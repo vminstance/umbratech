@@ -91,6 +91,53 @@ namespace Umbra.Implementations
             Write("[Player]: "+InputString);
         }
 
+        static public void Input(CharacterEventArgs e)
+        {
+            if (e.Character == '\b')
+            {
+                InputString = InputString.Substring(0, Math.Max(InputString.Length - 1, 0));
+                CursorPosition--;
+            }
+            else if (e.Character == '\r')
+            {
+                if (InputString != null && InputString != "")
+                {
+                    if (InputString[0] == '/')
+                    {
+                        ExecuteCurrentInput();
+                    }
+                    else
+                    {
+                        WriteCurrentInput();
+                    }
+                }
+                InputString = "";
+                CursorPosition = 0;
+                if (!(Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.LeftShift) || Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.RightShift)))
+                {
+                    Close();
+                }
+            }
+            else if (e.Character == (char)27)
+            {
+                Toggle();
+                CursorPosition = 0;
+            }
+            else if (e.Character == '\t')
+            {
+                InputString = "    ";
+                CursorPosition += 4;
+            }
+            else
+            {
+                InputString = InputString + e.Character;
+                CursorPosition++;
+            }
+
+            CursorPosition = Math.Max(CursorPosition, 0);
+            CursorPosition = Math.Min(CursorPosition, InputString.Length);
+        }
+
         static private string FormatInput(string input, out string[] args)
         {
             string[] inputs = input.ToLower().Split(' ');
