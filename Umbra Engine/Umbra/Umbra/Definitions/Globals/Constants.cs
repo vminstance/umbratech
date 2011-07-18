@@ -164,10 +164,10 @@ namespace Umbra.Definitions.Globals
         {
             static public Structures.World Current;
             static public int ChunkSize = 32;
-            static public int WorldSize = 5;
+            static public int WorldSize = 3;
             static public bool DynamicWorld = true;
             static public bool SaveDynamicWorld = false;
-            static public int UpdateLengthFromCenter = ChunkSize * 3 / 2;
+            static public int UpdateLengthFromCenter = ChunkSize;
         }
 
         static public class Physics
@@ -200,7 +200,7 @@ namespace Umbra.Definitions.Globals
 
             static public class Physics
             {
-                static public float Mass = 400.0F;
+                static public float Mass = 350.0F;
 
                 static public class Box
                 {
@@ -227,7 +227,7 @@ namespace Umbra.Definitions.Globals
                 static public float WalkForce = 36.0F * Physics.Mass;
                 static public float MaxSpeed = 4.0F;
                 static public float JumpForce = Physics.Mass * 4.9F * 60.0F;
-                static public float SwimForce = 30.0F * Physics.Mass;
+                static public float SwimForce = 40.0F * Physics.Mass;
 
                 static public float GripSignificance = 3F;
             }
@@ -269,7 +269,7 @@ namespace Umbra.Definitions.Globals
 
             static public class Data
             {
-                static public string WorldPath = Directory.GetCurrentDirectory() + @"worlds/";
+                static public string WorldPath = Directory.GetCurrentDirectory() + @"/worlds/";
                 static public string ChunkFilePath = @"chunks/";
                 static public string ChunkFileExtension = @".cnk";
             }

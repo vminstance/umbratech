@@ -244,7 +244,6 @@ namespace Umbra.Definitions
                     Console.Write(s);
                 }
 
-                Console.Toggle();
                 return false;
             });
 
@@ -312,7 +311,6 @@ namespace Umbra.Definitions
                     {
                         Console.Write(s);
                     }
-                    Console.Toggle();
                     return false;
                 }
 
@@ -328,7 +326,6 @@ namespace Umbra.Definitions
                 if (!canUse)
                 {
                     Popup.Post("\"" + args[0] + "\" is not a placable block!");
-                    Console.Toggle();
                     return false;
                 }
 
