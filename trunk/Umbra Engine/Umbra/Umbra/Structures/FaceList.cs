@@ -224,9 +224,9 @@ namespace Umbra.Structures
 
             // Special cases:
 
-            if (thisBlock.Type == Block.Leaves.Type && nextBlock.Type == Block.Leaves.Type)
+            if (nextBlock.Type == Block.Vacuum.Type)
             {
-                return FaceValidation.BothFaces;
+                return FaceValidation.NoFaces;
             }
 
 

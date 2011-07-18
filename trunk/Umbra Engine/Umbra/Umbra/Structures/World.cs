@@ -29,7 +29,7 @@ namespace Umbra.Structures
         {
             get
             {
-                return Constants.Content.Data.WorldPath + @"\" + Name;
+                return Constants.Content.Data.WorldPath + Name + @"/";
             }
         }
         public string Name { get; private set; }

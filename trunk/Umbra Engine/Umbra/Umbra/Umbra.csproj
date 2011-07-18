@@ -32,8 +32,8 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>111</ApplicationRevision>
+    <ApplicationVersion>1.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -128,10 +128,13 @@
     <Compile Include="Definitions\Globals\Constants.cs" />
     <Compile Include="Definitions\Globals\Variables.cs" />
     <Compile Include="Definitions\IndexLibrary.cs" />
+    <Compile Include="Engines\Graphics.cs" />
     <Compile Include="Engines\Physics.cs" />
     <Compile Include="Implementations\BlockCursor.cs" />
     <Compile Include="Implementations\Compass.cs" />
     <Compile Include="Implementations\ClockTime.cs" />
+    <None Include="Structures\new_FaceList.cs" />
+    <Compile Include="Structures\Octree.cs" />
     <Compile Include="Structures\Forms\GraphWindow.cs" />
     <Compile Include="Structures\Forms\Handle.cs" />
     <Compile Include="Structures\Forms\WindowComponent.cs" />
@@ -144,11 +147,12 @@
     <Compile Include="Structures\ChunkQueue.cs" />
     <Compile Include="Structures\PhysicsObject.cs" />
     <Compile Include="Structures\Forms\Window.cs" />
+    <None Include="Utilities\new_VertexDeclaration.cs" />
     <Compile Include="Utilities\EventInput.cs" />
     <Compile Include="Utilities\Landscape Generation\Interpolation.cs" />
     <Compile Include="Utilities\Landscape Generation\Perlin.cs" />
     <Compile Include="Engines\Content.cs" />
-    <Compile Include="Engines\Graphics.cs" />
+    <None Include="Engines\new_Graphics.cs" />
     <Compile Include="Engines\Input.cs" />
     <Compile Include="Engines\Overlay.cs" />
     <Compile Include="Engines\Sound.cs" />
@@ -162,7 +166,7 @@
     <Compile Include="Implementations\Camera.cs" />
     <Compile Include="Structures\Chunk.cs" />
     <Compile Include="Structures\FaceList.cs" />
-    <Compile Include="Structures\Octree.cs" />
+    <None Include="Structures\new_Octree.cs" />
     <Compile Include="Structures\World.cs" />
     <Compile Include="Utilities\Landscape Generation\Vegetation.cs" />
     <Compile Include="Utilities\VertexDeclaration.cs" />

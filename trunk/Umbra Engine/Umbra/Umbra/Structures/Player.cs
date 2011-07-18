@@ -92,6 +92,8 @@ namespace Umbra.Structures
             // Add player movement
             if (Variables.Player.NoclipEnabled)
             {
+                // Noclip
+
                 Position += Vector3.Transform(Constants.Engine_Input.NoclipDirection(), FirstPersonCamera.Rotation) * Constants.Player.Movement.NoclipSpeed;
             }
             else
@@ -101,6 +103,8 @@ namespace Umbra.Structures
 
                 if (Constants.Engine_Physics.IsOnGround(this))
                 {
+                    // Walking on ground
+
                     Vector3 newVelocity = horizontalVelocity + Vector3.Transform(Constants.Engine_Input.WalkingDirection(), Matrix.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Movement.WalkForce / Mass * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
                     if (newVelocity != Vector3.Zero)
@@ -110,13 +114,15 @@ namespace Umbra.Structures
 
                     ApplyForce((newVelocity - horizontalVelocity) * Mass / (float)gameTime.ElapsedGameTime.TotalSeconds * GripCoefficient * Constants.Player.Movement.GripSignificance);
 
-                    if (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.Space) && Constants.Engine_Input.KeyboardLastState.IsKeyUp(Keys.Space) && Math.Round(Velocity.Y, 2) == 0)
+                    if (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.Space) && Math.Round(Velocity.Y, 2) == 0)
                     {
                         ApplyForce(Vector3.Up * Constants.Player.Movement.JumpForce);
                     }
                 }
                 else
                 {
+                    // Swimming or in air
+
                     Vector3 newVelocity = horizontalVelocity + Vector3.Transform(Constants.Engine_Input.WalkingDirection(), Matrix.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Movement.SwimForce / Mass * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
                     if (newVelocity != Vector3.Zero)
@@ -128,7 +134,9 @@ namespace Umbra.Structures
 
                     if (Constants.Engine_Input.KeyboardCurrentState.IsKeyDown(Keys.Space))
                     {
-                        ApplyForce(Vector3.Up * Constants.Player.Movement.SwimForce * Constants.World.Current.GetBlock(new BlockIndex(Position)).Viscosity / 5000.0F);
+                        float magnitude = MathHelper.Lerp(Constants.World.Current.GetBlock(new BlockIndex(Position)).Viscosity, Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3.UnitY)).Viscosity, Position.Y % 1) / 5000.0F;
+
+                        ApplyForce(Vector3.Up * Constants.Player.Movement.SwimForce * magnitude);
                     }
                 }
             }
