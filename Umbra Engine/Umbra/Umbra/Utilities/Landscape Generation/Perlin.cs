@@ -46,7 +46,7 @@ namespace Umbra.Utilities
                 ((float)b + 0.1F) *
                 ((float)c + 0.1F) +
                 ((float)b + 0.1F) *
-                ((float)c + 0.1F)).ToString().GetHashCode()) % 10000)) / 10000.0F;
+                ((float)c + 0.1F))/*.ToString().GetHashCode()*/) % 10000)) / 10000.0F;
         }
 
         static private float GetBilinearlyInterpolated(int x, int y, int squareSize, int seed)
