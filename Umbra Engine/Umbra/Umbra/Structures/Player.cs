@@ -23,14 +23,14 @@ namespace Umbra.Structures
     {
         public Camera FirstPersonCamera { get; private set; }
         float CurrentAlterDelay;
-        public bool IsInitialized { get; private set; }
+        public bool IsReleased;
 
         public Player()
             : base(Constants.Player.Spawn, new Vector3(Constants.Player.Physics.Box.Width, Constants.Player.Physics.Box.Height, Constants.Player.Physics.Box.Width), Constants.Player.Physics.Mass)
         {
             FirstPersonCamera = new Camera(this.Position);
             CurrentAlterDelay = Constants.Controls.AlterDelay;
-            IsInitialized = false;
+            IsReleased = false;
         }
 
         public Matrix GetViewMatrix()
@@ -45,16 +45,19 @@ namespace Umbra.Structures
 
         public void Initialize()
         {
-            while (Constants.World.Current.GetBlock(new BlockIndex(Position)).Type != Block.Air.Type)
+            Position.Y = (float)Math.Ceiling(Math.Max(LandscapeGenerator.GetLandscapeHeight(new Vector2(Position.X, Position.Z)), 0.0F));
+            IsReleased = false;
+        }
+
+        public void Release()
+        {
+
+            while (Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3.UnitY)).Type != Block.Air.Type || Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3.UnitY * 2)).Type != Block.Air.Type)
             {
-                Position += Vector3.UnitY;
-            }
-            while (Constants.World.Current.GetBlock(new BlockIndex(Position - Vector3.UnitY)).Type == Block.Air.Type)
-            {
-                Position -= Vector3.UnitY;
+                Position.Y++;
             }
 
-            IsInitialized = true;
+            IsReleased = true;
             Variables.Player.NoclipEnabled = false;
         }
 
@@ -63,7 +66,7 @@ namespace Umbra.Structures
 
             PhysicsEnabled = !Variables.Player.NoclipEnabled;
 
-            if (!Variables.Player.NoclipEnabled)
+            if (!Variables.Player.NoclipEnabled && Constants.World.DynamicWorld)
             {
                 Vector3 currentWorldCenter = Constants.World.Current.Offset.Position + Vector3.One * ((float)Constants.World.WorldSize / 2.0F) * (float)Constants.World.ChunkSize;
 

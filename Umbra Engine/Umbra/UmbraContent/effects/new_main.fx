@@ -61,10 +61,14 @@ VertexToPixelBlock TexturedVS( float inData : POSITION )
     float4x4 preWorldViewProjection = mul(xWorld, preViewProjection);
 
     float index = (inData % 65536);
-	float4 cornerPosition = GetCornerPosition(floor(inData / 65536));
+	float cornerPosition[3];
+
+	GetCornerPosition(floor(inData / 65536), cornerPosition);
     float4 realPosition = float4(index % 32, floor(index / 32) % 32, floor(index / 1024) % 32, 0);
 
-	realPosition += cornerPosition;
+	realPosition.x += cornerPosition[0];
+	realPosition.y += cornerPosition[1];
+	realPosition.z += cornerPosition[2];
 
     Output.Position			= mul(realPosition, preWorldViewProjection);
     Output.TextureCoords	= float2(0, 0);

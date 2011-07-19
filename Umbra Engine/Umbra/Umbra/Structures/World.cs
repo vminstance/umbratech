@@ -39,7 +39,7 @@ namespace Umbra.Structures
             Name = name;
 
             LoadedChunks = new Chunk[Constants.World.WorldSize, Constants.World.WorldSize, Constants.World.WorldSize];
-            Offset = ChunkIndex.One * (-Constants.World.WorldSize / 2);
+            Offset = ChunkIndex.One * (-Constants.World.WorldSize / 2) + ChunkIndex.UnitY * (Constants.Engine_Physics.Player.Position.Y / Constants.World.ChunkSize);
         }
 
         public void Initialize()
