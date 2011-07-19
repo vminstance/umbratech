@@ -47,12 +47,14 @@ namespace Umbra.Definitions.Globals
             Engine_Main.Components.Add(Engine_Overlay);
             Engine_Main.Components.Add(Engine_Sound);
 
-            World.Current = new Structures.World("default");
 
+            LandscapeGenerator.Initialize(Landscape.WorldSeed);
+            Engine_Physics.Player.Initialize();
+
+            World.Current = new Structures.World(World.Name);
             ConsoleFunctions.Initialize();
             EventInput.Initialize(Engine_Main.Window);
             ChunkManager.InitializeThreads();
-            LandscapeGenerator.Initialize(Landscape.WorldSeed);
             World.Current.Initialize();
             ClockTime.SetTimeOfDay(TimeOfDay.Day);
         }
@@ -112,7 +114,7 @@ namespace Umbra.Definitions.Globals
 
         static public class Graphics
         {
-            static public Vector2 ScreenResolution = new Vector2(1024, 600);
+            static public Vector2 ScreenResolution = new Vector2(1920, 1080);
             static public float AspectRatio = ScreenResolution.X / ScreenResolution.Y;
             static public bool AntiAliasingEnabled = true;
             static public float CameraNearPlane = 0.01f;
@@ -160,11 +162,17 @@ namespace Umbra.Definitions.Globals
             }
         }
 
+        static public class Launcher
+        {
+            static public bool Enabled = true;
+        }
+
         static public class World
         {
             static public Structures.World Current;
+            static public string Name = "default";
             static public int ChunkSize = 32;
-            static public int WorldSize = 3;
+            static public int WorldSize = 13;
             static public bool DynamicWorld = true;
             static public bool SaveDynamicWorld = false;
             static public int UpdateLengthFromCenter = ChunkSize;

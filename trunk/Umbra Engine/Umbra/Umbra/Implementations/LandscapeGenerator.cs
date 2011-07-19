@@ -105,7 +105,6 @@ namespace Umbra.Implementations
             {
                 for (int z = 0; z < Constants.World.ChunkSize; z++)
                 {
-
                     float height = heightData[x, z];
 
                     for (int y = 0; y < Constants.World.ChunkSize; y++)
@@ -152,6 +151,52 @@ namespace Umbra.Implementations
                     }
                 }
             }
+        }
+
+        static public float GetLandscapeHeight(Vector2 position)
+        {
+            int squareSize = Constants.World.ChunkSize;
+
+            int x = (int)position.X;
+            int y = (int)position.Y;
+
+            int xInSquare = Interpolation.GetFloored(x, squareSize);
+            int yInSquare = Interpolation.GetFloored(y, squareSize);
+
+            float[,] dataPoints = new float[4, 4];
+
+            dataPoints[0, 0] = Perlin.GetPerlin(x - xInSquare - squareSize, y - yInSquare - squareSize, Seed);
+            dataPoints[0, 1] = Perlin.GetPerlin(x - xInSquare - squareSize, y - yInSquare, Seed);
+            dataPoints[0, 2] = Perlin.GetPerlin(x - xInSquare - squareSize, y - yInSquare + squareSize, Seed);
+            dataPoints[0, 3] = Perlin.GetPerlin(x - xInSquare - squareSize, y - yInSquare + squareSize * 2, Seed);
+
+            dataPoints[1, 0] = Perlin.GetPerlin(x - xInSquare, y - yInSquare - squareSize, Seed);
+            dataPoints[1, 1] = Perlin.GetPerlin(x - xInSquare, y - yInSquare, Seed);
+            dataPoints[1, 2] = Perlin.GetPerlin(x - xInSquare, y - yInSquare + squareSize, Seed);
+            dataPoints[1, 3] = Perlin.GetPerlin(x - xInSquare, y + y - yInSquare + squareSize * 2, Seed);
+
+            dataPoints[2, 0] = Perlin.GetPerlin(x - xInSquare + squareSize, y - yInSquare - squareSize, Seed);
+            dataPoints[2, 1] = Perlin.GetPerlin(x - xInSquare + squareSize, y - yInSquare, Seed);
+            dataPoints[2, 2] = Perlin.GetPerlin(x - xInSquare + squareSize, y - yInSquare + squareSize, Seed);
+            dataPoints[2, 3] = Perlin.GetPerlin(x - xInSquare + squareSize, y - yInSquare + squareSize * 2, Seed);
+
+            dataPoints[3, 0] = Perlin.GetPerlin(x - xInSquare + squareSize * 2, y - yInSquare - squareSize, Seed);
+            dataPoints[3, 1] = Perlin.GetPerlin(x - xInSquare + squareSize * 2, y - yInSquare, Seed);
+            dataPoints[3, 2] = Perlin.GetPerlin(x - xInSquare + squareSize * 2, y - yInSquare + squareSize, Seed);
+            dataPoints[3, 3] = Perlin.GetPerlin(x - xInSquare + squareSize * 2, y - yInSquare + squareSize * 2, Seed);
+
+            Interpolation.UpdateBicubicCoefficients(dataPoints);
+
+
+            float data = MathHelper.Lerp(
+                        Perlin.GetPerlin(x, y, Seed),
+                        Interpolation.BicubicInterpolation((float)xInSquare / (float)squareSize, (float)yInSquare / (float)squareSize),
+                        Constants.Landscape.PerlinBicubicWeight
+                        );
+
+            data = (data * Constants.Landscape.WorldHeightAmplitude) + (float)Constants.Landscape.WorldHeightOffset;
+
+            return data;
         }
 
         static public float[] GetAdjacentTerrain(ChunkIndex index, Direction dir)

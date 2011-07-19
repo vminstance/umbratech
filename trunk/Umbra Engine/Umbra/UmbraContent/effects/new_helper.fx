@@ -1,35 +1,41 @@
 // Helper functions
 
-float4 GetCornerPosition(in float inData)
+void GetCornerPosition(in float inData, out float outData[3])
 {
     uint corner = abs(inData % 4);
     uint direction = abs(floor(inData / 4));
 
-    switch(direction)
+    if(direction == 0)
     {
-		case 0:
+        if(corner < 1)
 		{
-			switch(corner)
-			{
-				case 0:
-					return float4(1, 1, 0, 0);
-					break;
-
-				case 1:
-					return float4(1, 1, 1, 0);
-					break;
-
-				case 2:
-					return float4(1, 0, 0, 0);
-					break;
-
-				case 3:
-					return float4(1, 0, 1, 0);
-					break;
-			}
-			break;
-		}
-	}
+            outData[0] = 1;
+            outData[1] = 1;
+            outData[2] = 0;
+			return;
+        }
+        if(corner < 2)
+		{
+            outData[0] = 1;
+            outData[1] = 1;
+            outData[2] = 1;
+			return;
+        }
+        if(corner < 3)
+		{
+            outData[0] = 1;
+            outData[1] = 0;
+            outData[2] = 0;
+			return;
+        }
+        if(corner < 4)
+		{
+            outData[0] = 1;
+            outData[1] = 0;
+            outData[2] = 1;
+			return;
+        }
+    }
     //else if(direction == 1)
     //{
 		//if(corner == 0)
@@ -125,5 +131,4 @@ float4 GetCornerPosition(in float inData)
             //return float4(0, 0, 1, 0);
         //}
     //}
-	return float4(0, 0, 0, 0);
 }
