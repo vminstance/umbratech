@@ -121,6 +121,8 @@ namespace Umbra.Utilities
                     Constants.World.Current.SetBlock(index, Block.Log, false);
                 }
             }
+
+            chunk[originPoint] = Block.Dirt;
         }
     }
 }
