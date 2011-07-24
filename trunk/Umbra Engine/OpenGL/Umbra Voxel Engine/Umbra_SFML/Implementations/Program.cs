@@ -45,7 +45,7 @@ namespace Umbra
                 GameWindowFlags flag = Constants.Graphics.EnableFullScreen ? GameWindowFlags.Fullscreen : GameWindowFlags.Default;
 
                 Main UmbraEngine = new Main((int)Constants.Graphics.ScreenResolution.X, (int)Constants.Graphics.ScreenResolution.Y, new GraphicsMode(), "Umbra Voxel Engine", flag);
-                UmbraEngine.Run(60.0F, 60.0F);
+                UmbraEngine.Run(100.0F, 60.0F);
             }
         }
     }

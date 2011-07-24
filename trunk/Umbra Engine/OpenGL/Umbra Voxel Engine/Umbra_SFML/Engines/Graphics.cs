@@ -45,6 +45,8 @@ namespace Umbra.Engines
 
         public override void Render(FrameEventArgs e)
         {
+            Console.Write("FPS: " + 1.0F / e.Time);
+
             RenderChunks();
 
             base.Render(e);

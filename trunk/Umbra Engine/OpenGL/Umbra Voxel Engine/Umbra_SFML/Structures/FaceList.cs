@@ -280,29 +280,29 @@ namespace Umbra.Structures
                 return FaceValidation.NoFaces;
             }
 
-            if (thisBlock.Type == Block.Leaves.Type)
-            {
-                if (nextBlock.Visibility == BlockVisibility.Invisible)
-                {
-                    return FaceValidation.ThisFace;
-                }
-                else
-                {
-                    return FaceValidation.BothFaces;
-                }
-            }
+            //if (thisBlock.Type == Block.Leaves.Type)
+            //{
+            //    if (nextBlock.Visibility == BlockVisibility.Invisible)
+            //    {
+            //        return FaceValidation.ThisFace;
+            //    }
+            //    else
+            //    {
+            //        return FaceValidation.BothFaces;
+            //    }
+            //}
 
-            if (nextBlock.Type == Block.Leaves.Type)
-            {
-                if (thisBlock.Visibility == BlockVisibility.Invisible)
-                {
-                    return FaceValidation.OtherFace;
-                }
-                else
-                {
-                    return FaceValidation.BothFaces;
-                }
-            }
+            //if (nextBlock.Type == Block.Leaves.Type)
+            //{
+            //    if (thisBlock.Visibility == BlockVisibility.Invisible)
+            //    {
+            //        return FaceValidation.OtherFace;
+            //    }
+            //    else
+            //    {
+            //        return FaceValidation.BothFaces;
+            //    }
+            //}
 
 
             // Normal

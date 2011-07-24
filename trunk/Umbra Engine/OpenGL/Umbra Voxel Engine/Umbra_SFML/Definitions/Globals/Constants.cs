@@ -85,7 +85,7 @@ namespace Umbra.Definitions.Globals
 
         static public class Controls
         {
-            static public float MouseSensitivityInv = 200.0F;
+            static public float MouseSensitivityInv = 400.0F;
             static public float AlterDelay = 250.0F;            // Delay between editing blocks (mS)
             static public bool SmoothCameraEnabled = false;
             static public float SmoothCameraResponse = 0.4F;
