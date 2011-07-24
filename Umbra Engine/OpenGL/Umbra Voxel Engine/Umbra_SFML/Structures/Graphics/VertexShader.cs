@@ -12,7 +12,7 @@ namespace Umbra.Structures.Graphics
 
         static public readonly string Shader = @"
 
-        #version 150
+        #version 120
 
         in vec4 pos_data;
         in vec4 col_data;

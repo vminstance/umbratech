@@ -12,7 +12,7 @@ namespace Umbra.Structures.Graphics
 
         static public readonly string Shader = @"
 
-        #version 150
+        #version 120
             
         in vec4 colorShade;
         in vec4 textureCoord;
