@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbra Voxel Engine", "Umbra_SFML\Umbra Voxel Engine.csproj", "{298EB912-28E9-4597-9098-8C297A0B8007}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbra Voxel Engine", "Umbra Voxel Engine\Umbra Voxel Engine.csproj", "{298EB912-28E9-4597-9098-8C297A0B8007}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
