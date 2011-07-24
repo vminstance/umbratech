@@ -11,8 +11,6 @@ namespace Umbra.Structures.Graphics
         // READ: http://www.opengl.org/wiki/GLSL_:_common_mistakes
 
         static public readonly string Shader = @"
-
-        #version 120
             
         in vec4 colorShade;
         in vec4 textureCoord;

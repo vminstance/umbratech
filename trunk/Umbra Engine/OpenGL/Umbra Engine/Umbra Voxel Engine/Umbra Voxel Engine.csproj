@@ -76,7 +76,6 @@
     <Compile Include="Implementations\Console.cs" />
     <Compile Include="Implementations\Content.cs" />
     <Compile Include="Implementations\BlockCursor.cs" />
-    <Compile Include="Implementations\LandscapeGenereator.cs" />
     <Compile Include="Implementations\Popup.cs" />
     <Compile Include="Implementations\Program.cs" />
     <Compile Include="Implementations\Render.cs" />
@@ -97,13 +96,14 @@
     <Compile Include="Structures\Graphics\GeometryShader.cs" />
     <Compile Include="Structures\Graphics\Shaders.cs" />
     <Compile Include="Structures\Graphics\VertexShader.cs" />
+    <Compile Include="Utilities\Interpolation.cs" />
+    <Compile Include="Utilities\Landscape\Utilities\NoiseMaps.cs" />
+    <Compile Include="Utilities\Landscape\TerrainGenerator.cs" />
     <Compile Include="Structures\Octree.cs" />
     <Compile Include="Structures\PhysicsObject.cs" />
     <Compile Include="Structures\Geometry\Ray.cs" />
     <Compile Include="Structures\Player.cs" />
     <Compile Include="Structures\World.cs" />
-    <Compile Include="Utilities\Interpolation.cs" />
-    <Compile Include="Utilities\Landscape\Noise.cs" />
     <Compile Include="Utilities\Landscape\Vegetation.cs" />
     <Compile Include="Utilities\Mathematics.cs" />
     <Compile Include="Utilities\Threading\Threading.cs" />

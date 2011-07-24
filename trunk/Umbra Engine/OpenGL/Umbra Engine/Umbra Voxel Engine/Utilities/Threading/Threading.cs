@@ -158,7 +158,7 @@ namespace Umbra.Utilities.Threading
 
                     // Generate Chunk
 
-                    LandscapeGenerator.SetChunkTerrain(currentChunk);
+                    TerrainGenerator.SetChunkTerrain(currentChunk);
 
                     Console.Write("GenerationQueue: " + GenerationQueue.Count);
 

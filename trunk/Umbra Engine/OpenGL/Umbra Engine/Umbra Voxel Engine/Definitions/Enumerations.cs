@@ -95,7 +95,6 @@ namespace Umbra.Definitions
 
     public class Direction
     {
-
         private enum Dir : byte
         {
             Left,
@@ -142,16 +141,16 @@ namespace Umbra.Definitions
             }
         }
 
-        public Vector3 GetVector3()
+        public Vector3d GetVector3()
         {
             switch (DirectionEnum)
             {
-                case Dir.Backward: return Vector3.UnitZ;
-                case Dir.Forward: return -Vector3.UnitZ;
-                case Dir.Right: return Vector3.UnitX;
-                case Dir.Left: return -Vector3.UnitX;
-                case Dir.Up: return Vector3.UnitY;
-                case Dir.Down: return -Vector3.UnitY;
+                case Dir.Backward: return Vector3d.UnitZ;
+                case Dir.Forward: return -Vector3d.UnitZ;
+                case Dir.Right: return Vector3d.UnitX;
+                case Dir.Left: return -Vector3d.UnitX;
+                case Dir.Up: return Vector3d.UnitY;
+                case Dir.Down: return -Vector3d.UnitY;
                 default: throw new Exception("This shouldn't happen.");
             }
         }
@@ -178,6 +177,16 @@ namespace Umbra.Definitions
         static public bool operator !=(Direction dir1, Direction dir2)
         {
             return (dir1.DirectionEnum != dir2.DirectionEnum);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

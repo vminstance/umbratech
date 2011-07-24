@@ -46,8 +46,8 @@ namespace Umbra
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            //this.checkBox2.Enabled = this.checkBox1.Checked;
-            //this.checkBox2.Checked = false;
+            this.checkBox2.Enabled = this.checkBox1.Checked;
+            this.checkBox2.Checked = false;
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)

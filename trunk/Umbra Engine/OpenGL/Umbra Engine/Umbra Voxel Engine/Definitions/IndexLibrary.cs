@@ -26,9 +26,9 @@ namespace Umbra.Definitions
         public int Y;
         public int Z;
 
-        public Vector3 Position
+        public Vector3d Position
         {
-            get { return new Vector3(X * Constants.World.ChunkSize, Y * Constants.World.ChunkSize, Z * Constants.World.ChunkSize); }
+            get { return new Vector3d(X * Constants.World.ChunkSize, Y * Constants.World.ChunkSize, Z * Constants.World.ChunkSize); }
         }
 
         public ChunkIndex(int x, int y, int z)
@@ -50,6 +50,13 @@ namespace Umbra.Definitions
             X = (int)Math.Floor((double)position.X / (double)Constants.World.ChunkSize);
             Y = (int)Math.Floor((double)position.Y / (double)Constants.World.ChunkSize);
             Z = (int)Math.Floor((double)position.Z / (double)Constants.World.ChunkSize);
+        }
+
+        public ChunkIndex(Vector3d position)
+        {
+            X = (int)Math.Floor(position.X / (double)Constants.World.ChunkSize);
+            Y = (int)Math.Floor(position.Y / (double)Constants.World.ChunkSize);
+            Z = (int)Math.Floor(position.Z / (double)Constants.World.ChunkSize);
         }
 
         public BlockIndex ToBlockIndex()
@@ -86,6 +93,11 @@ namespace Umbra.Definitions
         public static ChunkIndex operator *(ChunkIndex part1, float part2)
         {
             return new ChunkIndex((int)((float)part1.X * part2), (int)((float)part1.Y * part2), (int)((float)part1.Z * part2));
+        }
+
+        public static ChunkIndex operator *(ChunkIndex part1, double part2)
+        {
+            return new ChunkIndex((int)((double)part1.X * part2), (int)((double)part1.Y * part2), (int)((double)part1.Z * part2));
         }
 
         public static ChunkIndex operator *(ChunkIndex part1, ChunkIndex part2)
@@ -134,9 +146,9 @@ namespace Umbra.Definitions
         public int Y;
         public int Z;
 
-        public Vector3 Position
+        public Vector3d Position
         {
-            get { return new Vector3(X, Y, Z); }
+            get { return new Vector3d(X, Y, Z); }
         }
 
         public static BlockIndex Zero { get { return new BlockIndex(0, 0, 0); } }
@@ -153,6 +165,13 @@ namespace Umbra.Definitions
         }
 
         public BlockIndex(Vector3 position)
+        {
+            X = (int)Math.Floor(position.X);
+            Y = (int)Math.Floor(position.Y);
+            Z = (int)Math.Floor(position.Z);
+        }
+
+        public BlockIndex(Vector3d position)
         {
             X = (int)Math.Floor(position.X);
             Y = (int)Math.Floor(position.Y);

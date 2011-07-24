@@ -115,7 +115,7 @@ namespace Umbra.Definitions
 
                 Popup.Post("Noclip: " + Variables.Player.NoclipEnabled.ToString());
 
-                Constants.Engine_Physics.Player.Velocity = Vector3.Zero;
+                Constants.Engine_Physics.Player.Velocity = Vector3d.Zero;
             });
 
             ConsoleCommands["nightday"] = (ConsoleFunction)((string command, string[] args, string original) =>
@@ -210,7 +210,7 @@ namespace Umbra.Definitions
 
             ConsoleCommands["facing"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Popup.Post(Vector3.Transform(Vector3.UnitZ, Matrix4.CreateRotationY(Constants.Engine_Physics.Player.FirstPersonCamera.Direction)).ToString());
+                Popup.Post(Vector3d.Transform(Vector3d.UnitZ, Matrix4d.CreateRotationY(Constants.Engine_Physics.Player.FirstPersonCamera.Direction)).ToString());
             });
 
             ConsoleCommands["list"] = (ConsoleFunction)((string command, string[] args, string original) =>

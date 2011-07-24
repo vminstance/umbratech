@@ -22,13 +22,13 @@ namespace Umbra.Structures.Geometry
 {
     public class Ray
     {
-        public Vector3 Origin { get; private set; }
-        public Vector3 Direction { get; private set; }
+        public Vector3d Origin { get; private set; }
+        public Vector3d Direction { get; private set; }
 
-        public Ray(Vector3 origin, Vector3 direction)
+        public Ray(Vector3d origin, Vector3d direction)
         {
             Origin = origin;
-            if (direction == Vector3.Zero)
+            if (direction == Vector3d.Zero)
             {
                 throw new Exception("Direction cannot be a zero vector");
             }
@@ -36,27 +36,27 @@ namespace Umbra.Structures.Geometry
             Direction.Normalize();
         }
 
-        public float? Intersects(BoundingBox boundingBox)
+        public double? Intersects(BoundingBox boundingBox)
         {
             if (boundingBox.Contains(Origin))
             {
-                return 0.0F;
+                return 0.0;
             }
 
-            float shortest = float.MaxValue;
+            double shortest = double.MaxValue;
 
             // Intersection with faces:
 
             #region --Positive X--
-            float planeX = boundingBox.Max.X;
+            double planeX = boundingBox.Max.X;
 
             if (!((Origin.X > planeX && Direction.X > 0) || (Origin.X < planeX && Direction.X < 0)))
             {
-                float normalDistance = Math.Abs(Origin.X - planeX);
+                double normalDistance = Math.Abs(Origin.X - planeX);
 
-                float length = normalDistance / (float)Math.Sqrt(1 - (Math.Pow(Direction.Y, 2) + Math.Pow(Direction.Z, 2)));
+                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.Y, 2) + Math.Pow(Direction.Z, 2)));
 
-                Vector3 intersectionPoint = Origin + Direction * length;
+                Vector3d intersectionPoint = Origin + Direction * length;
 
                 if (!((intersectionPoint.Y > boundingBox.Max.Y || intersectionPoint.Y < boundingBox.Min.Y) &&
                     (intersectionPoint.Z > boundingBox.Max.Z || intersectionPoint.Z < boundingBox.Min.Z))
@@ -72,11 +72,11 @@ namespace Umbra.Structures.Geometry
 
             if (!((Origin.X > planeX && Direction.X > 0) || (Origin.X < planeX && Direction.X < 0)))
             {
-                float normalDistance = Math.Abs(Origin.X - planeX);
+                double normalDistance = Math.Abs(Origin.X - planeX);
 
-                float length = normalDistance / (float)Math.Sqrt(1 - (Math.Pow(Direction.Y, 2) + Math.Pow(Direction.Z, 2)));
+                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.Y, 2) + Math.Pow(Direction.Z, 2)));
 
-                Vector3 intersectionPoint = Origin + Direction * length;
+                Vector3d intersectionPoint = Origin + Direction * length;
 
                 if (!((intersectionPoint.Y > boundingBox.Max.Y || intersectionPoint.Y < boundingBox.Min.Y) &&
                     (intersectionPoint.Z > boundingBox.Max.Z || intersectionPoint.Z < boundingBox.Min.Z))
@@ -88,15 +88,15 @@ namespace Umbra.Structures.Geometry
             #endregion
 
             #region --Positive Y--
-            float planeY = boundingBox.Max.Y;
+            double planeY = boundingBox.Max.Y;
 
             if (!((Origin.Y > planeY && Direction.Y > 0) || (Origin.Y < planeY && Direction.Y < 0)))
             {
-                float normalDistance = Math.Abs(Origin.Y - planeY);
+                double normalDistance = Math.Abs(Origin.Y - planeY);
 
-                float length = normalDistance / (float)Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Z, 2)));
+                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Z, 2)));
 
-                Vector3 intersectionPoint = Origin + Direction * length;
+                Vector3d intersectionPoint = Origin + Direction * length;
 
                 if (!((intersectionPoint.X > boundingBox.Max.X || intersectionPoint.X < boundingBox.Min.X) &&
                     (intersectionPoint.Z > boundingBox.Max.Z || intersectionPoint.Z < boundingBox.Min.Z))
@@ -112,11 +112,11 @@ namespace Umbra.Structures.Geometry
 
             if (!((Origin.Y > planeY && Direction.Y > 0) || (Origin.Y < planeY && Direction.Y < 0)))
             {
-                float normalDistance = Math.Abs(Origin.Y - planeY);
+                double normalDistance = Math.Abs(Origin.Y - planeY);
 
-                float length = normalDistance / (float)Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Z, 2)));
+                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Z, 2)));
 
-                Vector3 intersectionPoint = Origin + Direction * length;
+                Vector3d intersectionPoint = Origin + Direction * length;
 
                 if (!((intersectionPoint.X > boundingBox.Max.X || intersectionPoint.X < boundingBox.Min.X) &&
                     (intersectionPoint.Z > boundingBox.Max.Z || intersectionPoint.Z < boundingBox.Min.Z))
@@ -128,15 +128,15 @@ namespace Umbra.Structures.Geometry
             #endregion
 
             #region --Positive Z--
-            float planeZ = boundingBox.Max.Z;
+            double planeZ = boundingBox.Max.Z;
 
             if (!((Origin.Z > planeZ && Direction.Z > 0) || (Origin.Z < planeZ && Direction.Z < 0)))
             {
-                float normalDistance = Math.Abs(Origin.Z - planeZ);
+                double normalDistance = Math.Abs(Origin.Z - planeZ);
 
-                float length = normalDistance / (float)Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Y, 2)));
+                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Y, 2)));
 
-                Vector3 intersectionPoint = Origin + Direction * length;
+                Vector3d intersectionPoint = Origin + Direction * length;
 
                 if (!((intersectionPoint.X > boundingBox.Max.X || intersectionPoint.X < boundingBox.Min.X) &&
                     (intersectionPoint.Y > boundingBox.Max.Y || intersectionPoint.Y < boundingBox.Min.Y))
@@ -152,11 +152,11 @@ namespace Umbra.Structures.Geometry
 
             if (!((Origin.Z > planeZ && Direction.Z > 0) || (Origin.Z < planeZ && Direction.Z < 0)))
             {
-                float normalDistance = Math.Abs(Origin.Z - planeZ);
+                double normalDistance = Math.Abs(Origin.Z - planeZ);
 
-                float length = normalDistance / (float)Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Y, 2)));
+                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Y, 2)));
 
-                Vector3 intersectionPoint = Origin + Direction * length;
+                Vector3d intersectionPoint = Origin + Direction * length;
 
                 if (!((intersectionPoint.X > boundingBox.Max.X || intersectionPoint.X < boundingBox.Min.X) &&
                     (intersectionPoint.Y > boundingBox.Max.Y || intersectionPoint.Y < boundingBox.Min.Y))
@@ -168,7 +168,7 @@ namespace Umbra.Structures.Geometry
             #endregion
 
 
-            if (shortest < float.MaxValue)
+            if (shortest < double.MaxValue)
             {
                 return shortest;
             }

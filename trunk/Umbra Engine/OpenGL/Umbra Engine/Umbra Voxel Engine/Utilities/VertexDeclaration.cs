@@ -95,7 +95,7 @@ namespace Umbra.Utilities
         {
             if (Count > 0)
             {
-                Matrix4 world = Matrix4.CreateTranslation(offset.Position);
+                Matrix4 world = Matrix4.CreateTranslation((Vector3)offset.Position);
                 GL.UniformMatrix4(Shaders.WorldMatrixID, false, ref world);
 
                 GL.BindVertexArray(ArrayID);

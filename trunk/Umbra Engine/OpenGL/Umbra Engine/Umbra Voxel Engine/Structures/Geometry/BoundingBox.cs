@@ -22,8 +22,8 @@ namespace Umbra.Structures.Geometry
 {
     public class BoundingBox
     {
-        public Vector3 Min { get; private set; }
-        public Vector3 Max { get; private set; }
+        public Vector3d Min { get; private set; }
+        public Vector3d Max { get; private set; }
 
         public List<BlockIndex> IntersectionIndices
         {
@@ -49,23 +49,23 @@ namespace Umbra.Structures.Geometry
             }
         }
 
-        public float SurfaceArea
+        public double SurfaceArea
         {
             get
             {
-                return 2 * ((Max.X - Min.X) * (Max.Y - Min.Y) + (Max.X - Min.X) * (Max.Z - Min.Z) + (Max.Y - Min.Y) * (Max.Z - Min.Z));
+                return 2.0 * ((Max.X - Min.X) * (Max.Y - Min.Y) + (Max.X - Min.X) * (Max.Z - Min.Z) + (Max.Y - Min.Y) * (Max.Z - Min.Z));
             }
         }
 
-        public BoundingBox(Vector3 min, Vector3 max)
+        public BoundingBox(Vector3d min, Vector3d max)
         {
             Min = min;
             Max = max;
         }
 
-        static public BoundingBox PlayerBoundingBox(Vector3 position)
+        static public BoundingBox PlayerBoundingBox(Vector3d position)
         {
-            return new BoundingBox(position, position + new Vector3(Constants.Player.Physics.Box.Width, Constants.Player.Physics.Box.Height, Constants.Player.Physics.Box.Width));
+            return new BoundingBox(position, position + new Vector3d(Constants.Player.Physics.Box.Width, Constants.Player.Physics.Box.Height, Constants.Player.Physics.Box.Width));
         }
 
         public bool Intersects(BoundingBox box)
@@ -88,21 +88,21 @@ namespace Umbra.Structures.Geometry
             return true;
         }
 
-        public float? Intersects(Ray ray)
+        public double? Intersects(Ray ray)
         {
             return ray.Intersects(this);
         }
 
-        public float IntersectionVolume(BoundingBox box)
+        public double IntersectionVolume(BoundingBox box)
         {
-            float intersectionVolume = 1;
+            double intersectionVolume = 1;
 
             if (!Intersects(box))
             {
                 return 0;
             }
 
-            List<float> points = new List<float>();
+            List<double> points = new List<double>();
             points.Add(Min.X);
             points.Add(box.Min.X);
             points.Add(Max.X);
@@ -129,12 +129,12 @@ namespace Umbra.Structures.Geometry
             return intersectionVolume;
         }
 
-        public BoundingBox At(Vector3 pos)
+        public BoundingBox At(Vector3d pos)
         {
             return new BoundingBox(pos, (Max - Min) + pos);
         }
 
-        public bool Contains(Vector3 point)
+        public bool Contains(Vector3d point)
         {
             if (point.X > Max.X || point.X < Min.X)
             {
