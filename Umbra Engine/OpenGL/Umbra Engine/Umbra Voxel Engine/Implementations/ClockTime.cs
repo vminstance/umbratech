@@ -134,7 +134,7 @@ namespace Umbra.Implementations
 
         static public void SetTimeOfDay(float time)
         {
-            Time = Mathematics.WrapAngleDegrees(time);
+            Time = (float)Mathematics.WrapAngleDegrees(time);
         }
 
         static private TimeOfDay GetCurrentTimeOfDay()

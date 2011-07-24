@@ -18,6 +18,7 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
+using Umbra.Utilities.Landscape;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Definitions.Globals
@@ -47,7 +48,7 @@ namespace Umbra.Definitions.Globals
             Engine_Main.AddEngine(Engine_Sound);
 
 
-            LandscapeGenerator.Initialize(Landscape.WorldSeed);
+            TerrainGenerator.Initialize(Landscape.WorldSeed);
             Engine_Physics.Player.Initialize();
 
             World.Current = new Structures.World(World.Name);
@@ -77,7 +78,7 @@ namespace Umbra.Definitions.Globals
             static public class Compass
             {
                 static public Vector2 FrameSize = new Vector2(144, 85);
-                static public Vector2 ScreenPosition = new Vector2(Graphics.ScreenResolution.X - FrameSize.X - 10, 10);
+                static public Vector2 ScreenPosition = new Vector2((float)Graphics.ScreenResolution.X - FrameSize.X - 10, 10);
                 static public Vector2 StripOffset = new Vector2(10, 10);
                 static public Vector2 StripWindowSize = FrameSize - 2 * StripOffset;
             }
@@ -118,8 +119,8 @@ namespace Umbra.Definitions.Globals
             static public Vector2 ScreenResolution = new Vector2(1920, 1080);
             static public float AspectRatio = ScreenResolution.X / ScreenResolution.Y;
             static public bool AntiAliasingEnabled = true;
-            static public float CameraNearPlane = 0.01f;
-            static public float CameraFarPlane = 64000f;
+            static public float CameraNearPlane = 0.01F;
+            static public float CameraFarPlane = 64000.0F;
             static public float FieldOfView = MathHelper.DegreesToRadians(60);
             static public bool EnableFullScreen = false;
             static public float[] TranslucentBlocks = { Block.Glass.GetFace(Direction.Up), Block.Water.GetFace(Direction.Up), Block.Leaves.GetFace(Direction.Up), Block.Ice.GetFace(Direction.Up) };
@@ -183,6 +184,7 @@ namespace Umbra.Definitions.Globals
         {
             static public float Gravity = 9.81F;
             static public float FrictionSignificance = 1F;
+            static public float MinSpeed = 0.0005F;
         }
 
         static public class Landscape
@@ -192,32 +194,34 @@ namespace Umbra.Definitions.Globals
             static public float PerlinBicubicWeight = 0.7F; // 0.0F = Total perlin, 1.0F = Total Bicubic
             static public float WorldHeightAmplitude = 128.0F;//256.0F;
             static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F) - 4;
-
+            static public int TerrainStretch = 8;
+            static public int WaterLevel = 0;
+            static public bool CavesEnabled = true;
 
             static public class Vegetation
             {
-                static public float TreeMinHeight = 7.0F;   // Tree height = (random 0-1) * TreeVaryHeight + TreeMinHeight
-                static public float TreeVaryHeight = 8.0F;  // Tree height will vary from TreeMinHeight to TreeVaryHeight + TreeMinHeight
-                static public float TreeChance = 0.05F;     // If a tree can be placed at a location, this is the chance that it will grow there.
+                static public int TreeMinHeight = 7;   // Tree height = (random 0-1) * TreeVaryHeight + TreeMinHeight
+                static public int TreeVaryHeight = 8;  // Tree height will vary from TreeMinHeight to TreeVaryHeight + TreeMinHeight
+                static public float TreeDensity = 0.05F;     // If a tree can be placed at a location, this is the chance that it will grow there.
             }
         }
 
         static public class Player
         {
-            static public Vector3 Spawn = new Vector3(16, 0, 16);
-            static public float MinDistanceToGround = 0.02F;
+            static public Vector3d Spawn = new Vector3d(16, 0, 16);
+            static public double MinDistanceToGround = 0.02;
 
             static public class Physics
             {
-                static public float Mass = 350.0F;
+                static public double Mass = 350.0;
 
                 static public class Box
                 {
-                    static public float Width = 0.6F;
-                    static public float Height = 1.8F;
+                    static public double Width = 0.6;
+                    static public double Height = 1.8;
                 }
 
-                static public float EyeHeight = 1.5F;
+                static public double EyeHeight = 1.5;
             }
 
             static public class Camera
@@ -231,20 +235,20 @@ namespace Umbra.Definitions.Globals
 
             static public class Movement
             {
-                static public float NoclipSpeed = 0.3F;
+                static public double NoclipSpeed = 0.3;
 
-                static public float WalkForce = 36.0F * Physics.Mass;
-                static public float MaxSpeed = 4.0F;
-                static public float JumpForce = Physics.Mass * 4.9F * 60.0F;
-                static public float SwimForce = 40.0F * Physics.Mass;
+                static public double WalkForce = 36.0 * Physics.Mass;
+                static public double MaxSpeed = 4.0;
+                static public double JumpForce = Physics.Mass * 4.9 * 60.0;
+                static public double SwimForce = 40.0 * Physics.Mass;
 
-                static public float GripSignificance = 3F;
+                static public double GripSignificance = 3.0;
             }
 
             static public class BlockEditing
             {
                 static public Block StartBlock = Block.Stone;
-                static public float Reach = 10.0F;
+                static public double Reach = 10.0;
             }
         }
 

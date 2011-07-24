@@ -16,6 +16,7 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
+using Umbra.Utilities.Landscape.Utilities;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Utilities.Landscape
@@ -40,7 +41,7 @@ namespace Umbra.Utilities.Landscape
                     {
                         if (chunk[x, y, z].Type == Block.Grass.Type)
                         {
-                            GrowTree(chunk, new BlockIndex(x, y, z), (int)(Noise.GetByValues(x * x * z + y * z, chunk.Index.X * chunk.Index.X * chunk.Index.Z + chunk.Index.Y * chunk.Index.Z, Seed) * Constants.Landscape.Vegetation.TreeVaryHeight + Constants.Landscape.Vegetation.TreeMinHeight));
+                            GrowTree(chunk, new BlockIndex(x, y, z), (int)(NoiseMaps.GetByValues(x * x * z + y * z, chunk.Index.X * chunk.Index.X * chunk.Index.Z + chunk.Index.Y * chunk.Index.Z, Seed) * Constants.Landscape.Vegetation.TreeVaryHeight + Constants.Landscape.Vegetation.TreeMinHeight));
                         }
                     }
                 }
@@ -91,11 +92,6 @@ namespace Umbra.Utilities.Landscape
                         }
                     }
                 }
-            }
-
-            if (Noise.GetByValues(point.X * point.X * point.Z + point.Y * point.Z, chunk.Index.X * chunk.Index.X * chunk.Index.Z + chunk.Index.Y * chunk.Index.Z, Seed) < Constants.Landscape.Vegetation.TreeChance)
-            {
-                return;
             }
 
             foreach (BlockIndex index in leafPositions)

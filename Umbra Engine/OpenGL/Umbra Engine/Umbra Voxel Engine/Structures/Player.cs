@@ -16,6 +16,7 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
+using Umbra.Utilities.Landscape;
 using Console = Umbra.Implementations.Console;
 
 namespace Umbra.Structures
@@ -25,17 +26,17 @@ namespace Umbra.Structures
         public Camera FirstPersonCamera { get; private set; }
         float CurrentAlterDelay;
         public bool IsReleased;
-        Vector3 MoveDirection;
+        Vector3d MoveDirection;
         bool SpacePressed;
         bool LeftShiftPressed;
 
         public Player()
-            : base(Constants.Player.Spawn, new Vector3(Constants.Player.Physics.Box.Width, Constants.Player.Physics.Box.Height, Constants.Player.Physics.Box.Width), Constants.Player.Physics.Mass)
+            : base(Constants.Player.Spawn, new Vector3d(Constants.Player.Physics.Box.Width, Constants.Player.Physics.Box.Height, Constants.Player.Physics.Box.Width), Constants.Player.Physics.Mass)
         {
             FirstPersonCamera = new Camera(this.Position);
             CurrentAlterDelay = Constants.Controls.AlterDelay;
             IsReleased = false;
-            MoveDirection = Vector3.Zero;
+            MoveDirection = Vector3d.Zero;
             SpacePressed = false;
             LeftShiftPressed = false;
         }
@@ -58,18 +59,18 @@ namespace Umbra.Structures
 
         public void Initialize()
         {
-            Position.Y = (float)Math.Ceiling(Math.Max(LandscapeGenerator.GetLandscapeHeight(new Vector2(Position.X, Position.Z)), 0.0F));
+            Position.Y = Math.Ceiling(Math.Max(TerrainGenerator.GetLandscapeHeight((int)Position.X, (int)Position.Z), 0.0));
             IsReleased = false;
         }
 
         public void Release()
         {
 
-            while (Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3.UnitY)).Type != Block.Air.Type || Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3.UnitY * 2)).Type != Block.Air.Type)
+            while (Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3d.UnitY)).Type != Block.Air.Type || Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3d.UnitY * 2)).Type != Block.Air.Type)
             {
                 Position.Y++;
             }
-            Position.Y += 1.0F;
+            Position.Y += 1.0;
 
             IsReleased = true;
             Variables.Player.NoclipEnabled = false;
@@ -82,7 +83,7 @@ namespace Umbra.Structures
 
             if (!Variables.Player.NoclipEnabled && Constants.World.DynamicWorld)
             {
-                Vector3 currentWorldCenter = Constants.World.Current.Offset.Position + Vector3.One * ((float)Constants.World.WorldSize / 2.0F) * (float)Constants.World.ChunkSize;
+                Vector3d currentWorldCenter = Constants.World.Current.Offset.Position + Vector3d.One * ((double)Constants.World.WorldSize / 2.0) * (double)Constants.World.ChunkSize;
 
                 if (new ChunkIndex(Position) != new ChunkIndex(currentWorldCenter))
                 {
@@ -164,103 +165,107 @@ namespace Umbra.Structures
             if (Variables.Player.NoclipEnabled)
             {
                 // Noclip
-                Position += Vector3.Transform(MoveDirection, FirstPersonCamera.Rotation) * Constants.Player.Movement.NoclipSpeed;
+                Position += Vector3d.Transform(MoveDirection, FirstPersonCamera.Rotation) * Constants.Player.Movement.NoclipSpeed;
             }
             else
             {
 
-                Vector3 horizontalVelocity = Vector3.Multiply(Velocity, new Vector3(1, 0, 1));
+                Vector3d horizontalVelocity = Vector3d.Multiply(Velocity, new Vector3d(1, 0, 1));
 
                 if (Constants.Engine_Physics.IsOnGround(this))
                 {
                     // Walking on ground
 
-                    Vector3 newVelocity = horizontalVelocity + Vector3.Transform(MoveDirection, Matrix4.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Movement.WalkForce / Mass * (float)e.Time);
+                    Vector3d newVelocity = horizontalVelocity + Vector3d.Transform(MoveDirection, Matrix4d.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Movement.WalkForce / Mass * (float)e.Time);
 
-                    if (newVelocity != Vector3.Zero)
+                    if (newVelocity != Vector3d.Zero)
                     {
-                        newVelocity = Vector3.Normalize(newVelocity) * Math.Min(newVelocity.Length, Constants.Player.Movement.MaxSpeed);
+                        newVelocity = Vector3d.Normalize(newVelocity) * Math.Min(newVelocity.Length, Constants.Player.Movement.MaxSpeed);
                     }
 
-                    ApplyForce((newVelocity - horizontalVelocity) * Mass / (float)e.Time * GripCoefficient * Constants.Player.Movement.GripSignificance);
+                    newVelocity.Y = 0;
+
+                    ApplyForce((newVelocity - horizontalVelocity) * Mass / e.Time * GripCoefficient * Constants.Player.Movement.GripSignificance);
+
 
                     if (SpacePressed && Velocity.Y == 0)
                     {
-                        ApplyForce(Vector3.UnitY * Constants.Player.Movement.JumpForce);
+                        ApplyForce(Vector3d.UnitY * Constants.Player.Movement.JumpForce);
                     }
+
                 }
                 else
                 {
                     // Swimming or in air
-                    Vector3 newVelocity;
+                    Vector3d newVelocity;
 
                     if (LeftShiftPressed)
                     {
-                        newVelocity = horizontalVelocity + Vector3.Transform(MoveDirection, FirstPersonCamera.Rotation) * (Constants.Player.Movement.SwimForce / Mass * (float)e.Time);
+                        newVelocity = horizontalVelocity + Vector3d.Transform(MoveDirection, FirstPersonCamera.Rotation) * (Constants.Player.Movement.SwimForce / Mass * e.Time);
                     }
                     else
                     {
-                        newVelocity = horizontalVelocity + Vector3.Transform(MoveDirection, Matrix4.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Movement.SwimForce / Mass * (float)e.Time);
+                        newVelocity = horizontalVelocity + Vector3d.Transform(MoveDirection, Matrix4d.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Movement.SwimForce / Mass * (float)e.Time);
                     }
 
-                    if (newVelocity != Vector3.Zero)
+                    if (newVelocity != Vector3d.Zero)
                     {
-                        newVelocity = Vector3.Normalize(newVelocity) * Math.Min(newVelocity.Length, Constants.Player.Movement.MaxSpeed);
+                        newVelocity = Vector3d.Normalize(newVelocity) * Math.Min(newVelocity.Length, Constants.Player.Movement.MaxSpeed);
                     }
 
-                    ApplyForce((newVelocity - horizontalVelocity) * Mass / (float)e.Time * GripCoefficient * Constants.Player.Movement.GripSignificance);
+                    ApplyForce((newVelocity - horizontalVelocity) * Mass / e.Time * GripCoefficient * Constants.Player.Movement.GripSignificance);
 
                     if (SpacePressed)
                     {
-                        float magnitude = Interpolation.Linear(Constants.World.Current.GetBlock(new BlockIndex(Position)).Viscosity, Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3.UnitY)).Viscosity, Position.Y % 1) / 5000.0F;
+                        double magnitude = Interpolation.Linear((double)Constants.World.Current.GetBlock(new BlockIndex(Position)).Viscosity, (double)Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3d.UnitY)).Viscosity, Position.Y % 1.0) / 5000.0;
 
-                        ApplyForce(Vector3.UnitY * Constants.Player.Movement.SwimForce * magnitude);
+                        ApplyForce(Vector3d.UnitY * Constants.Player.Movement.SwimForce * magnitude);
                     }
                 }
             }
 
-            MoveDirection = Vector3.Zero;
+            MoveDirection = Vector3d.Zero;
         }
 
 
         private void UpdateCamera(FrameEventArgs e)
         {
-            FirstPersonCamera.Position = Position + Vector3.Multiply(Dimensions / 2.0F, new Vector3(1, 0, 1)) + Vector3.UnitY * Constants.Player.Physics.EyeHeight;
+            FirstPersonCamera.Position = Position + Vector3d.Multiply(Dimensions / 2.0F, new Vector3d(1, 0, 1)) + Vector3d.UnitY * Constants.Player.Physics.EyeHeight;
         }
 
-        public Vector3 NoclipDirection(KeyboardDevice keyboard)
+        public Vector3d NoclipDirection(KeyboardDevice keyboard)
         {
-            Vector3 returnVector = Vector3.Zero;
+            Vector3d returnVector = Vector3d.Zero;
 
             if (Variables.Game.IsActive)
             {
-                returnVector = new Vector3((keyboard[Key.D] ? 1 : 0) - (keyboard[Key.A] ? 1 : 0),
+                returnVector = new Vector3d((keyboard[Key.D] ? 1 : 0) - (keyboard[Key.A] ? 1 : 0),
                     (keyboard[Key.Space] ? 1 : 0) - (keyboard[Key.ShiftLeft] ? 1 : 0),
                     (keyboard[Key.S] ? 1 : 0) - (keyboard[Key.W] ? 1 : 0));
             }
 
-            if (returnVector != Vector3.Zero)
+            if (returnVector != Vector3d.Zero)
             {
-                returnVector = Vector3.Normalize(returnVector);
+                returnVector = Vector3d.Normalize(returnVector);
             }
 
             return returnVector;
         }
 
-        public Vector3 WalkingDirection(KeyboardDevice keyboard)
+        public Vector3d WalkingDirection(KeyboardDevice keyboard)
         {
-            Vector3 returnVector = Vector3.Zero;
+            Vector3d returnVector = Vector3d.Zero;
 
             if (Variables.Game.IsActive)
             {
-                returnVector = new Vector3((keyboard[Key.D] ? 1 : 0) - (keyboard[Key.A] ? 1 : 0),
+                returnVector = new Vector3d((keyboard[Key.D] ? 1 : 0) - (keyboard[Key.A] ? 1 : 0),
                     0,
                     (keyboard[Key.S] ? 1 : 0) - (keyboard[Key.W] ? 1 : 0));
             }
 
-            if (returnVector != Vector3.Zero)
+            if (returnVector != Vector3d.Zero)
             {
-                returnVector = Vector3.Normalize(returnVector);
+                returnVector = Vector3d.Normalize(returnVector);
             }
 
             return returnVector;

@@ -45,17 +45,17 @@ namespace Umbra.Utilities
             }
         }
 
-        static public float WrapAngleRadians(float value)
+        static public double WrapAngleRadians(double value)
         {
-            return value % ((float)Math.PI * 2);
+            return value % (Math.PI * 2);
         }
 
-        static public float WrapAngleDegrees(float value)
+        static public double WrapAngleDegrees(double value)
         {
             return value % 360;
         }
 
-        static public float Clamp(float value, float min, float max)
+        static public double Clamp(double value, double min, double max)
         {
             return Math.Min(Math.Max(value, min), max);
         }
