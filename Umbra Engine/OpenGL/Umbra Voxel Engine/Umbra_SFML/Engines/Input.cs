@@ -70,11 +70,6 @@ namespace Umbra.Engines
             {
                 return;
             }
-
-            if (Variables.Game.IsActive)
-            {
-                Constants.Engine_Physics.Player.UpdateMouse(e);
-            }
         }
 
         void KeyboardEvent(object sender, KeyboardKeyEventArgs e)
@@ -122,69 +117,16 @@ namespace Umbra.Engines
 
         public override void Update(FrameEventArgs e)
         {
-            MouseMove();
-            Constants.Engine_Physics.Player.UpdateKeyboard(Keyboard);
 
 
             if (!Variables.Game.IsActive)
             {
-                //----------------
-                // Console writing 
-                //----------------
-
-                //if (MouseCurrentState.LeftButton == ButtonState.Pressed)
-                //{
-                //    if (IsResizingConsole)
-                //    {
-                //        Variables.Overlay.Console.Area.Width = Constants.Overlay.Console.DefaultArea.Width + (MouseCurrentState.X - ResizePosition.X);
-                //        Variables.Overlay.Console.Area.Y = Variables.Overlay.Console.Area.Y + (MouseCurrentState.Y - ResizePosition.Y);
-                //        Variables.Overlay.Console.Area.Height = Variables.Overlay.Console.Area.Height - (MouseCurrentState.Y - ResizePosition.Y);
-
-                //        Variables.Overlay.Console.Area.Width = (int)Math.Max(Console.Font.MeasureString("12345").X + 30, Variables.Overlay.Console.Area.Width);
-                //        Variables.Overlay.Console.Area.Y = (int)Math.Min(Constants.Graphics.ScreenResolution.Y - 50, Variables.Overlay.Console.Area.Y);
-                //    }
-
-                //    if (MouseCurrentState.X < Variables.Overlay.Console.Area.Width && MouseCurrentState.X > Variables.Overlay.Console.Area.Width - 5 && MouseCurrentState.Y < Variables.Overlay.Console.Area.Y + 5 && MouseCurrentState.Y > Variables.Overlay.Console.Area.Y)
-                //    {
-                //        ResizePosition = new Point(MouseCurrentState.X, MouseCurrentState.Y);
-                //        IsResizingConsole = true;
-                //    }
-                //}
-
-                //if (MouseCurrentState.LeftButton == ButtonState.Released)
-                //{
-                //    IsResizingConsole = false;
-                //    ResizePosition = Point.Zero;
-                //    Constants.Overlay.Console.DefaultArea = Variables.Overlay.Console.Area;
-                //}
             }
             else if (Variables.Game.IsActive && Main.Focused)
             {
-                //----------------
-                // Normal 
-                //----------------
-
-                //if (KeyboardCurrentState.IsKeyDown(Keys.T) && Console.IsClosed())
-                //{
-                //    Console.Toggle();
-                //}
-
-                //if (KeyboardCurrentState.IsKeyDown(Keys.Escape) && KeyboardLastState.IsKeyUp(Keys.Escape))
-                //{
-                //    Console.Execute("/exit");
-                //}
-
-                //if (KeyboardLastState.IsKeyUp(Keys.Q) && KeyboardCurrentState.IsKeyDown(Keys.Q))
-                //{
-                //    Console.Execute("/noclip");
-                //}
-
-                //if (KeyboardLastState.IsKeyUp(Keys.F) && KeyboardCurrentState.IsKeyDown(Keys.F))
-                //{
-                //    Console.Execute("/flashlight");
-                //}
-
-                //Game.IsMouseVisible = false;
+                MouseMove();
+                Constants.Engine_Physics.Player.UpdateKeyboard(Keyboard);
+                Constants.Engine_Physics.Player.UpdateMouse(Mouse);
             }
 
             base.Update(e);

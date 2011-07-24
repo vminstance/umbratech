@@ -64,6 +64,7 @@ namespace Umbra.Engines
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.PolygonSmooth);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
@@ -82,9 +83,11 @@ namespace Umbra.Engines
                 c.VertexBuffer.Render(c.Index);
             }
 
+
             GL.Disable(EnableCap.DepthTest);
             GL.Disable(EnableCap.CullFace);
             GL.Disable(EnableCap.Texture2D);
+            GL.Disable(EnableCap.PolygonSmooth);
             GL.Disable(EnableCap.Blend);
         }
 

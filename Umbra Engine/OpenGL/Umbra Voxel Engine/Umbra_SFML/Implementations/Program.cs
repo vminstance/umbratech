@@ -42,10 +42,19 @@ namespace Umbra
 
             if (CodeClose)
             {
-                GameWindowFlags flag = Constants.Graphics.EnableFullScreen ? GameWindowFlags.Fullscreen : GameWindowFlags.Default;
+                Main UmbraEngine;
 
-                Main UmbraEngine = new Main((int)Constants.Graphics.ScreenResolution.X, (int)Constants.Graphics.ScreenResolution.Y, new GraphicsMode(), "Umbra Voxel Engine", flag);
-                UmbraEngine.Run(100.0F, 60.0F);
+                if (Constants.Graphics.EnableFullScreen)
+                {
+                    UmbraEngine = new Main(SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height, new GraphicsMode(), "Umbra Voxel Engine", GameWindowFlags.Fullscreen);
+                    Constants.Graphics.AspectRatio = (float)SystemInformation.VirtualScreen.Width / SystemInformation.VirtualScreen.Height;
+                }
+                else
+                {
+                    UmbraEngine = new Main((int)Constants.Graphics.ScreenResolution.X, (int)Constants.Graphics.ScreenResolution.Y, new GraphicsMode(), "Umbra Voxel Engine", GameWindowFlags.Default);
+                }
+
+                UmbraEngine.Run(60.0F, 60.0F);
             }
         }
     }

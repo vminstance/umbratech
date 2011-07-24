@@ -86,8 +86,10 @@ namespace Umbra.Definitions.Globals
         static public class Controls
         {
             static public float MouseSensitivityInv = 400.0F;
-            static public float AlterDelay = 250.0F;            // Delay between editing blocks (mS)
+            static public float AlterDelay = 30.0F;            // Delay between editing blocks (mS)
             static public bool SmoothCameraEnabled = false;
+            static public bool CanPlaceBlocks = false;
+            static public bool NoclipAllowed = true;
             static public float SmoothCameraResponse = 0.4F;
             static public string[] PlacableBlocks = {
                                                     "grass",
@@ -188,8 +190,8 @@ namespace Umbra.Definitions.Globals
             static public string WorldSeed = "";
             static public int PerlinOctaves = 8;            // Area taken into account = 2^octaves, currently 256 blocks;
             static public float PerlinBicubicWeight = 0.7F; // 0.0F = Total perlin, 1.0F = Total Bicubic
-            static public float WorldHeightAmplitude = 256.0F;
-            static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F);
+            static public float WorldHeightAmplitude = 128.0F;//256.0F;
+            static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F) - 4;
 
 
             static public class Vegetation

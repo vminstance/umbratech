@@ -55,6 +55,7 @@ namespace Umbra
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -77,8 +78,7 @@ namespace Umbra
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Enabled = false;
             this.checkBox1.Location = new System.Drawing.Point(11, 6);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(211, 17);
@@ -90,6 +90,7 @@ namespace Umbra
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
+            this.checkBox2.Enabled = false;
             this.checkBox2.Location = new System.Drawing.Point(11, 29);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(144, 17);
@@ -99,10 +100,12 @@ namespace Umbra
             // 
             // textBox1
             // 
+            this.textBox1.Enabled = false;
             this.textBox1.Location = new System.Drawing.Point(11, 81);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 3;
+            this.textBox1.Text = "Facepunch";
             // 
             // label1
             // 
@@ -115,6 +118,7 @@ namespace Umbra
             // 
             // numericUpDown1
             // 
+            this.numericUpDown1.Enabled = false;
             this.numericUpDown1.Increment = new decimal(new int[] {
             2,
             0,
@@ -136,7 +140,7 @@ namespace Umbra
             this.numericUpDown1.Size = new System.Drawing.Size(52, 20);
             this.numericUpDown1.TabIndex = 5;
             this.numericUpDown1.Value = new decimal(new int[] {
-            7,
+            5,
             0,
             0,
             0});
@@ -214,6 +218,7 @@ namespace Umbra
             // 
             // textBox2
             // 
+            this.textBox2.Enabled = false;
             this.textBox2.Location = new System.Drawing.Point(11, 180);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
@@ -239,19 +244,19 @@ namespace Umbra
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(11, 97);
+            this.checkBox4.Location = new System.Drawing.Point(11, 12);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(74, 17);
             this.checkBox4.TabIndex = 6;
             this.checkBox4.Text = "Fullscreen";
             this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(11, 74);
+            this.checkBox3.Enabled = false;
+            this.checkBox3.Location = new System.Drawing.Point(11, 89);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(83, 17);
             this.checkBox3.TabIndex = 5;
@@ -260,7 +265,7 @@ namespace Umbra
             // 
             // numericUpDown3
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(128, 23);
+            this.numericUpDown3.Location = new System.Drawing.Point(125, 48);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             1200,
             0,
@@ -283,7 +288,7 @@ namespace Umbra
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(108, 30);
+            this.label4.Location = new System.Drawing.Point(105, 55);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(14, 13);
             this.label4.TabIndex = 3;
@@ -291,7 +296,7 @@ namespace Umbra
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(14, 23);
+            this.numericUpDown2.Location = new System.Drawing.Point(11, 48);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             6048,
             0,
@@ -314,7 +319,7 @@ namespace Umbra
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 7);
+            this.label3.Location = new System.Drawing.Point(8, 32);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 13);
             this.label3.TabIndex = 1;
@@ -322,6 +327,7 @@ namespace Umbra
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.checkBox6);
             this.tabPage3.Controls.Add(this.checkBox5);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
@@ -333,12 +339,24 @@ namespace Umbra
             // checkBox5
             // 
             this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(11, 12);
+            this.checkBox5.Enabled = false;
+            this.checkBox5.Location = new System.Drawing.Point(11, 15);
             this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(96, 17);
+            this.checkBox5.Size = new System.Drawing.Size(87, 17);
             this.checkBox5.TabIndex = 0;
-            this.checkBox5.Text = "Smooth mouse";
+            this.checkBox5.Text = "Block editing";
             this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Enabled = false;
+            this.checkBox6.Location = new System.Drawing.Point(11, 38);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(56, 17);
+            this.checkBox6.TabIndex = 1;
+            this.checkBox6.Text = "Noclip";
+            this.checkBox6.UseVisualStyleBackColor = true;
             // 
             // Launcher
             // 
@@ -388,6 +406,7 @@ namespace Umbra
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox6;
     }
 }
 

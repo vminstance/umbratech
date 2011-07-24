@@ -86,7 +86,19 @@ namespace Umbra.Definitions.Globals
 
         static public class Player
         {
-            static public bool NoclipEnabled = true;
+            static private bool _NoclipEnabled = true;
+
+            static public bool NoclipEnabled
+            {
+                get
+                {
+                    return _NoclipEnabled && Constants.Controls.NoclipAllowed;
+                }
+                set
+                {
+                    _NoclipEnabled = value;
+                }
+            }
 
             static public class BlockEditing
             {
