@@ -32,17 +32,28 @@ namespace Umbra
             Constants.Graphics.AntiAliasingEnabled = this.checkBox3.Checked;
             Constants.Graphics.EnableFullScreen = this.checkBox4.Checked;
 
-            // Controlsthis.checkBox2.Checked;
-            Constants.Controls.SmoothCameraEnabled = this.checkBox5.Checked;
+            // Controls
+            Constants.Controls.CanPlaceBlocks = this.checkBox5.Checked;
+            Constants.Controls.NoclipAllowed = this.checkBox6.Checked;
+
+
             Program.CodeClose = true;
+
+            System.Windows.Forms.MessageBox.Show("Loading chunks will take some about half a minute, just be patient :)\nPress OK to start the engine...", "Loading chunks!");
 
             this.Close();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            this.checkBox2.Enabled = this.checkBox1.Checked;
-            this.checkBox2.Checked = false;
+            //this.checkBox2.Enabled = this.checkBox1.Checked;
+            //this.checkBox2.Checked = false;
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            this.numericUpDown2.Enabled = !this.checkBox4.Checked;
+            this.numericUpDown3.Enabled = !this.checkBox4.Checked;
         }
     }
 }

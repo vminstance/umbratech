@@ -38,7 +38,7 @@ namespace Umbra.Utilities.Threading
             VegetationQueue = new ChunkQueue();
             BuildQueue = new ChunkQueue();
             SetupQueue = new ChunkQueue();
-            UnloadQueue = new ChunkQueue();
+            UnloadQueue = new ChunkQueue();                
         }
 
         public void AddToLoad(Chunk chunk)

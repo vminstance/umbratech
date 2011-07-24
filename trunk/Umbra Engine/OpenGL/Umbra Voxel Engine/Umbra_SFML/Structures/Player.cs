@@ -58,20 +58,21 @@ namespace Umbra.Structures
 
         public void Initialize()
         {
-            //Position.Y = (float)Math.Ceiling(Math.Max(LandscapeGenerator.GetLandscapeHeight(new Vector2(Position.X, Position.Z)), 0.0F));
+            Position.Y = (float)Math.Ceiling(Math.Max(LandscapeGenerator.GetLandscapeHeight(new Vector2(Position.X, Position.Z)), 0.0F));
             IsReleased = false;
         }
 
         public void Release()
         {
 
-            //while (Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3.UnitY)).Type != Block.Air.Type || Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3.UnitY * 2)).Type != Block.Air.Type)
-            //{
-            //    Position.Y++;
-            //}
+            while (Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3.UnitY)).Type != Block.Air.Type || Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3.UnitY * 2)).Type != Block.Air.Type)
+            {
+                Position.Y++;
+            }
+            Position.Y += 1.0F;
 
             IsReleased = true;
-            //Variables.Player.NoclipEnabled = false;
+            Variables.Player.NoclipEnabled = false;
         }
 
         public override void Update(FrameEventArgs e)
@@ -113,6 +114,49 @@ namespace Umbra.Structures
             }
         }
 
+
+        public void UpdateMouse(MouseDevice mouse)
+        {
+            if (!Constants.Controls.CanPlaceBlocks)
+            {
+                return;
+            }
+
+            if (mouse[MouseButton.Left])
+            {
+                if (CurrentAlterDelay == 0)
+                {
+                    BlockIndex target = BlockCursor.GetToDestroy();
+                    if (target != null)
+                    {
+                        Constants.World.Current.SetBlock(target, Block.Air);
+                        CurrentAlterDelay = Constants.Controls.AlterDelay;
+                    }
+                }
+            }
+            else if (mouse[MouseButton.Right])
+            {
+                if (CurrentAlterDelay == 0)
+                {
+                    BlockIndex target = BlockCursor.GetToCreate();
+                    if (target != null && !BoundingBox.PlayerBoundingBox(Position).Intersects(target.GetBoundingBox()))
+                    {
+                        Constants.World.Current.SetBlock(target, Variables.Player.BlockEditing.CurrentCursorBlock);
+                        CurrentAlterDelay = Constants.Controls.AlterDelay;
+                    }
+                }
+            }
+            else
+            {
+                CurrentAlterDelay = 0;
+            }
+
+            if (CurrentAlterDelay > 0)
+            {
+                CurrentAlterDelay--;
+            }
+        }
+
         public void UpdateMovement(FrameEventArgs e)
         {
 
@@ -140,7 +184,7 @@ namespace Umbra.Structures
 
                     ApplyForce((newVelocity - horizontalVelocity) * Mass / (float)e.Time * GripCoefficient * Constants.Player.Movement.GripSignificance);
 
-                    if (SpacePressed && Math.Round(Velocity.Y, 2) == 0)
+                    if (SpacePressed && Velocity.Y == 0)
                     {
                         ApplyForce(Vector3.UnitY * Constants.Player.Movement.JumpForce);
                     }
@@ -176,41 +220,6 @@ namespace Umbra.Structures
             }
 
             MoveDirection = Vector3.Zero;
-        }
-
-        public void UpdateMouse(MouseButtonEventArgs e)
-        {
-
-            if (e.Button == MouseButton.Left)
-            {
-                if (CurrentAlterDelay >= Constants.Controls.AlterDelay)
-                {
-                    BlockIndex target = BlockCursor.GetToDestroy();
-                    if (target != null)
-                    {
-                        Constants.World.Current.SetBlock(target, Block.Air);
-                        CurrentAlterDelay = 0.0F;
-                        //Constants.Engine_Sound.PlayerBlockRemoval();
-                    }
-                }
-            }
-            else if (e.Button == MouseButton.Right)
-            {
-                if (CurrentAlterDelay >= Constants.Controls.AlterDelay)
-                {
-                    BlockIndex target = BlockCursor.GetToCreate();
-                    if (target != null && !BoundingBox.PlayerBoundingBox(Position).Intersects(target.GetBoundingBox()))
-                    {
-                        Constants.World.Current.SetBlock(target, Variables.Player.BlockEditing.CurrentCursorBlock);
-                        CurrentAlterDelay = 0.0F;
-                        //Constants.Engine_Sound.PlayerBlockAdd();
-                    }
-                }
-            }
-            else
-            {
-                CurrentAlterDelay = Constants.Controls.AlterDelay;
-            }
         }
 
 
