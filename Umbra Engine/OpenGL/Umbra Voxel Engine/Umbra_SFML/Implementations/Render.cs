@@ -92,13 +92,13 @@ namespace Umbra.Implementations
 
             //graphics.DrawString(str, font, Brushes.Red, Point.Empty);
 
-            Bitmap texture = new Bitmap(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "/test.png");
+            //Bitmap texture = new Bitmap(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "/test.png");
 
-            BitmapData data = texture.LockBits(new Rectangle(0, 0, texture.Width, texture.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            //BitmapData data = texture.LockBits(new Rectangle(0, 0, texture.Width, texture.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             
-            TextureID = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2D, TextureID);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, texture.Width, texture.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.UnsignedByte, data.Scan0);
+            //TextureID = GL.GenTexture();
+            //GL.BindTexture(TextureTarget.Texture2D, TextureID);
+            //GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, texture.Width, texture.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.UnsignedByte, data.Scan0);
         }
     }
 

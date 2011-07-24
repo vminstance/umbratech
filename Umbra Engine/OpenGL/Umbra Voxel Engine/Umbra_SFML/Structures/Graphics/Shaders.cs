@@ -52,7 +52,8 @@ namespace Umbra.Structures.Graphics
             {
                 Console.Write("Compile Error!");
                 Console.Write(VertexShader.Shader);
-                throw new Exception("VertexShader Error!!");
+                System.Windows.Forms.MessageBox.Show("Error while compiling the vertex shader. This means that you probably have an outdated graphics card driver.", "Vertex Shader Error!");
+                throw new Exception("Vertex Shader Error!!");
             }
 
             //GL.GetShader(GeometryShaderID, ShaderParameter.CompileStatus, out compileResult);
@@ -67,7 +68,8 @@ namespace Umbra.Structures.Graphics
             {
                 Console.Write("Compile Error!");
                 Console.Write(FragmentShader.Shader);
-                throw new Exception("FragmentShader Error!!");
+                System.Windows.Forms.MessageBox.Show("Error while compiling the fragment shader. This means that you probably have an outdated graphics card driver.", "Fragment Shader Error!");
+                throw new Exception("Fragment Shader Error!!");
             }
 
 
