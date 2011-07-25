@@ -29,7 +29,7 @@ namespace Umbra
 
             Constants.Graphics.ScreenResolution = new Vector2((float)this.numericUpDown2.Value, (float)this.numericUpDown3.Value);
             Constants.Graphics.AspectRatio = (float)this.numericUpDown2.Value / (float)this.numericUpDown3.Value;
-            Constants.Graphics.AntiAliasingEnabled = this.checkBox3.Checked;
+            //Constants.Graphics.AntiAliasingEnabled = this.checkBox3.Checked;
             Constants.Graphics.EnableFullScreen = this.checkBox4.Checked;
 
             // Controls
@@ -39,7 +39,7 @@ namespace Umbra
 
             Program.CodeClose = true;
 
-            System.Windows.Forms.MessageBox.Show("Loading chunks will take some about half a minute, just be patient :)\nPress OK to start the engine...", "Loading chunks!");
+            System.Windows.Forms.MessageBox.Show("Loading chunks will take about half a minute, just be patient :)\nPress OK to start the engine...", "Loading chunks!");
 
             this.Close();
         }

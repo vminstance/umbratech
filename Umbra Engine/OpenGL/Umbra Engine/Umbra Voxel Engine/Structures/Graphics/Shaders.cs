@@ -23,23 +23,68 @@ namespace Umbra.Structures.Graphics
 {
     static public class Shaders
     {
-        static public int ChunkShaderProgram { get; private set; }
+        static public Shader DefaultShaderProgram { get; private set; }
+        static public Shader ChunkAlphaShaderProgram { get; private set; }
 
-        static public void CompileShader()
+        static public void CompileShaders()
+        {
+            DefaultShaderProgram = new Shader(VertexShader.Shader, FragmentShader.Shader);
+            ChunkAlphaShaderProgram = new Shader(VertexShader.Shader, FragmentShader.AlphaShader);
+
+            GetVariables(DefaultShaderProgram.ProgramID);
+        }
+
+        static public int ProjectionMatrixID { get; private set; }
+        static public int ViewMatrixID { get; private set; }
+        static public int WorldMatrixID { get; private set; }
+
+        static public int TextureID { get; private set; }
+
+        static public int PositionDataID { get; private set; }
+        static public int ColorDataID { get; private set; }
+        static public int TextureDataID { get; private set; }
+
+
+        static private void GetVariables(int shaderProgram)
+        {
+
+            ProjectionMatrixID = GL.GetUniformLocation(shaderProgram, "projection_mat");
+            ViewMatrixID = GL.GetUniformLocation(shaderProgram, "view_mat");
+            WorldMatrixID = GL.GetUniformLocation(shaderProgram, "world_mat");
+
+            TextureID = GL.GetUniformLocation(shaderProgram, "texture");
+
+            PositionDataID = GL.GetAttribLocation(shaderProgram, "pos_data");
+            ColorDataID = GL.GetAttribLocation(shaderProgram, "col_data");
+            TextureDataID = GL.GetAttribLocation(shaderProgram, "tex_data");
+        }
+    }
+
+    public class Shader
+    {
+        public int ProgramID { get; private set; }
+
+        public Shader(string vertexShader, string fragmentShader)
+        {
+            CompileShader(vertexShader, fragmentShader);
+            GL.UseProgram(ProgramID);
+        }
+
+        public void CompileShader(string vertexShader, string fragmentShader)
         {
             int VertexShaderID;
             //int GeometryShaderID;
             int FragmentShaderID;
 
-            ChunkShaderProgram = GL.CreateProgram();
+            ProgramID = GL.CreateProgram();
 
             VertexShaderID = GL.CreateShader(ShaderType.VertexShader);
             //GeometryShaderID = GL.CreateShader(ShaderType.GeometryShaderExt);
             FragmentShaderID = GL.CreateShader(ShaderType.FragmentShader);
 
-            GL.ShaderSource(VertexShaderID, VertexShader.Shader);
+            GL.ShaderSource(VertexShaderID, vertexShader);
             //GL.ShaderSource(GeometryShaderID, GeometryShader.Shader);
-            GL.ShaderSource(FragmentShaderID, FragmentShader.Shader);
+            GL.ShaderSource(FragmentShaderID, fragmentShader);
 
             GL.CompileShader(VertexShaderID);
             //GL.CompileShader(GeometryShaderID);
@@ -73,14 +118,14 @@ namespace Umbra.Structures.Graphics
             }
 
 
-            GL.AttachShader(ChunkShaderProgram, VertexShaderID);
+            GL.AttachShader(ProgramID, VertexShaderID);
             //GL.AttachShader(ShaderProgram, GeometryShaderID);
-            GL.AttachShader(ChunkShaderProgram, FragmentShaderID);
+            GL.AttachShader(ProgramID, FragmentShaderID);
 
-            GL.LinkProgram(ChunkShaderProgram);
+            GL.LinkProgram(ProgramID);
 
             string info;
-            GL.GetProgramInfoLog(ChunkShaderProgram, out info);
+            GL.GetProgramInfoLog(ProgramID, out info);
             Console.Write(info);
 
 
@@ -107,36 +152,6 @@ namespace Umbra.Structures.Graphics
             {
                 GL.DeleteShader(FragmentShaderID);
             }
-
-            GL.UseProgram(ChunkShaderProgram);
-
-            GetVariables(ChunkShaderProgram);
-        }
-
-
-        static public int ProjectionMatrixID { get; private set; }
-        static public int ViewMatrixID { get; private set; }
-        static public int WorldMatrixID { get; private set; }
-
-        static public int TextureID { get; private set; }
-
-        static public int PositionDataID { get; private set; }
-        static public int ColorDataID { get; private set; }
-        static public int TextureDataID { get; private set; }
-
-
-        static private void GetVariables(int shaderProgram)
-        {
-
-            ProjectionMatrixID = GL.GetUniformLocation(shaderProgram, "projection_mat");
-            ViewMatrixID = GL.GetUniformLocation(shaderProgram, "view_mat");
-            WorldMatrixID = GL.GetUniformLocation(shaderProgram, "world_mat");
-
-            TextureID = GL.GetUniformLocation(shaderProgram, "texture");
-
-            PositionDataID = GL.GetAttribLocation(shaderProgram, "pos_data");
-            ColorDataID = GL.GetAttribLocation(shaderProgram, "col_data");
-            TextureDataID = GL.GetAttribLocation(shaderProgram, "tex_data");
         }
     }
 }

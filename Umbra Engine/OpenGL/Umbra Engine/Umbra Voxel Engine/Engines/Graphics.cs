@@ -33,25 +33,40 @@ namespace Umbra.Engines
 
         public override void Initialize(EventArgs e)
         {
-            Shaders.CompileShader();
+            Shaders.CompileShaders();
+
+            InitShader(Shaders.DefaultShaderProgram.ProgramID);
+            InitShader(Shaders.ChunkAlphaShaderProgram.ProgramID);
+
+            base.Initialize(e);
+        }
+
+        private void InitShader(int shader)
+        {
+            GL.UseProgram(shader);
 
             Matrix4 proj = Constants.Engine_Physics.Player.ProjectionMatrix;
             GL.UniformMatrix4(Shaders.ProjectionMatrixID, false, ref proj);
 
             RenderHelp.CreateTexture(out TextureID, "content/textures.png");
+            RenderHelp.BindTexture(TextureID, TextureUnit.Texture0);
 
-            base.Initialize(e);
+            Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
+            GL.UniformMatrix4(Shaders.ViewMatrixID, false, ref view);
         }
 
-        public override void Render(FrameEventArgs e)
+        private void UseShader(int shader)
         {
-            GL.UseProgram(Shaders.ChunkShaderProgram);
+            GL.UseProgram(shader);
 
             RenderHelp.BindTexture(TextureID, TextureUnit.Texture0);
 
             Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
             GL.UniformMatrix4(Shaders.ViewMatrixID, false, ref view);
+        }
 
+        public override void Render(FrameEventArgs e)
+        {
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2D);
@@ -61,7 +76,11 @@ namespace Umbra.Engines
 
             // Render
             {
+                UseShader(Shaders.DefaultShaderProgram.ProgramID);
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+                RenderChunks();
+
+                UseShader(Shaders.ChunkAlphaShaderProgram.ProgramID);
                 RenderChunks();
 
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);

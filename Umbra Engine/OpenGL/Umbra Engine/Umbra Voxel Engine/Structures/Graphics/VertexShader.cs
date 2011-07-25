@@ -19,14 +19,10 @@ namespace Umbra.Structures.Graphics
         uniform mat4 projection_mat;
         uniform mat4 view_mat;
         uniform mat4 world_mat;
-
-        //out vec4 colorShade;
-        //out vec4 textureCoord;
  
         void main() 
         {
             gl_FrontColor = col_data;
-            //textureCoord = tex_data / 16.0;
             gl_TexCoord[0] = tex_data / 16.0;
 
             gl_Position = projection_mat * view_mat * world_mat * pos_data;

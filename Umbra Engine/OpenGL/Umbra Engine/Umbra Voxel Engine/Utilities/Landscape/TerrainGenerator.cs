@@ -150,7 +150,7 @@ namespace Umbra.Utilities.Landscape
                             }
                             else
                             {
-                                if (absoluteHeight < 4 && relativeHeight >= -4)
+                                if (absoluteHeight < Constants.Landscape.SandLevel && relativeHeight >= -4)
                                 {
                                     chunk[x,y,z] = Block.Sand;
                                 }
