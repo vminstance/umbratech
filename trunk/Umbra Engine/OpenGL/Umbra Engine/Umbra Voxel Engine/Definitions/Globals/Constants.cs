@@ -192,10 +192,11 @@ namespace Umbra.Definitions.Globals
             static public string WorldSeed = "";
             static public int PerlinOctaves = 8;            // Area taken into account = 2^octaves, currently 256 blocks;
             static public float PerlinBicubicWeight = 0.7F; // 0.0F = Total perlin, 1.0F = Total Bicubic
-            static public float WorldHeightAmplitude = 128.0F;//256.0F;
-            static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F) - 4;
+            static public float WorldHeightAmplitude = 256.0F;
+            static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F);
             static public int TerrainStretch = 8;
-            static public int WaterLevel = 0;
+            static public int WaterLevel = 95;
+            static public int SandLevel = WaterLevel + 3;
             static public bool CavesEnabled = true;
 
             static public class Vegetation
