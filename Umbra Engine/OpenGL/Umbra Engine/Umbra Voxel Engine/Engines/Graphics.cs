@@ -45,15 +45,6 @@ namespace Umbra.Engines
 
         public override void Render(FrameEventArgs e)
         {
-            //Console.Write("FPS: " + 1.0F / e.Time);
-
-            RenderChunks();
-
-            base.Render(e);
-        }
-
-        void RenderChunks()
-        {
             GL.UseProgram(Shaders.ChunkShaderProgram);
 
             RenderHelp.BindTexture(TextureID, TextureUnit.Texture0);
@@ -67,6 +58,28 @@ namespace Umbra.Engines
             GL.Enable(EnableCap.PolygonSmooth);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
+            // Render
+            {
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+                RenderChunks();
+
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+                BlockCursor.GetVertexBuffer().Render(ChunkIndex.Zero);
+            }
+
+
+            GL.Disable(EnableCap.DepthTest);
+            GL.Disable(EnableCap.CullFace);
+            GL.Disable(EnableCap.Texture2D);
+            GL.Disable(EnableCap.PolygonSmooth);
+            GL.Disable(EnableCap.Blend);
+
+            base.Render(e);
+        }
+
+        void RenderChunks()
+        {
 
             foreach (Chunk c in Constants.World.Current.GetChunks())
             {
@@ -82,13 +95,6 @@ namespace Umbra.Engines
 
                 c.VertexBuffer.Render(c.Index);
             }
-
-
-            GL.Disable(EnableCap.DepthTest);
-            GL.Disable(EnableCap.CullFace);
-            GL.Disable(EnableCap.Texture2D);
-            GL.Disable(EnableCap.PolygonSmooth);
-            GL.Disable(EnableCap.Blend);
         }
 
         public override void Update(FrameEventArgs e)

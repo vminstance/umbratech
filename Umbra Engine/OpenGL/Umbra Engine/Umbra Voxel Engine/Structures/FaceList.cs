@@ -40,65 +40,8 @@ namespace Umbra.Structures
             Vertices = new List<SmallBlockVertex>();
         }
 
-        //public void AddFace(BlockIndex position, Direction face, uint texture, byte shade)
-        //{
-        //    //SmallBlockVertex[] tempVertices = new SmallBlockVertex[6];
-        //    SmallBlockVertex[] tempVertices = new SmallBlockVertex[4];
-
-        //    if (face == Direction.Right)
-        //    {
-        //        tempVertices[0].Position = new Vector3(1, 1, 0);
-        //        tempVertices[3].Position = new Vector3(1, 1, 1);
-        //        tempVertices[1].Position = new Vector3(1, 0, 0);
-        //        tempVertices[2].Position = new Vector3(1, 0, 1);
-        //    }
-        //    else if (face == Direction.Left)
-        //    {
-        //        tempVertices[0].Position = new Vector3(0, 1, 1);
-        //        tempVertices[3].Position = new Vector3(0, 1, 0);
-        //        tempVertices[1].Position = new Vector3(0, 0, 1);
-        //        tempVertices[2].Position = new Vector3(0, 0, 0);
-        //    }
-        //    else if (face == Direction.Up)
-        //    {
-        //        tempVertices[0].Position = new Vector3(1, 1, 0);
-        //        tempVertices[3].Position = new Vector3(0, 1, 0);
-        //        tempVertices[1].Position = new Vector3(1, 1, 1);
-        //        tempVertices[2].Position = new Vector3(0, 1, 1);
-        //    }
-        //    else if (face == Direction.Down)
-        //    {
-        //        tempVertices[0].Position = new Vector3(0, 0, 0);
-        //        tempVertices[3].Position = new Vector3(1, 0, 0);
-        //        tempVertices[1].Position = new Vector3(0, 0, 1);
-        //        tempVertices[2].Position = new Vector3(1, 0, 1);
-        //    }
-        //    else if (face == Direction.Forward)
-        //    {
-        //        tempVertices[0].Position = new Vector3(0, 1, 0);
-        //        tempVertices[3].Position = new Vector3(1, 1, 0);
-        //        tempVertices[1].Position = new Vector3(0, 0, 0);
-        //        tempVertices[2].Position = new Vector3(1, 0, 0);
-        //    }
-        //    else if (face == Direction.Backward)
-        //    {
-        //        tempVertices[0].Position = new Vector3(1, 1, 1);
-        //        tempVertices[3].Position = new Vector3(0, 1, 1);
-        //        tempVertices[1].Position = new Vector3(1, 0, 1);
-        //        tempVertices[2].Position = new Vector3(0, 0, 1);
-        //    }
-
-        //    tempVertices[0].Position += position.Position;
-        //    tempVertices[2].Position += position.Position;
-        //    tempVertices[1].Position += position.Position;
-        //    tempVertices[3].Position += position.Position;
-
-        //    Vertices.AddRange(tempVertices);
-        //}
-
         public void AddFace(BlockIndex position, Direction face, byte texture, byte shade)
         {
-            //SmallBlockVertex[] tempVertices = new SmallBlockVertex[6];
             SmallBlockVertex[] tempVertices = new SmallBlockVertex[4];
 
             if (face == Direction.Right)
@@ -266,6 +209,20 @@ namespace Umbra.Structures
         public void FillVertexBuffer(ref VertexBuffer value)
         {
             value.SetData<SmallBlockVertex>(Vertices.ToArray());
+        }
+
+        static public FaceList GetCursorFacelist(BlockIndex cursorIndex)
+        {
+            FaceList faceList = new FaceList();
+
+            faceList.AddFace(cursorIndex, Direction.Right, Block.Glass.GetFace(Direction.Right), 0);
+            faceList.AddFace(cursorIndex, Direction.Left, Block.Glass.GetFace(Direction.Left), 0);
+            faceList.AddFace(cursorIndex, Direction.Up, Block.Glass.GetFace(Direction.Up), 0);
+            faceList.AddFace(cursorIndex, Direction.Down, Block.Glass.GetFace(Direction.Down), 0);
+            faceList.AddFace(cursorIndex, Direction.Backward, Block.Glass.GetFace(Direction.Backward), 0);
+            faceList.AddFace(cursorIndex, Direction.Forward, Block.Glass.GetFace(Direction.Forward), 0);
+
+            return faceList;
         }
 
         static public FaceValidation GetFaceValidation(Block thisBlock, Block nextBlock)

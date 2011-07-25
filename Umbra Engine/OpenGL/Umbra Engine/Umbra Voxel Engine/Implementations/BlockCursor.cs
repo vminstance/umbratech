@@ -26,50 +26,16 @@ namespace Umbra.Implementations
         static public VertexBuffer GetVertexBuffer()
         {
 
+            VertexBuffer returnVal = new VertexBuffer();
+
             BlockIndex currentAim = GetToDestroy();
 
             if (currentAim == null)
             {
-                return null;
+                return returnVal;
             }
 
-            //CursorVertex[] vertices = new CursorVertex[24];
-
-            //Vector3d currentAimPosition = currentAim;
-            //Vector3d UnitX = Vector3d.UnitX;
-            //Vector3d UnitY = Vector3d.UnitY;
-            //Vector3d UnitZ = Vector3d.UnitZ;
-            //Vector3d One = Vector3d.One;
-
-            //vertices[0] = new CursorVertex(currentAimPosition, Color.Black);
-            //vertices[1] = new CursorVertex(UnitX + currentAimPosition, Color.Black);
-            //vertices[2] = new CursorVertex(currentAimPosition, Color.Black);
-            //vertices[3] = new CursorVertex(UnitY + currentAimPosition, Color.Black);
-            //vertices[4] = new CursorVertex(currentAimPosition, Color.Black);
-            //vertices[5] = new CursorVertex(UnitZ + currentAimPosition, Color.Black);
-
-            //vertices[6] = new CursorVertex(UnitY + currentAimPosition, Color.Black);
-            //vertices[7] = new CursorVertex(UnitZ + UnitY + currentAimPosition, Color.Black);
-            //vertices[8] = new CursorVertex(UnitY + currentAimPosition, Color.Black);
-            //vertices[9] = new CursorVertex(UnitX + UnitY + currentAimPosition, Color.Black);
-            //vertices[10] = new CursorVertex(UnitZ + currentAimPosition, Color.Black);
-            //vertices[11] = new CursorVertex(UnitZ + UnitY + currentAimPosition, Color.Black);
-            //vertices[12] = new CursorVertex(UnitX + currentAimPosition, Color.Black);
-            //vertices[13] = new CursorVertex(UnitX + UnitY + currentAimPosition, Color.Black);
-            //vertices[14] = new CursorVertex(UnitZ + currentAimPosition, Color.Black);
-            //vertices[15] = new CursorVertex(UnitX + UnitZ + currentAimPosition, Color.Black);
-            //vertices[16] = new CursorVertex(UnitX + currentAimPosition, Color.Black);
-            //vertices[17] = new CursorVertex(UnitX + UnitZ + currentAimPosition, Color.Black);
-
-            //vertices[18] = new CursorVertex(UnitZ + UnitY + currentAimPosition, Color.Black);
-            //vertices[19] = new CursorVertex(One + currentAimPosition, Color.Black);
-            //vertices[20] = new CursorVertex(UnitX + UnitY + currentAimPosition, Color.Black);
-            //vertices[21] = new CursorVertex(One + currentAimPosition, Color.Black);
-            //vertices[22] = new CursorVertex(UnitX + UnitZ + currentAimPosition, Color.Black);
-            //vertices[23] = new CursorVertex(One + currentAimPosition, Color.Black);
-
-            VertexBuffer returnVal = new VertexBuffer();
-            //returnVal.SetData<CursorVertex>(vertices.ToArray(), CursorVertex.Size);
+            FaceList.GetCursorFacelist(currentAim).FillVertexBuffer(ref returnVal);
 
             return returnVal;
         }

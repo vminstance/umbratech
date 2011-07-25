@@ -140,7 +140,7 @@ namespace Umbra.Structures
                 if (CurrentAlterDelay == 0)
                 {
                     BlockIndex target = BlockCursor.GetToCreate();
-                    if (target != null && !BoundingBox.PlayerBoundingBox(Position).Intersects(target.GetBoundingBox()))
+                    if (target != null && !BoundingBox.Intersects(target.GetBoundingBox()))
                     {
                         Constants.World.Current.SetBlock(target, Variables.Player.BlockEditing.CurrentCursorBlock);
                         CurrentAlterDelay = Constants.Controls.AlterDelay;

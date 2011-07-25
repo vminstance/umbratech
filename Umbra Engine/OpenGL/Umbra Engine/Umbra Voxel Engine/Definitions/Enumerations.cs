@@ -127,6 +127,48 @@ namespace Umbra.Definitions
         static public Direction Up { get { return new Direction(Dir.Up); } }
         static public Direction Down { get { return new Direction(Dir.Down); } }
 
+        static public Vector3d GetFromIndex(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    {
+                        return Direction.Right.GetVector3();
+                    }
+
+                case 1:
+                    {
+                        return Direction.Up.GetVector3();
+                    }
+
+                case 2:
+                    {
+                        return Direction.Backward.GetVector3();
+                    }
+
+                case 3:
+                    {
+                        return Direction.Left.GetVector3();
+                    }
+
+                case 4:
+                    {
+                        return Direction.Down.GetVector3();
+                    }
+
+                case 5:
+                    {
+                        return Direction.Forward.GetVector3();
+                    }
+
+                default:
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+
+            }
+        }
+
         public Direction Opposite()
         {
             switch (DirectionEnum)

@@ -36,6 +36,7 @@ namespace Umbra.Structures.Geometry
             Direction.Normalize();
         }
 
+
         public double? Intersects(BoundingBox boundingBox)
         {
             if (boundingBox.Contains(Origin))
