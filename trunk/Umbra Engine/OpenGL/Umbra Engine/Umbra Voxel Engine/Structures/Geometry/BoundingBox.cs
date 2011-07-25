@@ -63,11 +63,6 @@ namespace Umbra.Structures.Geometry
             Max = max;
         }
 
-        static public BoundingBox PlayerBoundingBox(Vector3d position)
-        {
-            return new BoundingBox(position, position + new Vector3d(Constants.Player.Physics.Box.Width, Constants.Player.Physics.Box.Height, Constants.Player.Physics.Box.Width));
-        }
-
         public bool Intersects(BoundingBox box)
         {
             if (box.Min.X >= Max.X || box.Max.X <= Min.X)
