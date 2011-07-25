@@ -17,13 +17,14 @@ namespace Umbra.Structures.Graphics
 
         uniform sampler2D texture;        
 
-        out vec4 Output;
+        //out vec4 Output;
 
         void main()
         {
-            Output = colorShade;
-            Output *= texture2D(texture, textureCoord.xy);
-            if(Output.a == 0)
+            gl_FragColor = gl_Color;
+            gl_FragColor *= texture2D(texture, textureCoord.xy);
+
+            if(gl_FragColor.a == 0)
             {
                 discard;
             }
