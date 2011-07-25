@@ -38,26 +38,20 @@ namespace Umbra.Utilities
         public byte TextureY;
     }
 
-    public struct CursorVertex
-    {
-        public Vector3 Position;
-        public Color Color;
-
-        public CursorVertex(Vector3 position, Color color)
-        {
-            Position = position;
-            Color = color;
-        }
-    }
-
     public class VertexBuffer
     {
         int ID;
         int Count;
         int ArrayID;
+        ChunkIndex Offset;
 
         public VertexBuffer()
         {
+        }
+
+        public VertexBuffer(ChunkIndex offset)
+        {
+            Offset = offset;
         }
 
         public void SetData<VertexType>(VertexType[] vertices) where VertexType : struct
@@ -91,11 +85,11 @@ namespace Umbra.Utilities
             return Count;
         }
 
-        public void Render(ChunkIndex offset)
+        public void Render()
         {
             if (Count > 0)
             {
-                Matrix4 world = Matrix4.CreateTranslation((Vector3)offset.Position);
+                Matrix4 world = Matrix4.CreateTranslation((Vector3)Offset.Position);
                 GL.UniformMatrix4(Shaders.WorldMatrixID, false, ref world);
 
                 GL.BindVertexArray(ArrayID);
