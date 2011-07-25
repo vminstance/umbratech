@@ -215,12 +215,12 @@ namespace Umbra.Structures
         {
             FaceList faceList = new FaceList();
 
-            faceList.AddFace(cursorIndex, Direction.Right, Block.Glass.GetFace(Direction.Right), 0);
-            faceList.AddFace(cursorIndex, Direction.Left, Block.Glass.GetFace(Direction.Left), 0);
-            faceList.AddFace(cursorIndex, Direction.Up, Block.Glass.GetFace(Direction.Up), 0);
-            faceList.AddFace(cursorIndex, Direction.Down, Block.Glass.GetFace(Direction.Down), 0);
-            faceList.AddFace(cursorIndex, Direction.Backward, Block.Glass.GetFace(Direction.Backward), 0);
-            faceList.AddFace(cursorIndex, Direction.Forward, Block.Glass.GetFace(Direction.Forward), 0);
+            faceList.AddFace(cursorIndex, Direction.Right, Block.Stone.GetFace(Direction.Right), 0);
+            faceList.AddFace(cursorIndex, Direction.Left, Block.Stone.GetFace(Direction.Left), 0);
+            faceList.AddFace(cursorIndex, Direction.Up, Block.Stone.GetFace(Direction.Up), 0);
+            faceList.AddFace(cursorIndex, Direction.Down, Block.Stone.GetFace(Direction.Down), 0);
+            faceList.AddFace(cursorIndex, Direction.Backward, Block.Stone.GetFace(Direction.Backward), 0);
+            faceList.AddFace(cursorIndex, Direction.Forward, Block.Stone.GetFace(Direction.Forward), 0);
 
             return faceList;
         }

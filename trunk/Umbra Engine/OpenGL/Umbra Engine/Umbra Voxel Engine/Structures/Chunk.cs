@@ -85,7 +85,7 @@ namespace Umbra.Structures
             WillBeUnloaded = false;
             Index = index;
             Data = new Block[Constants.World.ChunkSize, Constants.World.ChunkSize, Constants.World.ChunkSize];
-            VertexBuffer = new VertexBuffer();
+            VertexBuffer = new VertexBuffer(Index);
         }
 
         public void SetBlock(BlockIndex index, Block value, bool updateAdjacentChunks)

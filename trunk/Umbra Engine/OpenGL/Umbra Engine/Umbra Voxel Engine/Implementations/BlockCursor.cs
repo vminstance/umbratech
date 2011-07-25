@@ -25,15 +25,16 @@ namespace Umbra.Implementations
     {
         static public VertexBuffer GetVertexBuffer()
         {
-
-            VertexBuffer returnVal = new VertexBuffer();
-
             BlockIndex currentAim = GetToDestroy();
 
             if (currentAim == null)
             {
-                return returnVal;
+                return new VertexBuffer();
             }
+
+            VertexBuffer returnVal = new VertexBuffer(currentAim.ToChunkIndex());
+
+            currentAim = currentAim - currentAim.ToChunkIndex();
 
             FaceList.GetCursorFacelist(currentAim).FillVertexBuffer(ref returnVal);
 

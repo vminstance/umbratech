@@ -65,7 +65,7 @@ namespace Umbra.Engines
                 RenderChunks();
 
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-                BlockCursor.GetVertexBuffer().Render(ChunkIndex.Zero);
+                BlockCursor.GetVertexBuffer().Render();
             }
 
 
@@ -93,7 +93,7 @@ namespace Umbra.Engines
                     continue;
                 }
 
-                c.VertexBuffer.Render(c.Index);
+                c.VertexBuffer.Render();
             }
         }
 
