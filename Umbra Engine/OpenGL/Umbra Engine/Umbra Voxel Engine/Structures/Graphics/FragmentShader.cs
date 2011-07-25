@@ -12,8 +12,8 @@ namespace Umbra.Structures.Graphics
 
         static public readonly string Shader = @"
             
-        in vec4 colorShade;
-        in vec4 textureCoord;
+        //in vec4 colorShade;
+        //in vec4 textureCoord;
 
         uniform sampler2D texture;        
 
@@ -22,7 +22,7 @@ namespace Umbra.Structures.Graphics
         void main()
         {
             gl_FragColor = gl_Color;
-            gl_FragColor *= texture2D(texture, textureCoord.xy);
+            gl_FragColor *= texture2D(texture, gl_TexCoord[0].xy);
 
             if(gl_FragColor.a == 0)
             {
