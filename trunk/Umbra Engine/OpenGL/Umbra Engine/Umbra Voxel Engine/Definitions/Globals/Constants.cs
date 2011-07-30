@@ -19,7 +19,8 @@ using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
 using Umbra.Utilities.Landscape;
-using Console = Umbra.Implementations.Console;
+using Umbra.Implementations.Graphics;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Definitions.Globals
 {
@@ -56,6 +57,9 @@ namespace Umbra.Definitions.Globals
             ChunkManager.InitializeThreads();
             World.Current.Initialize();
             ClockTime.SetTimeOfDay(TimeOfDay.Day);
+
+            Crosshair.Initialize();
+            Compass.Initialize();
         }
 
         static public class Overlay
@@ -86,7 +90,7 @@ namespace Umbra.Definitions.Globals
 
         static public class Controls
         {
-            static public float MouseSensitivityInv = 400.0F;
+            static public double MouseSensitivityInv = 400.0;
             static public float AlterDelay = 30.0F;            // Delay between editing blocks (mS)
             static public bool SmoothCameraEnabled = false;
             static public bool CanPlaceBlocks = false;
@@ -116,8 +120,15 @@ namespace Umbra.Definitions.Globals
 
         static public class Graphics
         {
-            static public Vector2 ScreenResolution = new Vector2(1920, 1080);
-            static public float AspectRatio = ScreenResolution.X / ScreenResolution.Y;
+            static public Vector2 ScreenResolution;
+            static public float AspectRatio
+            {
+                get
+                {
+                    return ScreenResolution.X / ScreenResolution.Y;
+                }
+            }
+
             static public bool AntiAliasingEnabled = true;
             static public float CameraNearPlane = 0.01F;
             static public float CameraFarPlane = 64000.0F;
@@ -190,20 +201,19 @@ namespace Umbra.Definitions.Globals
         static public class Landscape
         {
             static public string WorldSeed = "";
-            static public int PerlinOctaves = 8;            // Area taken into account = 2^octaves, currently 256 blocks;
+            static public int TerrainStretch = 8;           // Area taken into account = 2^stretch, currently 256 blocks;
             static public float PerlinBicubicWeight = 0.7F; // 0.0F = Total perlin, 1.0F = Total Bicubic
             static public float WorldHeightAmplitude = 256.0F;
             static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F);
-            static public int TerrainStretch = 8;
             static public int WaterLevel = 95;
             static public int SandLevel = WaterLevel + 3;
             static public bool CavesEnabled = true;
 
             static public class Vegetation
             {
-                static public int TreeMinHeight = 7;   // Tree height = (random 0-1) * TreeVaryHeight + TreeMinHeight
-                static public int TreeVaryHeight = 8;  // Tree height will vary from TreeMinHeight to TreeVaryHeight + TreeMinHeight
-                static public float TreeDensity = 0.05F;     // If a tree can be placed at a location, this is the chance that it will grow there.
+                static public int TreeMinHeight = 7;        // Tree height = (random 0-1) * TreeVaryHeight + TreeMinHeight
+                static public int TreeVaryHeight = 8;       // Tree height will vary from TreeMinHeight to TreeVaryHeight + TreeMinHeight
+                static public float TreeDensity = 0.05F;    // If a tree can be placed at a location, this is the chance that it will grow there.
             }
         }
 

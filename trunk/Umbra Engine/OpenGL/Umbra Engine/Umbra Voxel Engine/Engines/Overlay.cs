@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Audio;
@@ -16,7 +18,8 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Umbra.Implementations.Graphics;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Engines
 {
@@ -93,63 +96,72 @@ namespace Umbra.Engines
 
         public override void Render(FrameEventArgs e)
         {
-            //SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
-            //SpriteBatch.Draw(Constants.Engine_Content.CrosshairTexture, new Vector2((Constants.Graphics.ScreenResolution.X - Constants.Engine_Content.CrosshairTexture.Width) / 2, (Constants.Graphics.ScreenResolution.Y - Constants.Engine_Content.CrosshairTexture.Height) / 2), Color.White);
-            Console.Draw(e);
-            //Popup.Draw();
-            //Compass.Draw();
-            //if (Variables.Overlay.DisplayFPS)
-            //{
-            //    SpriteBatch.DrawString(DebugFont, Convert.ToString(1000f / (float)gameTime.ElapsedGameTime.Milliseconds), new Vector2(10, 5), Color.Yellow);
-            //}
-            //if (Variables.Game.DeveloperMode)
-            //{
-            //    // Memory
-            //    string memoryUsage = (int)(System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024) + " kB";
-            //    SpriteBatch.DrawString(DebugFont, memoryUsage, new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(memoryUsage).X - 10, 100), Color.Yellow);
 
-            //    // Position
-            //    string[] position = { 
-            //                            "Px: " + Math.Round(Constants.Engine_Physics.Player.Position.X, 1), 
-            //                            "Py: " + Math.Round(Constants.Engine_Physics.Player.Position.Y, 1), 
-            //                            "Pz: " + Math.Round(Constants.Engine_Physics.Player.Position.Z, 1) 
-            //                        };
-
-            //    SpriteBatch.DrawString(DebugFont, position[0], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(position[0]).X - 10, 130), Color.Yellow);
-            //    SpriteBatch.DrawString(DebugFont, position[1], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(position[1]).X - 10, 150), Color.Yellow);
-            //    SpriteBatch.DrawString(DebugFont, position[2], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(position[2]).X - 10, 170), Color.Yellow);
-
-            //    // Acceleration
-            //    string[] acceleration = { 
-            //                                "Ax: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.X / Constants.Engine_Physics.Player.Mass, 2), 
-            //                                "Ay: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Y / Constants.Engine_Physics.Player.Mass, 2), 
-            //                                "Az: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Z / Constants.Engine_Physics.Player.Mass, 2) 
-            //                            };
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(0, Constants.Graphics.ScreenResolution.X, Constants.Graphics.ScreenResolution.Y, 0, -1.0, 1.0);
 
 
-            //    SpriteBatch.DrawString(DebugFont, acceleration[0], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(acceleration[0]).X - 10, 270), Color.Yellow);
-            //    SpriteBatch.DrawString(DebugFont, acceleration[1], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(acceleration[1]).X - 10, 290), Color.Yellow);
-            //    SpriteBatch.DrawString(DebugFont, acceleration[2], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(acceleration[2]).X - 10, 310), Color.Yellow);
+            GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
+            Crosshair.Render(e);
+            Console.Render(e);
+            Popup.Render(e);
+            Compass.Render(e);
 
-            //    // Velocity
-            //    string[] velocity = { 
-            //                            "Vx: " + Math.Round(Constants.Engine_Physics.Player.Velocity.X, 2), 
-            //                            "Vy: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Y, 2), 
-            //                            "Vz: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Z, 2) 
-            //                        };
+            if (Variables.Overlay.DisplayFPS)
+            {
+                SpriteString.Render(Math.Round(1.0 / e.Time, 2) + "", Console.Font, Point.Empty, Color.Yellow);
+            }
+            if (Variables.Game.DeveloperMode)
+            {
+                // Memory
+                string memoryUsage = (int)(System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024) + " kB";
+                SpriteString.Render(memoryUsage, Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(memoryUsage, Console.Font).X - 10, 100), Color.Yellow);
 
-            //    SpriteBatch.DrawString(DebugFont, velocity[0], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(velocity[0]).X - 10, 200), Color.Yellow);
-            //    SpriteBatch.DrawString(DebugFont, velocity[1], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(velocity[1]).X - 10, 220), Color.Yellow);
-            //    SpriteBatch.DrawString(DebugFont, velocity[2], new Vector2(Constants.Graphics.ScreenResolution.X - DebugFont.MeasureString(velocity[2]).X - 10, 240), Color.Yellow);
-            //}
+                // Position
+                string[] position = { 
+                                        "Px: " + Math.Round(Constants.Engine_Physics.Player.Position.X, 1), 
+                                        "Py: " + Math.Round(Constants.Engine_Physics.Player.Position.Y, 1), 
+                                        "Pz: " + Math.Round(Constants.Engine_Physics.Player.Position.Z, 1) 
+                                    };
 
-            //for (int i = 0; i < Windows.Count; i++)
-            //{
-            //    Windows.ElementAt(i).Event_OnPaint.Invoke(gameTime, new object[] { SpriteBatch });
-            //}
+                SpriteString.Render(position[0], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[0], Console.Font).X - 10, 130), Color.Yellow);
+                SpriteString.Render(position[1], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[1], Console.Font).X - 10, 150), Color.Yellow);
+                SpriteString.Render(position[2], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[2], Console.Font).X - 10, 170), Color.Yellow);
 
-            //SpriteBatch.End();
+               
+                // Velocity
+                string[] velocity = { 
+                                        "Vx: " + Math.Round(Constants.Engine_Physics.Player.Velocity.X, 2), 
+                                        "Vy: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Y, 2), 
+                                        "Vz: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Z, 2) 
+                                    };
+
+                SpriteString.Render(velocity[0], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[0], Console.Font).X - 10, 200), Color.Yellow);
+                SpriteString.Render(velocity[1], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[1], Console.Font).X - 10, 220), Color.Yellow);
+                SpriteString.Render(velocity[2], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[2], Console.Font).X - 10, 240), Color.Yellow);
+
+                
+                // Acceleration
+                string[] acceleration = { 
+                                            "Ax: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.X / Constants.Engine_Physics.Player.Mass, 2), 
+                                            "Ay: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Y / Constants.Engine_Physics.Player.Mass, 2), 
+                                            "Az: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Z / Constants.Engine_Physics.Player.Mass, 2) 
+                                        };
+
+                SpriteString.Render(acceleration[0], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[0], Console.Font).X - 10, 270), Color.Yellow);
+                SpriteString.Render(acceleration[1], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[1], Console.Font).X - 10, 290), Color.Yellow);
+                SpriteString.Render(acceleration[2], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[2], Console.Font).X - 10, 310), Color.Yellow);
+
+            }
+
+            GL.Disable(EnableCap.Texture2D);
+            GL.Disable(EnableCap.Blend);
             base.Render(e);
         }
     }

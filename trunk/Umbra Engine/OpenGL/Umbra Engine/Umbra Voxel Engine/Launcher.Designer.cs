@@ -117,7 +117,6 @@ namespace Umbra
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Enabled = false;
             this.numericUpDown1.Increment = new decimal(new int[] {
             2,
             0,

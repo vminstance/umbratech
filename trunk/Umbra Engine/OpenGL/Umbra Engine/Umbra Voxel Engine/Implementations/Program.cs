@@ -17,7 +17,7 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra
 {
@@ -46,15 +46,15 @@ namespace Umbra
 
                 if (Constants.Graphics.EnableFullScreen)
                 {
-                    UmbraEngine = new Main(SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height, new GraphicsMode(), "Umbra Voxel Engine", GameWindowFlags.Fullscreen);
-                    Constants.Graphics.AspectRatio = (float)SystemInformation.VirtualScreen.Width / SystemInformation.VirtualScreen.Height;
+                    Constants.Graphics.ScreenResolution = new Vector2(SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height);
+                    UmbraEngine = new Main(new GraphicsMode(), "Umbra Voxel Engine", GameWindowFlags.Fullscreen);
                 }
                 else
                 {
-                    UmbraEngine = new Main((int)Constants.Graphics.ScreenResolution.X, (int)Constants.Graphics.ScreenResolution.Y, new GraphicsMode(), "Umbra Voxel Engine", GameWindowFlags.Default);
+                    UmbraEngine = new Main(new GraphicsMode(), "Umbra Voxel Engine", GameWindowFlags.Default);
                 }
 
-                UmbraEngine.Run(60.0F, 60.0F);
+                UmbraEngine.Run(100.0, 60.0);
             }
         }
     }

@@ -16,7 +16,7 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Structures.Geometry
 {
@@ -36,147 +36,102 @@ namespace Umbra.Structures.Geometry
             Direction.Normalize();
         }
 
-
         public double? Intersects(BoundingBox boundingBox)
         {
-            if (boundingBox.Contains(Origin))
+            double tNear = int.MinValue;
+            double tFar = int.MaxValue;
+
+            #region - X -
+            if (Direction.X == 0 && Origin.X < boundingBox.Min.X && Origin.X > boundingBox.Max.X)
             {
-                return 0.0;
-            }
-
-            double shortest = double.MaxValue;
-
-            // Intersection with faces:
-
-            #region --Positive X--
-            double planeX = boundingBox.Max.X;
-
-            if (!((Origin.X > planeX && Direction.X > 0) || (Origin.X < planeX && Direction.X < 0)))
-            {
-                double normalDistance = Math.Abs(Origin.X - planeX);
-
-                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.Y, 2) + Math.Pow(Direction.Z, 2)));
-
-                Vector3d intersectionPoint = Origin + Direction * length;
-
-                if (!((intersectionPoint.Y > boundingBox.Max.Y || intersectionPoint.Y < boundingBox.Min.Y) &&
-                    (intersectionPoint.Z > boundingBox.Max.Z || intersectionPoint.Z < boundingBox.Min.Z))
-                    && length < shortest)
-                {
-                    shortest = length;
-                }
-            }
-            #endregion
-
-            #region --Negative X--
-            planeX = boundingBox.Min.X;
-
-            if (!((Origin.X > planeX && Direction.X > 0) || (Origin.X < planeX && Direction.X < 0)))
-            {
-                double normalDistance = Math.Abs(Origin.X - planeX);
-
-                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.Y, 2) + Math.Pow(Direction.Z, 2)));
-
-                Vector3d intersectionPoint = Origin + Direction * length;
-
-                if (!((intersectionPoint.Y > boundingBox.Max.Y || intersectionPoint.Y < boundingBox.Min.Y) &&
-                    (intersectionPoint.Z > boundingBox.Max.Z || intersectionPoint.Z < boundingBox.Min.Z))
-                    && length < shortest)
-                {
-                    shortest = length;
-                }
-            }
-            #endregion
-
-            #region --Positive Y--
-            double planeY = boundingBox.Max.Y;
-
-            if (!((Origin.Y > planeY && Direction.Y > 0) || (Origin.Y < planeY && Direction.Y < 0)))
-            {
-                double normalDistance = Math.Abs(Origin.Y - planeY);
-
-                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Z, 2)));
-
-                Vector3d intersectionPoint = Origin + Direction * length;
-
-                if (!((intersectionPoint.X > boundingBox.Max.X || intersectionPoint.X < boundingBox.Min.X) &&
-                    (intersectionPoint.Z > boundingBox.Max.Z || intersectionPoint.Z < boundingBox.Min.Z))
-                    && length < shortest)
-                {
-                    shortest = length;
-                }
-            }
-            #endregion
-
-            #region --Negative Y--
-            planeY = boundingBox.Min.Y;
-
-            if (!((Origin.Y > planeY && Direction.Y > 0) || (Origin.Y < planeY && Direction.Y < 0)))
-            {
-                double normalDistance = Math.Abs(Origin.Y - planeY);
-
-                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Z, 2)));
-
-                Vector3d intersectionPoint = Origin + Direction * length;
-
-                if (!((intersectionPoint.X > boundingBox.Max.X || intersectionPoint.X < boundingBox.Min.X) &&
-                    (intersectionPoint.Z > boundingBox.Max.Z || intersectionPoint.Z < boundingBox.Min.Z))
-                    && length < shortest)
-                {
-                    shortest = length;
-                }
-            }
-            #endregion
-
-            #region --Positive Z--
-            double planeZ = boundingBox.Max.Z;
-
-            if (!((Origin.Z > planeZ && Direction.Z > 0) || (Origin.Z < planeZ && Direction.Z < 0)))
-            {
-                double normalDistance = Math.Abs(Origin.Z - planeZ);
-
-                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Y, 2)));
-
-                Vector3d intersectionPoint = Origin + Direction * length;
-
-                if (!((intersectionPoint.X > boundingBox.Max.X || intersectionPoint.X < boundingBox.Min.X) &&
-                    (intersectionPoint.Y > boundingBox.Max.Y || intersectionPoint.Y < boundingBox.Min.Y))
-                    && length < shortest)
-                {
-                    shortest = length;
-                }
-            }
-            #endregion
-
-            #region --Negative Z--
-            planeZ = boundingBox.Min.Z;
-
-            if (!((Origin.Z > planeZ && Direction.Z > 0) || (Origin.Z < planeZ && Direction.Z < 0)))
-            {
-                double normalDistance = Math.Abs(Origin.Z - planeZ);
-
-                double length = normalDistance / Math.Sqrt(1 - (Math.Pow(Direction.X, 2) + Math.Pow(Direction.Y, 2)));
-
-                Vector3d intersectionPoint = Origin + Direction * length;
-
-                if (!((intersectionPoint.X > boundingBox.Max.X || intersectionPoint.X < boundingBox.Min.X) &&
-                    (intersectionPoint.Y > boundingBox.Max.Y || intersectionPoint.Y < boundingBox.Min.Y))
-                    && length < shortest)
-                {
-                    shortest = length;
-                }
-            }
-            #endregion
-
-
-            if (shortest < double.MaxValue)
-            {
-                return shortest;
+                // Ray is paralell and outside planes
+                return null;
             }
             else
             {
+                double t1 = (boundingBox.Min.X - Origin.X) / Direction.X;
+                double t2 = (boundingBox.Max.X - Origin.X) / Direction.X;
+
+                if (t1 > t2)
+                {
+                    MathHelper.Swap(ref t1, ref t2);
+                }
+                if (t1 > tNear)
+                {
+                    tNear = t1;
+                }
+                if (t2 < tFar)
+                {
+                    tFar = t2;
+                }
+                if (tNear > tFar || tFar < 0)
+                {
+                    return null;
+                }
+            }
+            #endregion
+
+            #region - Y -
+            if (Direction.Y == 0 && Origin.Y < boundingBox.Min.Y && Origin.Y > boundingBox.Max.Y)
+            {
+                // Ray is paralell and outside planes
                 return null;
             }
+            else
+            {
+                double t1 = (boundingBox.Min.Y - Origin.Y) / Direction.Y;
+                double t2 = (boundingBox.Max.Y - Origin.Y) / Direction.Y;
+
+                if (t1 > t2)
+                {
+                    MathHelper.Swap(ref t1, ref t2);
+                }
+                if (t1 > tNear)
+                {
+                    tNear = t1;
+                }
+                if (t2 < tFar)
+                {
+                    tFar = t2;
+                }
+                if (tNear > tFar || tFar < 0)
+                {
+                    return null;
+                }
+            }
+            #endregion
+
+            #region - Z -
+            if (Direction.Z == 0 && Origin.Z < boundingBox.Min.Z && Origin.Z > boundingBox.Max.Z)
+            {
+                // Ray is paralell and outside planes
+                return null;
+            }
+            else
+            {
+                double t1 = (boundingBox.Min.Z - Origin.Z) / Direction.Z;
+                double t2 = (boundingBox.Max.Z - Origin.Z) / Direction.Z;
+
+                if (t1 > t2)
+                {
+                    MathHelper.Swap(ref t1, ref t2);
+                }
+                if (t1 > tNear)
+                {
+                    tNear = t1;
+                }
+                if (t2 < tFar)
+                {
+                    tFar = t2;
+                }
+                if (tNear > tFar || tFar < 0)
+                {
+                    return null;
+                }
+            }
+            #endregion
+
+            return tNear;
         }
     }
 }

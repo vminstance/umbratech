@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Audio;
@@ -18,26 +19,16 @@ using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Graphics.Console;
 
-namespace Umbra.Structures
+namespace Umbra.Implementations.Graphics
 {
-    public class Engine
+    static public class Compass
     {
-        protected Main Main { get; set; }
 
-        public void SetGame(Main main)
-        {
-            Main = main;
-        }
-
-        public virtual void Initialize(EventArgs e)
+        static public void Initialize()
         {
         }
 
-        public virtual void Update(FrameEventArgs e)
-        {
-        }
-
-        public virtual void Render(FrameEventArgs e)
+        static public void Render(FrameEventArgs e)
         {
         }
     }

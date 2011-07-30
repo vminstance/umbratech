@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Audio;
@@ -16,9 +17,9 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Console = Umbra.Implementations.Graphics.Console;
 
-namespace Umbra.Implementations
+namespace Umbra.Implementations.Graphics
 {
     static public class Popup
     {
@@ -36,10 +37,10 @@ namespace Umbra.Implementations
 
         static public void Update(FrameEventArgs e)
         {
-            LastTimeStamp = e.Time * 1000.0F;
+            LastTimeStamp += e.Time;
         }
 
-        static public void Draw()
+        static public void Render(FrameEventArgs e)
         {
             if (LastMessageTimeStamp != 0)
             {

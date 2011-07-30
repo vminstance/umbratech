@@ -17,7 +17,7 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Structures
 {
@@ -54,8 +54,8 @@ namespace Umbra.Structures
 
         public void UpdateMouse(Point delta)
         {
-            Direction = Mathematics.WrapAngleRadians(Direction - (double)delta.X / (double)Constants.Controls.MouseSensitivityInv);
-            Pitch = Mathematics.Clamp(Pitch - (double)delta.Y / (double)Constants.Controls.MouseSensitivityInv, -MathHelper.PiOver2, MathHelper.PiOver2);
+            Direction = Mathematics.WrapAngleRadians(Direction - (double)delta.X / Constants.Controls.MouseSensitivityInv);
+            Pitch = Mathematics.Clamp(Pitch - (double)delta.Y / Constants.Controls.MouseSensitivityInv, -MathHelper.PiOver2, MathHelper.PiOver2);
         }
 
         public void SetRotation(double direction, double pitch)

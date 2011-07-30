@@ -19,8 +19,7 @@ using Umbra.Implementations;
 using Umbra.Structures.Graphics;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
-using GL = OpenTK.Graphics.OpenGL.GL;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Utilities
 {

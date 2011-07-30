@@ -19,7 +19,7 @@ using Umbra.Implementations;
 using Umbra.Structures.Graphics;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Engines
 {
@@ -53,6 +53,8 @@ namespace Umbra.Engines
 
             Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
             GL.UniformMatrix4(Shaders.ViewMatrixID, false, ref view);
+
+            GL.UseProgram(0);
         }
 
         private void UseShader(int shader)
@@ -70,11 +72,11 @@ namespace Umbra.Engines
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.PolygonSmooth);
             GL.Enable(EnableCap.Blend);
+            GL.Enable(EnableCap.Multisample);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
-            // Render
+            // Render World
             {
                 UseShader(Shaders.DefaultShaderProgram.ProgramID);
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
@@ -82,17 +84,17 @@ namespace Umbra.Engines
 
                 UseShader(Shaders.ChunkAlphaShaderProgram.ProgramID);
                 RenderChunks();
-
-                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-                BlockCursor.GetVertexBuffer().Render();
             }
+
+            UseShader(0);
+            RenderCursor();
 
 
             GL.Disable(EnableCap.DepthTest);
             GL.Disable(EnableCap.CullFace);
             GL.Disable(EnableCap.Texture2D);
-            GL.Disable(EnableCap.PolygonSmooth);
             GL.Disable(EnableCap.Blend);
+            GL.Disable(EnableCap.Multisample);
 
             base.Render(e);
         }
@@ -114,6 +116,59 @@ namespace Umbra.Engines
 
                 c.VertexBuffer.Render();
             }
+        }
+
+        void RenderCursor()
+        {
+            BlockIndex currentAim = BlockCursor.GetToDestroy();
+
+            if (currentAim == null)
+            {
+                return;
+            }
+
+            GL.MatrixMode(MatrixMode.Projection);
+            Matrix4 proj = Constants.Engine_Physics.Player.ProjectionMatrix;
+            GL.LoadMatrix(ref proj);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
+            GL.LoadMatrix(ref view);
+
+            GL.Color4(0.0, 0.0, 0.0, 0.2);
+            GL.Begin(BeginMode.Quads);
+            {
+                GL.Vertex3(new Vector3d(1.002,  -0.002, -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.002,  1.002,  -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.002,  1.002,  1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.002,  -0.002, 1.002) + currentAim.Position);
+
+                GL.Vertex3(new Vector3d(-0.002, -0.002, 1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.002, 1.002,  1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.002, 1.002,  -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.002, -0.002, -0.002) + currentAim.Position);
+
+                GL.Vertex3(new Vector3d(1.002,  1.002,  1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.002,  1.002,  -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.002, 1.002,  -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.002, 1.002,  1.002) + currentAim.Position);
+
+                GL.Vertex3(new Vector3d(-0.002, -0.002, 1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.002, -0.002, -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.002,  -0.002, -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.002,  -0.002, 1.002) + currentAim.Position);
+
+                GL.Vertex3(new Vector3d(1.002,  -0.002, 1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.002,  1.002,  1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.002, 1.002,  1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.002, -0.002, 1.002) + currentAim.Position);
+
+                GL.Vertex3(new Vector3d(-0.002, -0.002, -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.002, 1.002,  -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.002,  1.002,  -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.002,  -0.002, -0.002) + currentAim.Position);
+            }
+            GL.End();
         }
 
         public override void Update(FrameEventArgs e)

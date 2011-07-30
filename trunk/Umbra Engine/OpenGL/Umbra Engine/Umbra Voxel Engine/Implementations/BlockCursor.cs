@@ -17,30 +17,12 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Implementations
 {
     static public class BlockCursor
     {
-        static public VertexBuffer GetVertexBuffer()
-        {
-            BlockIndex currentAim = GetToDestroy();
-
-            if (currentAim == null)
-            {
-                return new VertexBuffer();
-            }
-
-            VertexBuffer returnVal = new VertexBuffer(currentAim.ToChunkIndex());
-
-            currentAim = currentAim - currentAim.ToChunkIndex();
-
-            FaceList.GetCursorFacelist(currentAim).FillVertexBuffer(ref returnVal);
-
-            return returnVal;
-        }
-
         static public BlockIndex GetToDestroy()
         {
             Vector3d outVar;
