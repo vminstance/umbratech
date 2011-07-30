@@ -16,7 +16,7 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Engines
 {
@@ -24,7 +24,8 @@ namespace Umbra.Engines
     {
         List<Engine> Engines;
 
-        public Main(int width, int height, GraphicsMode mode, string title, GameWindowFlags flags) : base(width, height, mode, title, flags)
+        public Main(GraphicsMode mode, string title, GameWindowFlags flags)
+            : base((int)Constants.Graphics.ScreenResolution.X, (int)Constants.Graphics.ScreenResolution.Y, mode, title, flags)
         {
             Engines = new List<Engine>();
             Constants.SetupEngines(this);

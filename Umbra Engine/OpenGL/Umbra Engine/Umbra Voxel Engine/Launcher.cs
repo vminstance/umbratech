@@ -28,7 +28,6 @@ namespace Umbra
             // Graphics
 
             Constants.Graphics.ScreenResolution = new Vector2((float)this.numericUpDown2.Value, (float)this.numericUpDown3.Value);
-            Constants.Graphics.AspectRatio = (float)this.numericUpDown2.Value / (float)this.numericUpDown3.Value;
             //Constants.Graphics.AntiAliasingEnabled = this.checkBox3.Checked;
             Constants.Graphics.EnableFullScreen = this.checkBox4.Checked;
 

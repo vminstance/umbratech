@@ -73,10 +73,12 @@
     <Compile Include="Engines\Audio.cs" />
     <Compile Include="Implementations\ChunkManager.cs" />
     <Compile Include="Implementations\ClockTime.cs" />
-    <Compile Include="Implementations\Console.cs" />
+    <Compile Include="Implementations\Overlay\Compass.cs" />
+    <Compile Include="Implementations\Overlay\Console.cs" />
     <Compile Include="Implementations\Content.cs" />
     <Compile Include="Implementations\BlockCursor.cs" />
-    <Compile Include="Implementations\Popup.cs" />
+    <Compile Include="Implementations\Overlay\Crosshair.cs" />
+    <Compile Include="Implementations\Overlay\Popup.cs" />
     <Compile Include="Implementations\Program.cs" />
     <Compile Include="Implementations\Render.cs" />
     <Compile Include="Launcher.cs">
@@ -146,6 +148,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\crosshair.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\textures.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

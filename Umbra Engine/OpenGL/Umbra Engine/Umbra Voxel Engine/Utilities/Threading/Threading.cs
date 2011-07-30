@@ -18,7 +18,7 @@ using Umbra.Implementations;
 using Umbra.Utilities.Landscape;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Utilities.Threading
 {

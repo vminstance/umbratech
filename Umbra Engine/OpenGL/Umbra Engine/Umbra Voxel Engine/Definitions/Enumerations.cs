@@ -17,7 +17,7 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Definitions
 {
@@ -76,20 +76,20 @@ namespace Umbra.Definitions
         FullFree
     }
 
-    // Operators:
-
     public struct ConsoleMessage
     {
         public string Message;
         public double Timestamp;
-        public SpriteString SpriteString;
+        //public SpriteString SpriteString;
+        public Color Color;
 
         public ConsoleMessage(string message, double timestamp, Color color)
         {
             Message = message;
             Timestamp = timestamp;
+            Color = color;
 
-            SpriteString = new SpriteString(Console.Font, message, color);
+            //SpriteString = new SpriteString(Console.Font, message);
         }
     }
 

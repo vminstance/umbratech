@@ -18,7 +18,7 @@ using Umbra.Implementations;
 using Umbra.Utilities.Landscape.Utilities;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
-using Console = Umbra.Implementations.Console;
+using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Utilities.Landscape
 {
@@ -137,7 +137,7 @@ namespace Umbra.Utilities.Landscape
                         {
                             if (Constants.Landscape.CavesEnabled)
                             {
-                                density = NoiseMaps.GetTrilinearlyInterpolated(chunk.Index.X * 32 + x, chunk.Index.Y * 32 + y, chunk.Index.Z * 32 + z, 12, Seed);
+                                density = NoiseMaps.GetTrilinearlyInterpolated((int)chunk.Index.Position.X + x, (int)chunk.Index.Position.Y + y, (int)chunk.Index.Position.Z + z, 16, Seed);
                             }
                             else
                             {

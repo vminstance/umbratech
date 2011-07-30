@@ -19,7 +19,7 @@ namespace Umbra.Structures.Graphics
             gl_FragColor = gl_Color;
             gl_FragColor *= texture2D(texture, gl_TexCoord[0].xy);
 
-            if(gl_FragColor.a != 1.0)
+            if(gl_FragColor.a < 1.0)
             {
                 discard;
             }
