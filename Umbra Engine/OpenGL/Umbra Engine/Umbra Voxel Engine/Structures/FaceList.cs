@@ -232,7 +232,7 @@ namespace Umbra.Structures
 
             // Special cases:
 
-            if (nextBlock.Type == Block.Vacuum.Type)
+            if (nextBlock == Block.Vacuum)
             {
                 return FaceValidation.NoFaces;
             }
@@ -284,7 +284,7 @@ namespace Umbra.Structures
                 }
                 else if (nextBlockVisibility == BlockVisibility.Translucent)
                 {
-                    if (thisBlock.Type == nextBlock.Type)
+                    if (thisBlock == nextBlock)
                     {
                         return FaceValidation.NoFaces;
                     }
@@ -306,7 +306,7 @@ namespace Umbra.Structures
                 }
                 else if (thisBlockVisibility == BlockVisibility.Translucent)
                 {
-                    if (thisBlock.Type == nextBlock.Type)
+                    if (thisBlock == nextBlock)
                     {
                         return FaceValidation.NoFaces;
                     }

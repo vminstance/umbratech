@@ -47,12 +47,24 @@ namespace Umbra.Utilities
 
         static public double WrapAngleRadians(double value)
         {
-            return value % (Math.PI * 2);
+            double returnvalue = value % (Math.PI * 2);
+            if (returnvalue <= 0)
+            {
+                returnvalue = (Math.PI * 2) + returnvalue;
+            }
+
+            return returnvalue;
         }
 
         static public double WrapAngleDegrees(double value)
         {
-            return value % 360;
+            double returnvalue = value % 360;
+            if (returnvalue <= 0)
+            {
+                returnvalue = 360 + returnvalue;
+            }
+
+            return returnvalue;
         }
 
         static public double Clamp(double value, double min, double max)

@@ -148,6 +148,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\compass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\crosshair.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

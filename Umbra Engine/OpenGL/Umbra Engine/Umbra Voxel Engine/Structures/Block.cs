@@ -299,6 +299,31 @@ namespace Umbra.Structures
                 default: return Air;
             }
         }
+
+        public static bool operator ==(Block part1, Block part2)
+        {
+            return (part1.Type == part2.Type);
+        }
+
+        public static bool operator !=(Block part1, Block part2)
+        {
+            return !(part1.Type == part2.Type);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        public override bool Equals(object o)
+        {
+            return o == (object)this;
+        }
     }
 
     public enum BlockType : byte

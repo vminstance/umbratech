@@ -98,15 +98,27 @@ namespace Umbra.Implementations
             GL.Uniform1(Shaders.TextureID, TextureUnit.Texture0 - textureUnit);
         }
 
-        static public void RenderTexture(int textureID, Rectangle rect)
+        static public void RenderTexture(int textureID, Rectangle destination)
         {
             GL.BindTexture(TextureTarget.Texture2D, textureID);
             GL.Color4(Color.White);
             GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0.0F, 1.0F); GL.Vertex2(rect.X, rect.Y + rect.Height);
-            GL.TexCoord2(1.0F, 1.0F); GL.Vertex2(rect.X + rect.Width, rect.Y + rect.Height);
-            GL.TexCoord2(1.0F, 0.0F); GL.Vertex2(rect.X + rect.Width, rect.Y);
-            GL.TexCoord2(0.0F, 0.0F); GL.Vertex2(rect.X, rect.Y);
+            GL.TexCoord2(0.0F, 1.0F); GL.Vertex2(destination.X, destination.Y + destination.Height);
+            GL.TexCoord2(1.0F, 1.0F); GL.Vertex2(destination.X + destination.Width, destination.Y + destination.Height);
+            GL.TexCoord2(1.0F, 0.0F); GL.Vertex2(destination.X + destination.Width, destination.Y);
+            GL.TexCoord2(0.0F, 0.0F); GL.Vertex2(destination.X, destination.Y);
+            GL.End();
+        }
+
+        static public void RenderTexture(int textureID, Size BitmapSize, Point destination, Rectangle source)
+        {
+            GL.BindTexture(TextureTarget.Texture2D, textureID);
+            GL.Color4(Color.White);
+            GL.Begin(BeginMode.Quads);
+            GL.TexCoord2((float)source.X / (float)BitmapSize.Width, (float)(source.Height + source.Y) / (float)BitmapSize.Height); GL.Vertex2(destination.X, destination.Y + source.Height);
+            GL.TexCoord2((float)(source.Width + source.X) / (float)BitmapSize.Width, (float)(source.Height + source.Y) / (float)BitmapSize.Height); GL.Vertex2(destination.X + source.Width, destination.Y + source.Height);
+            GL.TexCoord2((float)(source.Width + source.X) / (float)BitmapSize.Width, (float)source.Y / (float)BitmapSize.Height); GL.Vertex2(destination.X + source.Width, destination.Y);
+            GL.TexCoord2((float)source.X / (float)BitmapSize.Width, (float)source.Y / (float)BitmapSize.Height); GL.Vertex2(destination.X, destination.Y);
             GL.End();
         }
     }

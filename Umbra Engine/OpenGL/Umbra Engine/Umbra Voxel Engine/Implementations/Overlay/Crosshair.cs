@@ -35,7 +35,7 @@ namespace Umbra.Implementations.Graphics
 
         static public void Render(FrameEventArgs e)
         {
-            RenderHelp.RenderTexture(TextureID, new Rectangle((int)(Constants.Graphics.ScreenResolution.X - Texture.Width) / 2, (int)(Constants.Graphics.ScreenResolution.Y - Texture.Height) / 2, Texture.Width, Texture.Height));
+            RenderHelp.RenderTexture(TextureID, new Rectangle(new Point((int)(Constants.Graphics.ScreenResolution.X - Texture.Width) / 2, (int)(Constants.Graphics.ScreenResolution.Y - Texture.Height) / 2), Texture.Size));
         }
     }
 }
