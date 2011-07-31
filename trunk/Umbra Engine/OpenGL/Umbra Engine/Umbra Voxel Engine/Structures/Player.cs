@@ -66,7 +66,7 @@ namespace Umbra.Structures
         public void Release()
         {
 
-            while (Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3d.UnitY)).Type != Block.Air.Type || Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3d.UnitY * 2)).Type != Block.Air.Type)
+            while (Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3d.UnitY)) != Block.Air || Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3d.UnitY * 2)) != Block.Air)
             {
                 Position.Y++;
             }

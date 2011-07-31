@@ -81,10 +81,10 @@ namespace Umbra.Definitions.Globals
 
             static public class Compass
             {
-                static public Vector2 FrameSize = new Vector2(144, 85);
-                static public Vector2 ScreenPosition = new Vector2((float)Graphics.ScreenResolution.X - FrameSize.X - 10, 10);
-                static public Vector2 StripOffset = new Vector2(10, 10);
-                static public Vector2 StripWindowSize = FrameSize - 2 * StripOffset;
+                static public Point FrameSize = new Point(144, 85);
+                static public Point ScreenPosition = new Point((int)Graphics.ScreenResolution.X - FrameSize.X - 10, 10);
+                static public Point StripOffset = new Point(10, 10);
+                static public Point StripWindowSize = new Point(FrameSize.X - StripOffset.X * 2, FrameSize.Y - StripOffset.Y * 2);
             }
         }
 

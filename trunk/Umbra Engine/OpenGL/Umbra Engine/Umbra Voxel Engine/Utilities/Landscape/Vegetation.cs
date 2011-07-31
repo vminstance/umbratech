@@ -39,7 +39,7 @@ namespace Umbra.Utilities.Landscape
                 {
                     for (int y = 0; y < Constants.World.ChunkSize; y++)
                     {
-                        if (chunk[x, y, z].Type == Block.Grass.Type)
+                        if (chunk[x, y, z] == Block.Grass)
                         {
                             GrowTree(chunk, new BlockIndex(x, y, z), (int)(NoiseMaps.GetByValues(x * x * z + y * z, chunk.Index.X * chunk.Index.X * chunk.Index.Z + chunk.Index.Y * chunk.Index.Z, Seed) * Constants.Landscape.Vegetation.TreeVaryHeight + Constants.Landscape.Vegetation.TreeMinHeight));
                         }
@@ -73,7 +73,7 @@ namespace Umbra.Utilities.Landscape
                         blockWorldPos = new BlockIndex(point.X + x, point.Y + y, point.Z + z) + chunk.Index;
                         if (x == 0 && z == 0 && y <= trunkHeight)
                         {
-                            if (Constants.World.Current.GetBlock(blockWorldPos).Type != Block.Air.Type)
+                            if (Constants.World.Current.GetBlock(blockWorldPos) != Block.Air)
                             {
                                 return;
                             }
@@ -83,7 +83,7 @@ namespace Umbra.Utilities.Landscape
                         {
                             if (Math.Sqrt(Math.Pow(x, 2) + Math.Pow(z, 2) + Math.Pow(y - leafCenter, 2)) < leafRadius)
                             {
-                                if (Constants.World.Current.GetBlock(blockWorldPos).Type != Block.Air.Type)
+                                if (Constants.World.Current.GetBlock(blockWorldPos) != Block.Air)
                                 {
                                     return;
                                 }

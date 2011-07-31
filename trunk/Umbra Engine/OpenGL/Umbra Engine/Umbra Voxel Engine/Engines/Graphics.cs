@@ -73,7 +73,6 @@ namespace Umbra.Engines
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
-            GL.Enable(EnableCap.Multisample);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             // Render World
@@ -91,10 +90,9 @@ namespace Umbra.Engines
 
 
             GL.Disable(EnableCap.DepthTest);
-            GL.Disable(EnableCap.CullFace);
             GL.Disable(EnableCap.Texture2D);
+            GL.Disable(EnableCap.CullFace);
             GL.Disable(EnableCap.Blend);
-            GL.Disable(EnableCap.Multisample);
 
             base.Render(e);
         }
