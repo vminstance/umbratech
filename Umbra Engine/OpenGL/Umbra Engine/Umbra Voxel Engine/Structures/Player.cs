@@ -59,7 +59,7 @@ namespace Umbra.Structures
 
         public void Initialize()
         {
-            Position.Y = Math.Ceiling(Math.Max(TerrainGenerator.GetLandscapeHeight((int)Position.X, (int)Position.Z), 0.0));
+            Position.Y = Math.Ceiling(Math.Max(TerrainGenerator.GetLandscapeHeight((int)Position.X, (int)Position.Z), (double)Constants.Landscape.WaterLevel));
             IsReleased = false;
         }
 

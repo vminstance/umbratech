@@ -234,11 +234,11 @@ namespace Umbra.Structures
 
             if (validation == FaceValidation.ThisFace || validation == FaceValidation.BothFaces)
             {
-                faceList.AddFace(currentIndex, faceDirection, ParentChunk[currentIndex].GetFace(faceDirection), faceDirection.GetFaceShade());
+                faceList.AddFace(currentIndex, faceDirection, ParentChunk[currentIndex], Block.GetFaceShade(currentIndex + ParentChunk.Index.ToBlockIndex(), faceDirection));
             }
             if (validation == FaceValidation.OtherFace || validation == FaceValidation.BothFaces)
             {
-                faceList.AddFace(nextIndex, faceDirection.Opposite(), Constants.World.Current.GetBlock(nextIndex + ParentChunk.Index.ToBlockIndex()).GetFace(faceDirection.Opposite()), faceDirection.Opposite().GetFaceShade());
+                faceList.AddFace(nextIndex, faceDirection.Opposite(), Constants.World.Current.GetBlock(nextIndex + ParentChunk.Index.ToBlockIndex()), Block.GetFaceShade(nextIndex + ParentChunk.Index.ToBlockIndex(), faceDirection.Opposite()));
             }
         }
     }

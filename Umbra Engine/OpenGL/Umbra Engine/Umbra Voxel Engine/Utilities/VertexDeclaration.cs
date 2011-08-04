@@ -23,18 +23,14 @@ using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Utilities
 {
-    public struct SmallBlockVertex
+    public struct VoxelVertex
     {
-        public byte PositionX;
-        public byte PositionY;
-        public byte PositionZ;
+        public uint Data;
 
-        public byte ColorR;
-        public byte ColorG;
-        public byte ColorB;
-
-        public byte TextureX;
-        public byte TextureY;
+        public VoxelVertex(uint data)
+        {
+            Data = data;
+        }
     }
 
     public class VertexBuffer
@@ -53,7 +49,7 @@ namespace Umbra.Utilities
             Offset = offset;
         }
 
-        public void SetData<VertexType>(VertexType[] vertices) where VertexType : struct
+        public void SetData(VoxelVertex[] vertices)
         {
             GL.GenVertexArrays(1, out ArrayID);
             GL.BindVertexArray(ArrayID);
@@ -61,12 +57,9 @@ namespace Umbra.Utilities
             GL.GenBuffers(1, out ID);
             GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
 
-            GL.BufferData<VertexType>(BufferTarget.ArrayBuffer, (IntPtr)(vertices.Length * 8 * sizeof(byte)), vertices, BufferUsageHint.StaticDraw);
+            GL.BufferData<VoxelVertex>(BufferTarget.ArrayBuffer, (IntPtr)(vertices.Length * sizeof(int)), vertices, BufferUsageHint.StaticDraw);
 
-            GL.VertexAttribPointer(Shaders.PositionDataID, 3, VertexAttribPointerType.UnsignedByte, false, 8 * sizeof(byte), 0);
-            GL.VertexAttribPointer(Shaders.ColorDataID, 3, VertexAttribPointerType.UnsignedByte, true, 8 * sizeof(byte), 3 * sizeof(byte));
-            GL.VertexAttribPointer(Shaders.TextureDataID, 2, VertexAttribPointerType.UnsignedByte, false, 8 * sizeof(byte), 6 * sizeof(byte));
-
+            GL.VertexAttribIPointer(Shaders.DataID, 1, VertexAttribIPointerType.UnsignedInt, sizeof(int), IntPtr.Zero);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindVertexArray(0);
@@ -88,21 +81,17 @@ namespace Umbra.Utilities
         {
             if (Count > 0)
             {
+                GL.PointSize(20.0F);
+
                 Matrix4 world = Matrix4.CreateTranslation((Vector3)Offset.Position);
                 GL.UniformMatrix4(Shaders.WorldMatrixID, false, ref world);
 
                 GL.BindVertexArray(ArrayID);
-
-                GL.EnableVertexAttribArray(Shaders.PositionDataID);
-                GL.EnableVertexAttribArray(Shaders.ColorDataID);
-                GL.EnableVertexAttribArray(Shaders.TextureDataID);
+                GL.EnableVertexAttribArray(Shaders.DataID);
 
                 GL.DrawArrays(OpenTK.Graphics.OpenGL.BeginMode.Quads, 0, Count);
 
-                GL.DisableVertexAttribArray(Shaders.PositionDataID);
-                GL.DisableVertexAttribArray(Shaders.ColorDataID);
-                GL.DisableVertexAttribArray(Shaders.TextureDataID);
-
+                GL.DisableVertexAttribArray(Shaders.DataID);
                 GL.BindVertexArray(0);
             }
         }

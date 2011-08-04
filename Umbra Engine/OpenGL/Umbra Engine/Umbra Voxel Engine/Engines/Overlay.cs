@@ -96,7 +96,6 @@ namespace Umbra.Engines
 
         public override void Render(FrameEventArgs e)
         {
-
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
             GL.MatrixMode(MatrixMode.Projection);

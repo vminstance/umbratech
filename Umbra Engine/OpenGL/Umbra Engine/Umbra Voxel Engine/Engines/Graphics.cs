@@ -70,19 +70,19 @@ namespace Umbra.Engines
         public override void Render(FrameEventArgs e)
         {
             GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Blend);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             // Render World
             {
                 UseShader(Shaders.DefaultShaderProgram.ProgramID);
-                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
                 RenderChunks();
 
-                UseShader(Shaders.ChunkAlphaShaderProgram.ProgramID);
-                RenderChunks();
+                //UseShader(Shaders.ChunkAlphaShaderProgram.ProgramID);
+                //RenderChunks();
             }
 
             UseShader(0);
@@ -99,7 +99,6 @@ namespace Umbra.Engines
 
         void RenderChunks()
         {
-
             foreach (Chunk c in Constants.World.Current.GetChunks())
             {
                 if (
@@ -136,35 +135,35 @@ namespace Umbra.Engines
             GL.Color4(0.0, 0.0, 0.0, 0.2);
             GL.Begin(BeginMode.Quads);
             {
-                GL.Vertex3(new Vector3d(1.002,  -0.002, -0.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.002,  1.002,  -0.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.002,  1.002,  1.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.002,  -0.002, 1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  -0.004, -0.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  1.004,  -0.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  1.004,  1.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  -0.004, 1.004) + currentAim.Position);
 
-                GL.Vertex3(new Vector3d(-0.002, -0.002, 1.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.002, 1.002,  1.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.002, 1.002,  -0.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.002, -0.002, -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, -0.004, 1.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, 1.004,  1.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, 1.004,  -0.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, -0.004, -0.004) + currentAim.Position);
 
-                GL.Vertex3(new Vector3d(1.002,  1.002,  1.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.002,  1.002,  -0.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.002, 1.002,  -0.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.002, 1.002,  1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  1.004,  1.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  1.004,  -0.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, 1.004,  -0.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, 1.004,  1.004) + currentAim.Position);
 
-                GL.Vertex3(new Vector3d(-0.002, -0.002, 1.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.002, -0.002, -0.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.002,  -0.002, -0.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.002,  -0.002, 1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, -0.004, 1.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, -0.004, -0.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  -0.004, -0.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  -0.004, 1.004) + currentAim.Position);
 
-                GL.Vertex3(new Vector3d(1.002,  -0.002, 1.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.002,  1.002,  1.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.002, 1.002,  1.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.002, -0.002, 1.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  -0.004, 1.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  1.004,  1.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, 1.004,  1.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, -0.004, 1.004) + currentAim.Position);
 
-                GL.Vertex3(new Vector3d(-0.002, -0.002, -0.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.002, 1.002,  -0.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.002,  1.002,  -0.002) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.002,  -0.002, -0.002) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, -0.004, -0.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(-0.004, 1.004,  -0.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  1.004,  -0.004) + currentAim.Position);
+                GL.Vertex3(new Vector3d(1.004,  -0.004, -0.004) + currentAim.Position);
             }
             GL.End();
         }
