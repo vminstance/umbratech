@@ -138,12 +138,12 @@ namespace Umbra.Definitions.Globals
 
             static public class Lighting
             {
-                static public byte UpShade = 250;
-                static public byte DownShade = 100;
-                static public byte LeftShade = 200;
-                static public byte RightShade = 200;
-                static public byte ForwardShade = 150;
-                static public byte BackwardShade = 150;
+                static public byte UpShade = 20;
+                static public byte DownShade = 20;
+                static public byte LeftShade = 20;
+                static public byte RightShade = 20;
+                static public byte ForwardShade = 20;
+                static public byte BackwardShade = 20;
 
                 static readonly public float DayFaceLightCoef = 1F;
                 static readonly public float NightFaceLightCoef = 1F / 16F;
@@ -178,6 +178,7 @@ namespace Umbra.Definitions.Globals
         static public class Launcher
         {
             static public bool Enabled = true;
+            static public bool ReleaseModeEnabled = false;
         }
 
         static public class World
@@ -205,7 +206,7 @@ namespace Umbra.Definitions.Globals
             static public float PerlinBicubicWeight = 0.7F; // 0.0F = Total perlin, 1.0F = Total Bicubic
             static public float WorldHeightAmplitude = 256.0F;
             static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F);
-            static public int WaterLevel = 95;
+            static public int WaterLevel = 0;
             static public int SandLevel = WaterLevel + 3;
             static public bool CavesEnabled = true;
 

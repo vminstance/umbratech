@@ -97,12 +97,12 @@ namespace Umbra.Definitions
     {
         private enum Dir : byte
         {
-            Left,
             Right,
+            Left,
             Up,
             Down,
-            Forward,
-            Backward
+            Backward,
+            Forward
         }
 
         public byte Value
@@ -138,22 +138,22 @@ namespace Umbra.Definitions
 
                 case 1:
                     {
-                        return Direction.Up.GetVector3();
+                        return Direction.Left.GetVector3();
                     }
 
                 case 2:
                     {
-                        return Direction.Backward.GetVector3();
+                        return Direction.Up.GetVector3();
                     }
 
                 case 3:
                     {
-                        return Direction.Left.GetVector3();
+                        return Direction.Down.GetVector3();
                     }
 
                 case 4:
                     {
-                        return Direction.Down.GetVector3();
+                        return Direction.Backward.GetVector3();
                     }
 
                 case 5:
@@ -193,6 +193,34 @@ namespace Umbra.Definitions
                 case Dir.Left: return -Vector3d.UnitX;
                 case Dir.Up: return Vector3d.UnitY;
                 case Dir.Down: return -Vector3d.UnitY;
+                default: throw new Exception("This shouldn't happen.");
+            }
+        }
+
+        public Vector3d GetPerpendicularRight()
+        {
+            switch (DirectionEnum)
+            {
+                case Dir.Backward: return Vector3d.UnitX;
+                case Dir.Forward: return -Vector3d.UnitX;
+                case Dir.Right: return Vector3d.UnitY;
+                case Dir.Left: return -Vector3d.UnitY;
+                case Dir.Up: return Vector3d.UnitZ;
+                case Dir.Down: return -Vector3d.UnitZ;
+                default: throw new Exception("This shouldn't happen.");
+            }
+        }
+
+        public Vector3d GetPerpendicularLeft()
+        {
+            switch (DirectionEnum)
+            {
+                case Dir.Backward: return Vector3d.UnitY;
+                case Dir.Forward: return -Vector3d.UnitY;
+                case Dir.Right: return Vector3d.UnitZ;
+                case Dir.Left: return -Vector3d.UnitZ;
+                case Dir.Up: return Vector3d.UnitX;
+                case Dir.Down: return -Vector3d.UnitX;
                 default: throw new Exception("This shouldn't happen.");
             }
         }

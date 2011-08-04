@@ -13,13 +13,15 @@ namespace Umbra.Structures.Graphics
         static public readonly string Shader = @"
 
         uniform sampler2D texture;
+        varying float diffuse;
 
         void main()
         {
             gl_FragColor = gl_Color;
             gl_FragColor *= texture2D(texture, gl_TexCoord[0].xy);
+            gl_FragColor.rgb *= diffuse;
 
-            if(gl_FragColor.a < 1.0)
+            if(gl_FragColor.a == 0.0)// < 1.0)
             {
                 discard;
             }
@@ -32,7 +34,7 @@ namespace Umbra.Structures.Graphics
         void main()
         {
             gl_FragColor = gl_Color;
-            gl_FragColor *= texture2D(texture, gl_TexCoord[0].xy);
+            gl_FragColor *= texture2D(texture, gl_TexCoord[0].xy / 16);
 
             if(gl_FragColor.a == 0.0 || gl_FragColor.a == 1.0)
             {

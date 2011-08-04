@@ -23,7 +23,7 @@ namespace Umbra.Structures
 {
     public class FaceList
     {
-        List<SmallBlockVertex> Vertices;
+        List<VoxelVertex> Vertices;
 
         public bool IsEmpty
         {
@@ -37,192 +37,38 @@ namespace Umbra.Structures
 
         public void Clear()
         {
-            Vertices = new List<SmallBlockVertex>();
+            Vertices = new List<VoxelVertex>();
         }
 
-        public void AddFace(BlockIndex position, Direction face, byte texture, byte shade)
+        public void AddFace(BlockIndex index, Direction face, Block block, byte shade)
         {
-            SmallBlockVertex[] tempVertices = new SmallBlockVertex[4];
+            VoxelVertex[] tempVertices = new VoxelVertex[4];
 
-            if (face == Direction.Right)
-            {
-                tempVertices[0].PositionX = 1;
-                tempVertices[0].PositionY = 0;
-                tempVertices[0].PositionZ = 0;
-
-                tempVertices[1].PositionX = 1;
-                tempVertices[1].PositionY = 1;
-                tempVertices[1].PositionZ = 0;
-
-                tempVertices[2].PositionX = 1;
-                tempVertices[2].PositionY = 1;
-                tempVertices[2].PositionZ = 1;
-
-                tempVertices[3].PositionX = 1;
-                tempVertices[3].PositionY = 0;
-                tempVertices[3].PositionZ = 1;
-            }
-            else if (face == Direction.Left)
-            {
-                tempVertices[0].PositionX = 0;
-                tempVertices[0].PositionY = 0;
-                tempVertices[0].PositionZ = 1;
-
-                tempVertices[1].PositionX = 0;
-                tempVertices[1].PositionY = 1;
-                tempVertices[1].PositionZ = 1;
-
-                tempVertices[2].PositionX = 0;
-                tempVertices[2].PositionY = 1;
-                tempVertices[2].PositionZ = 0;
-
-                tempVertices[3].PositionX = 0;
-                tempVertices[3].PositionY = 0;
-                tempVertices[3].PositionZ = 0;
-            }
-            else if (face == Direction.Up)
-            {
-                tempVertices[0].PositionX = 1;
-                tempVertices[0].PositionY = 1;
-                tempVertices[0].PositionZ = 1;
-
-                tempVertices[1].PositionX = 1;
-                tempVertices[1].PositionY = 1;
-                tempVertices[1].PositionZ = 0;
-
-                tempVertices[2].PositionX = 0;
-                tempVertices[2].PositionY = 1;
-                tempVertices[2].PositionZ = 0;
-
-                tempVertices[3].PositionX = 0;
-                tempVertices[3].PositionY = 1;
-                tempVertices[3].PositionZ = 1;
-            }
-            else if (face == Direction.Down)
-            {
-                tempVertices[0].PositionX = 0;
-                tempVertices[0].PositionY = 0;
-                tempVertices[0].PositionZ = 1;
-
-                tempVertices[1].PositionX = 0;
-                tempVertices[1].PositionY = 0;
-                tempVertices[1].PositionZ = 0;
-
-                tempVertices[2].PositionX = 1;
-                tempVertices[2].PositionY = 0;
-                tempVertices[2].PositionZ = 0;
-
-                tempVertices[3].PositionX = 1;
-                tempVertices[3].PositionY = 0;
-                tempVertices[3].PositionZ = 1;
-            }
-            else if (face == Direction.Forward)
-            {
-                tempVertices[0].PositionX = 0;
-                tempVertices[0].PositionY = 0;
-                tempVertices[0].PositionZ = 0;
-
-                tempVertices[1].PositionX = 0;
-                tempVertices[1].PositionY = 1;
-                tempVertices[1].PositionZ = 0;
-
-                tempVertices[2].PositionX = 1;
-                tempVertices[2].PositionY = 1;
-                tempVertices[2].PositionZ = 0;
-
-                tempVertices[3].PositionX = 1;
-                tempVertices[3].PositionY = 0;
-                tempVertices[3].PositionZ = 0;
-            }
-            else if (face == Direction.Backward)
-            {
-                tempVertices[0].PositionX = 1;
-                tempVertices[0].PositionY = 0;
-                tempVertices[0].PositionZ = 1;
-
-                tempVertices[1].PositionX = 1;
-                tempVertices[1].PositionY = 1;
-                tempVertices[1].PositionZ = 1;
-
-                tempVertices[2].PositionX = 0;
-                tempVertices[2].PositionY = 1;
-                tempVertices[2].PositionZ = 1;
-
-                tempVertices[3].PositionX = 0;
-                tempVertices[3].PositionY = 0;
-                tempVertices[3].PositionZ = 1;
-            }
-
-            tempVertices[0].PositionX += (byte)position.X;
-            tempVertices[1].PositionX += (byte)position.X;
-            tempVertices[2].PositionX += (byte)position.X;
-            tempVertices[3].PositionX += (byte)position.X;
-
-            tempVertices[0].PositionY += (byte)position.Y;
-            tempVertices[1].PositionY += (byte)position.Y;
-            tempVertices[2].PositionY += (byte)position.Y;
-            tempVertices[3].PositionY += (byte)position.Y;
-
-            tempVertices[0].PositionZ += (byte)position.Z;
-            tempVertices[1].PositionZ += (byte)position.Z;
-            tempVertices[2].PositionZ += (byte)position.Z;
-            tempVertices[3].PositionZ += (byte)position.Z;
-
-            tempVertices[0].TextureX = (byte)(GetTextureOffset(texture).X);
-            tempVertices[0].TextureY = (byte)(1 + GetTextureOffset(texture).Y);
-
-            tempVertices[1].TextureX = (byte)(GetTextureOffset(texture).X);
-            tempVertices[1].TextureY = (byte)(GetTextureOffset(texture).Y);
-
-            tempVertices[2].TextureX = (byte)(1 + GetTextureOffset(texture).X);
-            tempVertices[2].TextureY = (byte)(GetTextureOffset(texture).Y);
-
-            tempVertices[3].TextureX = (byte)(1 + GetTextureOffset(texture).X);
-            tempVertices[3].TextureY = (byte)(1 + GetTextureOffset(texture).Y);
-
-            tempVertices[0].ColorR = shade;
-            tempVertices[0].ColorG = shade;
-            tempVertices[0].ColorB = shade;
-            tempVertices[1].ColorR = shade;
-            tempVertices[1].ColorG = shade;
-            tempVertices[1].ColorB = shade;
-            tempVertices[2].ColorR = shade;
-            tempVertices[2].ColorG = shade;
-            tempVertices[2].ColorB = shade;
-            tempVertices[3].ColorR = shade;
-            tempVertices[3].ColorG = shade;
-            tempVertices[3].ColorB = shade;
-
-            //tempVertices[0].BlockData = Constants.World.Current.GetBlock(position).Type;
-            //tempVertices[1].BlockData = tempVertices[0].BlockData;
-            //tempVertices[2].BlockData = tempVertices[0].BlockData;
-            //tempVertices[3].BlockData = tempVertices[0].BlockData;
+            tempVertices[0] = GetVertex(index, face, 0, block, shade);
+            tempVertices[1] = GetVertex(index, face, 1, block, shade);
+            tempVertices[2] = GetVertex(index, face, 2, block, shade);
+            tempVertices[3] = GetVertex(index, face, 3, block, shade);
 
             Vertices.AddRange(tempVertices);
         }
 
-        Point GetTextureOffset(byte ID)
+        public VoxelVertex GetVertex(BlockIndex index, Direction normal, byte corner, Block block, byte shade)
         {
-            return new Point(ID % 16, ID >> 4);
+            uint vertexData = 0;
+            vertexData += (uint)Mathematics.Clamp(index.X, 0, 31);
+            vertexData += (uint)Mathematics.Clamp(index.Y, 0, 31)                    * 32;
+            vertexData += (uint)Mathematics.Clamp(index.Z, 0, 31)                    * 32 * 32;
+            vertexData += (uint)Mathematics.Clamp(normal.Value, 0, 5)                * 32 * 32 * 32;
+            vertexData += (uint)Mathematics.Clamp(corner, 0, 3)                      * 32 * 32 * 32 * 6;
+            vertexData += (uint)Mathematics.Clamp(block.GetFace(normal), 0, 255)     * 32 * 32 * 32 * 6 * 4;
+            vertexData += (uint)Mathematics.Clamp(shade, 0, 20)                      * 32 * 32 * 32 * 6 * 4 * 256;
+
+            return new VoxelVertex(vertexData);
         }
 
         public void FillVertexBuffer(ref VertexBuffer value)
         {
-            value.SetData<SmallBlockVertex>(Vertices.ToArray());
-        }
-
-        static public FaceList GetCursorFacelist(BlockIndex cursorIndex)
-        {
-            FaceList faceList = new FaceList();
-
-            faceList.AddFace(cursorIndex, Direction.Right, Block.Stone.GetFace(Direction.Right), 0);
-            faceList.AddFace(cursorIndex, Direction.Left, Block.Stone.GetFace(Direction.Left), 0);
-            faceList.AddFace(cursorIndex, Direction.Up, Block.Stone.GetFace(Direction.Up), 0);
-            faceList.AddFace(cursorIndex, Direction.Down, Block.Stone.GetFace(Direction.Down), 0);
-            faceList.AddFace(cursorIndex, Direction.Backward, Block.Stone.GetFace(Direction.Backward), 0);
-            faceList.AddFace(cursorIndex, Direction.Forward, Block.Stone.GetFace(Direction.Forward), 0);
-
-            return faceList;
+            value.SetData(Vertices.ToArray());
         }
 
         static public FaceValidation GetFaceValidation(Block thisBlock, Block nextBlock)

@@ -84,6 +84,30 @@ namespace Umbra.Structures
             }
         }
 
+        static public byte GetFaceShade(BlockIndex index, Direction direction)
+        {
+            byte baseShade = direction.GetFaceShade();
+
+            //double dist = Lighting.GetRayIntersectDistance(12, direction.GetVector3(), (index.Position + new Vector3d(0.5, 0.5, 0.5)) + direction.GetVector3() * 0.6);
+
+            //dist += Lighting.GetRayIntersectDistance(12, direction.GetVector3() + direction.GetPerpendicularRight(), (index.Position + new Vector3d(0.5, 0.5, 0.5)) + direction.GetVector3() * 0.6);
+            //dist += Lighting.GetRayIntersectDistance(12, direction.GetVector3() - direction.GetPerpendicularRight(), (index.Position + new Vector3d(0.5, 0.5, 0.5)) + direction.GetVector3() * 0.6);
+            //dist += Lighting.GetRayIntersectDistance(12, direction.GetVector3() + direction.GetPerpendicularLeft(), (index.Position + new Vector3d(0.5, 0.5, 0.5)) + direction.GetVector3() * 0.6);
+            //dist += Lighting.GetRayIntersectDistance(12, direction.GetVector3() - direction.GetPerpendicularLeft(), (index.Position + new Vector3d(0.5, 0.5, 0.5)) + direction.GetVector3() * 0.6);
+
+            //dist += Lighting.GetRayIntersectDistance(12, direction.GetVector3() + direction.GetPerpendicularRight() + direction.GetPerpendicularLeft(), (index.Position + new Vector3d(0.5, 0.5, 0.5)) + direction.GetVector3() * 0.6);
+            //dist += Lighting.GetRayIntersectDistance(12, direction.GetVector3() + direction.GetPerpendicularRight() - direction.GetPerpendicularLeft(), (index.Position + new Vector3d(0.5, 0.5, 0.5)) + direction.GetVector3() * 0.6);
+            //dist += Lighting.GetRayIntersectDistance(12, direction.GetVector3() - direction.GetPerpendicularRight() + direction.GetPerpendicularLeft(), (index.Position + new Vector3d(0.5, 0.5, 0.5)) + direction.GetVector3() * 0.6);
+            //dist += Lighting.GetRayIntersectDistance(12, direction.GetVector3() - direction.GetPerpendicularRight() - direction.GetPerpendicularLeft(), (index.Position + new Vector3d(0.5, 0.5, 0.5)) + direction.GetVector3() * 0.6);
+
+            //dist /= 9;
+
+            //baseShade = (byte)Math.Max((int)baseShade - 12, 0);
+            //baseShade += (byte)dist;
+
+            return baseShade;
+        }
+
         public bool Translucency
         {
             get

@@ -40,9 +40,10 @@ namespace Umbra.Structures.Graphics
 
         static public int TextureID { get; private set; }
 
-        static public int PositionDataID { get; private set; }
-        static public int ColorDataID { get; private set; }
-        static public int TextureDataID { get; private set; }
+        static public int DataID { get; private set; }
+        //static public int PositionDataID { get; private set; }
+        //static public int ColorDataID { get; private set; }
+        //static public int TextureDataID { get; private set; }
 
 
         static private void GetVariables(int shaderProgram)
@@ -54,9 +55,10 @@ namespace Umbra.Structures.Graphics
 
             TextureID = GL.GetUniformLocation(shaderProgram, "texture");
 
-            PositionDataID = GL.GetAttribLocation(shaderProgram, "pos_data");
-            ColorDataID = GL.GetAttribLocation(shaderProgram, "col_data");
-            TextureDataID = GL.GetAttribLocation(shaderProgram, "tex_data");
+            DataID = GL.GetAttribLocation(shaderProgram, "data");
+            //PositionDataID = GL.GetAttribLocation(shaderProgram, "pos_data");
+            //ColorDataID = GL.GetAttribLocation(shaderProgram, "col_data");
+            //TextureDataID = GL.GetAttribLocation(shaderProgram, "tex_data");
         }
     }
 
@@ -124,9 +126,8 @@ namespace Umbra.Structures.Graphics
 
             GL.LinkProgram(ProgramID);
 
-            string info;
-            GL.GetProgramInfoLog(ProgramID, out info);
-            Console.Write(info);
+            string info = GL.GetProgramInfoLog(ProgramID);
+            System.Console.WriteLine(info);
 
 
             //GL.ProgramParameter(ShaderProgram, Version32.GeometryInputType, (int)All.Lines);

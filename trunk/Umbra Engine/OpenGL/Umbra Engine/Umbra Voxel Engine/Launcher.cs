@@ -18,22 +18,31 @@ namespace Umbra
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // General
+            if (!Constants.Launcher.ReleaseModeEnabled)
+            {
+                // General
+                Constants.World.DynamicWorld = this.checkBox1.Checked;
+                Constants.World.SaveDynamicWorld = this.checkBox2.Checked;
+                Constants.World.WorldSize = (int)this.numericUpDown1.Value;
+                Constants.World.Name = this.textBox2.Text;
 
-            Constants.World.DynamicWorld = this.checkBox1.Checked;
-            Constants.World.SaveDynamicWorld = this.checkBox2.Checked;
+                // Graphics
+                Constants.Graphics.AntiAliasingEnabled = this.checkBox3.Checked;
+
+                // Controls
+                Constants.Controls.NoclipAllowed = this.checkBox6.Checked;
+            }
+
+            // General
             Constants.Landscape.WorldSeed = this.textBox1.Text;
-            Constants.World.WorldSize = (int)this.numericUpDown1.Value;
 
             // Graphics
 
             Constants.Graphics.ScreenResolution = new Vector2((float)this.numericUpDown2.Value, (float)this.numericUpDown3.Value);
-            //Constants.Graphics.AntiAliasingEnabled = this.checkBox3.Checked;
             Constants.Graphics.EnableFullScreen = this.checkBox4.Checked;
 
             // Controls
             Constants.Controls.CanPlaceBlocks = this.checkBox5.Checked;
-            Constants.Controls.NoclipAllowed = this.checkBox6.Checked;
 
 
             Program.CodeClose = true;
@@ -53,6 +62,26 @@ namespace Umbra
         {
             this.numericUpDown2.Enabled = !this.checkBox4.Checked;
             this.numericUpDown3.Enabled = !this.checkBox4.Checked;
+        }
+
+        private void Launcher_Load(object sender, EventArgs e)
+        {
+            if (Constants.Launcher.ReleaseModeEnabled)
+            {
+                this.checkBox1.Enabled = false;
+                this.checkBox1.Checked = false;
+                this.checkBox2.Enabled = false;
+                this.checkBox2.Checked = false;
+
+                this.numericUpDown1.Enabled = false;
+
+                this.checkBox3.Enabled = false;
+                this.checkBox3.Checked = false;
+                this.checkBox6.Enabled = false;
+                this.checkBox6.Checked = false;
+
+                this.textBox2.Enabled = false;
+            }
         }
     }
 }

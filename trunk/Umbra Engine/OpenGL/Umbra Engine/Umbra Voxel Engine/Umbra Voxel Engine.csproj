@@ -73,6 +73,7 @@
     <Compile Include="Engines\Audio.cs" />
     <Compile Include="Implementations\ChunkManager.cs" />
     <Compile Include="Implementations\ClockTime.cs" />
+    <Compile Include="Implementations\Lighting.cs" />
     <Compile Include="Implementations\Overlay\Compass.cs" />
     <Compile Include="Implementations\Overlay\Console.cs" />
     <Compile Include="Implementations\Content.cs" />

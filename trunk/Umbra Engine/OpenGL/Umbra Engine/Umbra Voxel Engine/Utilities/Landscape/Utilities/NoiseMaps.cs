@@ -29,11 +29,11 @@ namespace Umbra.Utilities.Landscape.Utilities
         {
             return Math.Abs((float)(((
                 ((float)a + 0.1F) *
-                ((float)b + 0.1F) *
+                ((float)b - 0.1F) *
                 ((float)c + 0.1F) *
-                ((float)d + 0.1F) +
+                ((float)d - 0.1F) +
                 ((float)b + 0.1F) *
-                ((float)c + 0.1F) *
+                ((float)c - 0.1F) *
                 ((float)d + 0.1F))) % 10000)) / 10000.0F;
         }
 
@@ -41,11 +41,11 @@ namespace Umbra.Utilities.Landscape.Utilities
         {
             return Math.Abs((float)(((
                 ((float)a + 0.1F) *
-                ((float)b + 0.1F) *
+                ((float)b - 0.1F) *
                 ((float)c + 0.1F) *
-                ((float)d + 0.1F) +
+                ((float)d - 0.1F) +
                 ((float)b + 0.1F) *
-                ((float)c + 0.1F) *
+                ((float)c - 0.1F) *
                 ((float)d + 0.1F)).ToString().GetHashCode()) % 10000)) / 10000.0F;
         }
 

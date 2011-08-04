@@ -62,6 +62,12 @@ namespace Umbra.Implementations
         {
             Vector3d direction = Vector3d.Transform(-Vector3d.UnitZ, Constants.Engine_Physics.Player.FirstPersonCamera.Rotation);
             Vector3d startPosition = Constants.Engine_Physics.Player.FirstPersonCamera.Position;
+
+            return GetCursorIntersect(maxReach, direction, startPosition, out intersectionPoint);
+        }
+
+        static private BlockIndex GetCursorIntersect(double maxReach, Vector3d direction, Vector3d startPosition, out Vector3d intersectionPoint)
+        {
             Ray ray = new Ray(startPosition, direction);
             double distance = 0.0;
             BlockIndex index;
