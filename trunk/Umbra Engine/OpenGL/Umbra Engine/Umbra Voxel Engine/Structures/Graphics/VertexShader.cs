@@ -21,6 +21,7 @@ namespace Umbra.Structures.Graphics
                 uniform mat4 projection_mat;
                 uniform mat4 view_mat;
                 uniform mat4 world_mat;
+                uniform float view_type;
 
                 varying float diffuse;
  
@@ -44,6 +45,12 @@ namespace Umbra.Structures.Graphics
                     gl_Position = projection_mat * view_mat * world_mat * position;
 
                     gl_FrontColor = vec4(shade, shade, shade, 20.0) / 20.0; 
+
+                    if(view_type == 1.0)
+                    {
+                        gl_FrontColor /= vec4(3.0, 2.0, 1.0, 1.0);
+                    }
+
                     gl_TexCoord[0] = vec4(type % 16, type >> 4, 1.0, 1.0);
                     
                     " + SetTextureCoords + @"

@@ -178,7 +178,7 @@ namespace Umbra.Definitions.Globals
         static public class Launcher
         {
             static public bool Enabled = true;
-            static public bool ReleaseModeEnabled = false;
+            static public bool ReleaseModeEnabled = true;
         }
 
         static public class World
@@ -186,7 +186,7 @@ namespace Umbra.Definitions.Globals
             static public Structures.World Current;
             static public string Name = "default";
             static public int ChunkSize = 32;
-            static public int WorldSize = 13;
+            static public int WorldSize = 5;
             static public bool DynamicWorld = true;
             static public bool SaveDynamicWorld = false;
             static public int UpdateLengthFromCenter = ChunkSize;

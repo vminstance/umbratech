@@ -39,11 +39,9 @@ namespace Umbra.Structures.Graphics
         static public int WorldMatrixID { get; private set; }
 
         static public int TextureID { get; private set; }
+        static public int ViewTypeID { get; private set; }
 
         static public int DataID { get; private set; }
-        //static public int PositionDataID { get; private set; }
-        //static public int ColorDataID { get; private set; }
-        //static public int TextureDataID { get; private set; }
 
 
         static private void GetVariables(int shaderProgram)
@@ -54,11 +52,9 @@ namespace Umbra.Structures.Graphics
             WorldMatrixID = GL.GetUniformLocation(shaderProgram, "world_mat");
 
             TextureID = GL.GetUniformLocation(shaderProgram, "texture");
+            ViewTypeID = GL.GetUniformLocation(shaderProgram, "view_type");
 
             DataID = GL.GetAttribLocation(shaderProgram, "data");
-            //PositionDataID = GL.GetAttribLocation(shaderProgram, "pos_data");
-            //ColorDataID = GL.GetAttribLocation(shaderProgram, "col_data");
-            //TextureDataID = GL.GetAttribLocation(shaderProgram, "tex_data");
         }
     }
 
@@ -97,10 +93,7 @@ namespace Umbra.Structures.Graphics
             GL.GetShader(VertexShaderID, ShaderParameter.CompileStatus, out compileResult);
             if (compileResult != 1)
             {
-                Console.Write("Compile Error!");
-                Console.Write(VertexShader.Shader);
-                System.Windows.Forms.MessageBox.Show("Error while compiling the vertex shader. This means that you probably have an outdated graphics card driver.", "Vertex Shader Error!");
-                throw new Exception("Vertex Shader Error!!");
+                throw new Exception("Error while compiling the vertex shader. This means that you probably have an outdated graphics card driver.");
             }
 
             //GL.GetShader(GeometryShaderID, ShaderParameter.CompileStatus, out compileResult);
@@ -113,10 +106,7 @@ namespace Umbra.Structures.Graphics
             GL.GetShader(FragmentShaderID, ShaderParameter.CompileStatus, out compileResult);
             if (compileResult != 1)
             {
-                Console.Write("Compile Error!");
-                Console.Write(FragmentShader.Shader);
-                System.Windows.Forms.MessageBox.Show("Error while compiling the fragment shader. This means that you probably have an outdated graphics card driver.", "Fragment Shader Error!");
-                throw new Exception("Fragment Shader Error!!");
+                throw new Exception("Error while compiling the fragment shader. This means that you probably have an outdated graphics card driver.");
             }
 
 

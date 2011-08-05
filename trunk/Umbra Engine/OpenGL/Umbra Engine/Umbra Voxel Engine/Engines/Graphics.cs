@@ -65,6 +65,8 @@ namespace Umbra.Engines
 
             Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
             GL.UniformMatrix4(Shaders.ViewMatrixID, false, ref view);
+
+            GL.Uniform1(Shaders.ViewTypeID, Constants.Engine_Physics.Player.GetViewType());
         }
 
         public override void Render(FrameEventArgs e)
@@ -81,8 +83,12 @@ namespace Umbra.Engines
                 UseShader(Shaders.DefaultShaderProgram.ProgramID);
                 RenderChunks();
 
-                //UseShader(Shaders.ChunkAlphaShaderProgram.ProgramID);
-                //RenderChunks();
+                GL.Disable(EnableCap.CullFace);
+
+                UseShader(Shaders.ChunkAlphaShaderProgram.ProgramID);
+                RenderChunks();
+
+                GL.Enable(EnableCap.CullFace);
             }
 
             UseShader(0);
