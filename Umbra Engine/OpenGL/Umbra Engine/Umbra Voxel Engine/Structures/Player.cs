@@ -270,5 +270,18 @@ namespace Umbra.Structures
 
             return returnVector;
         }
+
+        public float GetViewType()
+        {
+            Block block = Constants.World.Current.GetBlock(new BlockIndex(Constants.Engine_Physics.Player.FirstPersonCamera.Position));
+
+            switch (block.Type)
+            {
+                case (byte)BlockType.Air: return 0.0F;
+                case (byte)BlockType.Water: return 1.0F;
+                case (byte)BlockType.Lava: return 2.0F;
+                default: return 0.0F;
+            }
+        }
     }
 }
