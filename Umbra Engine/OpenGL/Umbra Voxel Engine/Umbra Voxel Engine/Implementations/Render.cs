@@ -25,41 +25,59 @@ namespace Umbra.Implementations
 {
     static public class SpriteString
     {
-        static public void Render(string str, Font font, Point position, Color color)
+        static public Dictionary<char, int> Characters = new Dictionary<char, int>();
+
+        static public void Initialize()
+        {
+            for (int i = 32; i <= 256; i++)
+            {
+                string character = char.ConvertFromUtf32(i);
+
+                Point size = Measure(character);
+
+                Bitmap texture = new Bitmap(size.X, size.Y);
+
+                System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(texture);
+                graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
+                graphics.DrawString(character, Constants.Overlay.DefaultFont, Brushes.White, Point.Empty);
+
+                int textureID;
+
+                RenderHelp.CreateTexture(out textureID, texture);
+
+                Characters.Add(character[0], textureID);
+            }
+        }
+
+        static public void Render(string str, Point position, Color color)
         {
             if (str == "")
             {
-                throw new Exception("String cannot be empty!");
+                return;
             }
 
-            Point size = Measure(str, font);
+            for (int i = 0; i < str.Length; i++)
+            {
+                int textureID = Characters[str[i]];
 
-            Bitmap texture = new Bitmap(size.X, size.Y);
+                Point positionOffset = new Point(position.X + Constants.Overlay.DefaultFontWidth * i, position.Y);
+                Point size = Measure(str[i] + "");
 
-            System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(texture);
-            graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
-            graphics.DrawString(str, font, Brushes.White, Point.Empty);
 
-            int textureID;
-
-            RenderHelp.CreateTexture(out textureID, texture);
-
-            GL.BindTexture(TextureTarget.Texture2D, textureID);
-            GL.Color4(color);
-            GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0.0F, 1.0F); GL.Vertex2(position.X, position.Y + size.Y);
-            GL.TexCoord2(1.0F, 1.0F); GL.Vertex2(position.X + size.X, position.Y + size.Y);
-            GL.TexCoord2(1.0F, 0.0F); GL.Vertex2(position.X + size.X, position.Y);
-            GL.TexCoord2(0.0F, 0.0F); GL.Vertex2(position.X, position.Y);
-            GL.End();
-
-            RenderHelp.DeleteTexture(textureID);
+                GL.BindTexture(TextureTarget.Texture2D, textureID);
+                GL.Color4(color);
+                GL.Begin(BeginMode.Quads);
+                GL.TexCoord2(0.0F, 1.0F); GL.Vertex2(positionOffset.X, positionOffset.Y + size.Y);
+                GL.TexCoord2(1.0F, 1.0F); GL.Vertex2(positionOffset.X + size.X, positionOffset.Y + size.Y);
+                GL.TexCoord2(1.0F, 0.0F); GL.Vertex2(positionOffset.X + size.X, positionOffset.Y);
+                GL.TexCoord2(0.0F, 0.0F); GL.Vertex2(positionOffset.X, positionOffset.Y);
+                GL.End();
+            }
         }
 
-        static public Point Measure(string str, Font font)
+        static public Point Measure(string str)
         {
-            Size size = System.Windows.Forms.TextRenderer.MeasureText(str, font);
-            return new Point(size.Width, size.Height);
+            return new Point(Constants.Overlay.DefaultFontWidth * str.Length, Constants.Overlay.DefaultFont.Height);
         }
     }
 

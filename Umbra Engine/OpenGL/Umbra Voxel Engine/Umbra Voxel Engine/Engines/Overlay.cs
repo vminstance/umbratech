@@ -114,13 +114,13 @@ namespace Umbra.Engines
 
             if (Variables.Overlay.DisplayFPS)
             {
-                SpriteString.Render(Math.Round(1.0 / e.Time, 2) + "", Console.Font, Point.Empty, Color.Yellow);
+                SpriteString.Render(Math.Round(1.0 / e.Time, 0) + "", Point.Empty, Color.Yellow);
             }
             if (Variables.Game.DeveloperMode)
             {
                 // Memory
                 string memoryUsage = (int)(System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024) + " kB";
-                SpriteString.Render(memoryUsage, Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(memoryUsage, Console.Font).X - 10, 100), Color.Yellow);
+                SpriteString.Render(memoryUsage, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(memoryUsage).X - 10, 100), Color.Yellow);
 
                 // Position
                 string[] position = { 
@@ -129,9 +129,9 @@ namespace Umbra.Engines
                                         "Pz: " + Math.Round(Constants.Engine_Physics.Player.Position.Z, 1) 
                                     };
 
-                SpriteString.Render(position[0], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[0], Console.Font).X - 10, 130), Color.Yellow);
-                SpriteString.Render(position[1], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[1], Console.Font).X - 10, 150), Color.Yellow);
-                SpriteString.Render(position[2], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[2], Console.Font).X - 10, 170), Color.Yellow);
+                SpriteString.Render(position[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[0]).X - 10, 130), Color.Yellow);
+                SpriteString.Render(position[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[1]).X - 10, 150), Color.Yellow);
+                SpriteString.Render(position[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[2]).X - 10, 170), Color.Yellow);
 
                
                 // Velocity
@@ -141,9 +141,9 @@ namespace Umbra.Engines
                                         "Vz: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Z, 2) 
                                     };
 
-                SpriteString.Render(velocity[0], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[0], Console.Font).X - 10, 200), Color.Yellow);
-                SpriteString.Render(velocity[1], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[1], Console.Font).X - 10, 220), Color.Yellow);
-                SpriteString.Render(velocity[2], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[2], Console.Font).X - 10, 240), Color.Yellow);
+                SpriteString.Render(velocity[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[0]).X - 10, 200), Color.Yellow);
+                SpriteString.Render(velocity[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[1]).X - 10, 220), Color.Yellow);
+                SpriteString.Render(velocity[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[2]).X - 10, 240), Color.Yellow);
 
                 
                 // Acceleration
@@ -153,9 +153,9 @@ namespace Umbra.Engines
                                             "Az: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Z / Constants.Engine_Physics.Player.Mass, 2) 
                                         };
 
-                SpriteString.Render(acceleration[0], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[0], Console.Font).X - 10, 270), Color.Yellow);
-                SpriteString.Render(acceleration[1], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[1], Console.Font).X - 10, 290), Color.Yellow);
-                SpriteString.Render(acceleration[2], Console.Font, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[2], Console.Font).X - 10, 310), Color.Yellow);
+                SpriteString.Render(acceleration[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[0]).X - 10, 270), Color.Yellow);
+                SpriteString.Render(acceleration[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[1]).X - 10, 290), Color.Yellow);
+                SpriteString.Render(acceleration[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[2]).X - 10, 310), Color.Yellow);
 
             }
 
