@@ -36,7 +36,7 @@ namespace Umbra.Engines
             Keyboard.KeyDown += new EventHandler<KeyboardKeyEventArgs>(KeyboardEvent);
             Mouse.ButtonDown += new EventHandler<MouseButtonEventArgs>(MouseButton);
 
-            System.Windows.Forms.Cursor.Position = Main.PointToScreen(new Point((Main.ClientSize.Width / 2), (Main.ClientSize.Height / 2)));
+            CenterMouse();
 
             base.Initialize(e);
         }
@@ -53,12 +53,17 @@ namespace Umbra.Engines
             }
         }
 
+        public void CenterMouse()
+        {
+            System.Windows.Forms.Cursor.Position = Main.PointToScreen(new Point((Main.ClientSize.Width / 2), (Main.ClientSize.Height / 2)));
+        }
+
         void MouseMove()
         {
             if (Variables.Game.IsActive)
             {
                 MouseDelta = new Point(Mouse.X - (Main.ClientSize.Width / 2), Mouse.Y - (Main.ClientSize.Height / 2));
-                System.Windows.Forms.Cursor.Position = Main.PointToScreen(new Point((Main.ClientSize.Width / 2), (Main.ClientSize.Height / 2)));
+                CenterMouse();
 
                 Constants.Engine_Physics.Player.FirstPersonCamera.UpdateMouse(MouseDelta);
             }
@@ -110,7 +115,7 @@ namespace Umbra.Engines
             }
             else
             {
-                Console.Input(e);
+                Console.Input(e, Keyboard);
             }
         }
 

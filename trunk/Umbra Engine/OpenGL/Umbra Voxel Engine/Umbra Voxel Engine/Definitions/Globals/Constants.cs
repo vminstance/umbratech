@@ -58,12 +58,17 @@ namespace Umbra.Definitions.Globals
             World.Current.Initialize();
             ClockTime.SetTimeOfDay(TimeOfDay.Day);
 
+            Console.Initialize();
             Crosshair.Initialize();
             Compass.Initialize();
+            SpriteString.Initialize();
         }
 
         static public class Overlay
         {
+
+            static public Font DefaultFont = new Font("Lucida Console", 11, FontStyle.Regular);
+            static public int DefaultFontWidth = 10; 
 
             static public class Console
             {
@@ -71,6 +76,7 @@ namespace Umbra.Definitions.Globals
                 static public Rectangle DefaultArea = new Rectangle(0, (int)Graphics.ScreenResolution.Y / 2, 290, (int)Graphics.ScreenResolution.Y / 2);
                 static public int FadeSpeed = 500; // mS
                 static public int Timeout = 10000; // mS
+                static public int MessageQuantity = 19;
             }
 
             static public class Popup
@@ -178,7 +184,7 @@ namespace Umbra.Definitions.Globals
         static public class Launcher
         {
             static public bool Enabled = true;
-            static public bool ReleaseModeEnabled = true;
+            static public bool ReleaseModeEnabled = false;
         }
 
         static public class World

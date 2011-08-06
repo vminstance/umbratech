@@ -23,18 +23,21 @@ namespace Umbra.Implementations.Graphics
 {
     static public class Console
     {
-        static List<ConsoleMessage> Buffer = new List<ConsoleMessage>();
-        static public Font Font = new Font("Lucida Console", 11, FontStyle.Regular);
+        static public bool IsOpen { get; private set; }
 
-        static bool IsOpen = false;
-        static int StateCounter = Constants.Overlay.Console.FadeSpeed;
+        static private double LastTimeStamp = 0;
 
-        static double LastTimeStamp = 0;
-
+        static private List<ConsoleMessage> Buffer { get; set; }
+        static private int CurrentBufferSelection = 0;
         static public string InputString { get; set; }
         static public int CursorPosition = 0;
 
-        static int MessageQuantity = 19;
+        static public void Initialize()
+        {
+            Buffer = new List<ConsoleMessage>();
+            IsOpen = false;
+            InputString = "";
+        }
 
         static public bool IsClosed()
         {
@@ -46,11 +49,22 @@ namespace Umbra.Implementations.Graphics
             Buffer = new List<ConsoleMessage>();
         }
 
+        static private void AddMessage(ConsoleMessage message)
+        {
+            Buffer.Add(message);
+
+            if (CurrentBufferSelection != 0)
+            {
+                InputString = Buffer[Buffer.Count - CurrentBufferSelection].Message;
+                CursorPosition = InputString.Length;
+            }
+        }
+
         static public void Write(string message)
         {
             if (message != "")
             {
-                Buffer.Add(new ConsoleMessage(message, LastTimeStamp, Color.White));
+                AddMessage(new ConsoleMessage(message, LastTimeStamp, Color.White));
             }
         }
 
@@ -62,7 +76,7 @@ namespace Umbra.Implementations.Graphics
             if (ConsoleFunctions.ConsoleCommands.ContainsKey(command))
             {
                 ((ConsoleFunction)ConsoleFunctions.ConsoleCommands[command]).Invoke(command, args, inputString);
-                Buffer.Add(new ConsoleMessage(inputString, LastTimeStamp, Color.White));
+                AddMessage(new ConsoleMessage(inputString, LastTimeStamp, Color.White));
             }
         }
 
@@ -75,18 +89,46 @@ namespace Umbra.Implementations.Graphics
             if (ConsoleFunctions.ConsoleCommands.ContainsKey(command))
             {
                 ((ConsoleFunction)ConsoleFunctions.ConsoleCommands[command]).Invoke(command, args, InputString);
-                Buffer.Add(new ConsoleMessage(InputString, LastTimeStamp, Color.White));
+                AddMessage(new ConsoleMessage(InputString, LastTimeStamp, Color.White));
             }
         }
 
-        static public void Input(KeyboardKeyEventArgs e)
+        static public void Input(KeyboardKeyEventArgs e, KeyboardDevice keyboard)
         {
             string character = e.Key.ToString();
 
-            if (e.Key == Key.BackSpace)
+            if (e.Key == Key.Up)
             {
-                InputString = InputString.Substring(0, Math.Max(InputString.Length - 1, 0));
+                CurrentBufferSelection = (int)Mathematics.Clamp(CurrentBufferSelection + 1, 1, Buffer.Count);
+                int selected = Buffer.Count - CurrentBufferSelection;
+
+                InputString = Buffer[selected].Message;
+                CursorPosition = InputString.Length;
+            }
+            else if (e.Key == Key.Down)
+            {
+                CurrentBufferSelection = (int)Mathematics.Clamp(CurrentBufferSelection - 1, 0, Buffer.Count - 1);
+
+                if (CurrentBufferSelection == 0)
+                {
+                    InputString = "";
+                }
+                else
+                {
+                    int selected = Buffer.Count - CurrentBufferSelection;
+
+                    InputString = Buffer[selected].Message;
+                }
+
+                CursorPosition = InputString.Length;
+            }
+            else if (e.Key == Key.Left)
+            {
                 CursorPosition--;
+            }
+            else if (e.Key == Key.Right)
+            {
+                CursorPosition++;
             }
             else if (e.Key == Key.Enter)
             {
@@ -94,6 +136,7 @@ namespace Umbra.Implementations.Graphics
                 {
                     ExecuteCurrentInput();
                 }
+
                 InputString = "";
                 CursorPosition = 0;
             }
@@ -111,10 +154,28 @@ namespace Umbra.Implementations.Graphics
                 InputString += " ";
                 CursorPosition++;
             }
-            else
+            else if (e.Key == Key.BackSpace)
             {
-                InputString = InputString + character;
+                InputString = InputString.Substring(0, Math.Max(CursorPosition - 1, 0)) + InputString.Substring(CursorPosition);
+                CursorPosition--;
+            }
+            else if (e.Key == Key.Delete)
+            {
+                InputString = InputString.Substring(0, Math.Max(CursorPosition, 0)) + InputString.Substring(Math.Min(CursorPosition + 1, InputString.Length));
+            }
+            else if(character.Length == 1)
+            {
+                if (!keyboard[Key.ShiftLeft] && !keyboard[Key.ShiftRight])
+                {
+                    character = character.ToLower();
+                }
+                InputString = InputString.Substring(0, CursorPosition) + character + InputString.Substring(CursorPosition);
                 CursorPosition++;
+            }
+
+            if (InputString.Length > Constants.Overlay.Console.CharacterLimit)
+            {
+                InputString = InputString.Substring(0, Constants.Overlay.Console.CharacterLimit);
             }
 
             CursorPosition = Math.Max(CursorPosition, 0);
@@ -140,6 +201,7 @@ namespace Umbra.Implementations.Graphics
 
         static public void Toggle()
         {
+            Constants.Engine_Input.CenterMouse();
             InputString = "";
             IsOpen = !IsOpen;
             Variables.Game.IsActive = !IsOpen;
@@ -163,24 +225,25 @@ namespace Umbra.Implementations.Graphics
 
         static public void Update(FrameEventArgs e)
         {
-
-            if (InputString == null)
-            {
-                InputString = "";
-            }
-
             LastTimeStamp += e.Time;
         }
 
         static public void Render(FrameEventArgs e)
         {
+            if (IsOpen)
+            {
+                SpriteString.Render(">" + InputString, new Point(Variables.Overlay.Console.Area.X + 10, Variables.Overlay.Console.Area.Y + Variables.Overlay.Console.Area.Height - 20), Color.Beige);
+                SpriteString.Render("|", new Point(Variables.Overlay.Console.Area.X + 5 + SpriteString.Measure(">" + InputString.Substring(0, CursorPosition)).X, Variables.Overlay.Console.Area.Y + Variables.Overlay.Console.Area.Height - 20), Color.FromArgb((int)((LastTimeStamp * 2) % 2) * 255, Color.White));
+            }
+
+
             if (Buffer.Count > 0)
             {
                 int count = 0;
                 int heightOffset = 0;
                 ConsoleMessage message;
                 Color color = Color.White;
-                for (int i = Buffer.Count - 1; i > Buffer.Count - MessageQuantity - 1; i--)
+                for (int i = Buffer.Count - 1; i > Buffer.Count - Constants.Overlay.Console.MessageQuantity - 1; i--)
                 {
                     if (i < 0 || i >= Buffer.Count)
                     {
@@ -201,9 +264,7 @@ namespace Umbra.Implementations.Graphics
                         color = Color.FromArgb(message.Color.R, message.Color.G, message.Color.B, closedAlpha);
                     }
 
-                    //message.SpriteString.Render(new Point(Variables.Overlay.Console.Area.X + 20, Variables.Overlay.Console.Area.Y + Variables.Overlay.Console.Area.Height + heightOffset), color);
-                    SpriteString.Render(message.Message, Font, new Point(Variables.Overlay.Console.Area.X + 20, Variables.Overlay.Console.Area.Y + Variables.Overlay.Console.Area.Height + heightOffset), color);
-
+                    SpriteString.Render(message.Message, new Point(Variables.Overlay.Console.Area.X + 20, Variables.Overlay.Console.Area.Y + Variables.Overlay.Console.Area.Height + heightOffset), color);
 
                     count++;
                 }

@@ -41,37 +41,45 @@ namespace Umbra
                 CodeClose = true;
             }
 
-            try
+
+            if (Constants.Launcher.ReleaseModeEnabled)
+            {
+                try
+                {
+                    RunEngine();
+                }
+                catch (Exception e)
+                {
+                    DialogResult result = System.Windows.Forms.MessageBox.Show(
+                    "An error occurred while trying to run the game!" +
+                    "\n\n\tOpenGL version: " + GL.GetString(StringName.Version) +
+                    "\n\tGLSL version: " + GL.GetString(StringName.ShadingLanguageVersion) +
+                    "\n\tVendor: " + GL.GetString(StringName.Vendor) +
+                    "\n\tRenderer: " + GL.GetString(StringName.Renderer) +
+                    "\n\nError Message:\n" + e.Message +
+                    "\n\nDetails:\n" + e.StackTrace +
+                    "\n\n\nPlease report this error message.\nThanks in advance!\n\n" +
+                    "Copy to clipboard?", "Internal Program Error!", MessageBoxButtons.YesNo);
+
+                    Console.Execute("exit");
+
+                    if (result == DialogResult.Yes)
+                    {
+                        Clipboard.SetText(
+                            "An error occurred while trying to run the game!" +
+                            "\n\n\tOpenGL version: " + GL.GetString(StringName.Version) +
+                            "\n\tGLSL version: " + GL.GetString(StringName.ShadingLanguageVersion) +
+                            "\n\tVendor: " + GL.GetString(StringName.Vendor) +
+                            "\n\tRenderer: " + GL.GetString(StringName.Renderer) +
+                            "\n\nError Message:\n" + e.Message +
+                            "\n\nDetails:\n" + e.StackTrace +
+                            "\n\n\nPlease report this error message.\nThanks in advance!\n\n");
+                    }
+                }
+            }
+            else
             {
                 RunEngine();
-            }
-            catch (Exception e)
-            {
-                DialogResult result = System.Windows.Forms.MessageBox.Show(
-                "An error occurred while trying to run the game!"+
-                "\n\n\tOpenGL version: " + GL.GetString(StringName.Version) +
-                "\n\tGLSL version: " + GL.GetString(StringName.ShadingLanguageVersion) +
-                "\n\tVendor: " + GL.GetString(StringName.Vendor) +
-                "\n\tRenderer: " + GL.GetString(StringName.Renderer) +
-                "\n\nError Message:\n"+e.Message + 
-                "\n\nDetails:\n" + e.StackTrace + 
-                "\n\n\nPlease report this error message.\nThanks in advance!\n\n"+
-                "Copy to clipboard?", "Internal Program Error!", MessageBoxButtons.YesNo);
-
-                Console.Execute("exit");
-
-                if (result == DialogResult.Yes)
-                {
-                    Clipboard.SetText(
-                        "An error occurred while trying to run the game!" +
-                        "\n\n\tOpenGL version: " + GL.GetString(StringName.Version) +
-                        "\n\tGLSL version: " + GL.GetString(StringName.ShadingLanguageVersion) +
-                        "\n\tVendor: " + GL.GetString(StringName.Vendor) +
-                        "\n\tRenderer: " + GL.GetString(StringName.Renderer) +
-                        "\n\nError Message:\n" + e.Message +
-                        "\n\nDetails:\n" + e.StackTrace +
-                        "\n\n\nPlease report this error message.\nThanks in advance!\n\n");
-                }
             }
         }
 
