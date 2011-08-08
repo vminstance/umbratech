@@ -37,6 +37,7 @@ namespace Umbra.Structures.Graphics
         static public int ProjectionMatrixID { get; private set; }
         static public int ViewMatrixID { get; private set; }
         static public int WorldMatrixID { get; private set; }
+        static public int LightDirectionID { get; private set; }
 
         static public int TextureID { get; private set; }
         static public int ViewTypeID { get; private set; }
@@ -50,6 +51,7 @@ namespace Umbra.Structures.Graphics
             ProjectionMatrixID = GL.GetUniformLocation(shaderProgram, "projection_mat");
             ViewMatrixID = GL.GetUniformLocation(shaderProgram, "view_mat");
             WorldMatrixID = GL.GetUniformLocation(shaderProgram, "world_mat");
+            LightDirectionID = GL.GetUniformLocation(shaderProgram, "light_dir");
 
             TextureID = GL.GetUniformLocation(shaderProgram, "texture");
             ViewTypeID = GL.GetUniformLocation(shaderProgram, "view_type");

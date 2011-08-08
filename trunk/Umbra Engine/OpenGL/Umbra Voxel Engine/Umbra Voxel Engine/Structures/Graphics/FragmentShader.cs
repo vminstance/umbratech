@@ -12,30 +12,27 @@ namespace Umbra.Structures.Graphics
 
         static public readonly string Shader = @"
 
-        uniform sampler2D texture;
-        varying float diffuse;
+        uniform sampler2DArray texture;
 
         void main()
         {
-            gl_FragColor = texture2D(texture, gl_TexCoord[0].xy);
+            gl_FragColor = texture2DArray(texture, gl_TexCoord[0].xyz);
 
             if(gl_FragColor.a < 1.0)
             {
                 discard;
             }
 
-            gl_FragColor.rgb *= diffuse;
             gl_FragColor *= gl_Color;
         }";
 
         static public readonly string AlphaShader = @"
 
-        uniform sampler2D texture;
-        varying float diffuse;
+        uniform sampler2DArray texture;
 
         void main()
         {
-            gl_FragColor = texture2D(texture, gl_TexCoord[0].xy);
+            gl_FragColor = texture2DArray(texture, gl_TexCoord[0].xyz);
 
             if(gl_FragColor.a == 0.0 || gl_FragColor.a == 1.0)
             {
@@ -43,7 +40,6 @@ namespace Umbra.Structures.Graphics
             }
 
             gl_FragColor *= gl_Color;
-            gl_FragColor.rgb *= diffuse;
         }";
     }
 }

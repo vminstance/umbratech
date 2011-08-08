@@ -282,16 +282,16 @@ namespace Umbra.Definitions
                 {
                     Console.Write("Usage: \"block <blocktype>\"");
                     Console.Write("Currently selectable blocktypes:");
-                    foreach (string s in Constants.Controls.PlacableBlocks)
+                    foreach (Block s in Constants.Controls.PlacableBlocks)
                     {
-                        Console.Write(s);
+                        Console.Write(s.Name);
                     }
                 }
 
                 bool canUse = false;
-                foreach (string s in Constants.Controls.PlacableBlocks)
+                foreach (Block s in Constants.Controls.PlacableBlocks)
                 {
-                    if (args[0] == s)
+                    if (args[0] == s.Name)
                     {
                         canUse = true;
                     }

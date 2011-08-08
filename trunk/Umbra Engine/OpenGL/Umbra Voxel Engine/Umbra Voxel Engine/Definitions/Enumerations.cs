@@ -225,20 +225,6 @@ namespace Umbra.Definitions
             }
         }
 
-        public byte GetFaceShade()
-        {
-            switch (DirectionEnum)
-            {
-                case Dir.Backward: return Constants.Graphics.Lighting.BackwardShade;
-                case Dir.Forward: return Constants.Graphics.Lighting.ForwardShade;
-                case Dir.Left: return Constants.Graphics.Lighting.LeftShade;
-                case Dir.Right: return Constants.Graphics.Lighting.RightShade;
-                case Dir.Up: return Constants.Graphics.Lighting.UpShade;
-                case Dir.Down: return Constants.Graphics.Lighting.DownShade;
-                default: return 0;
-            }
-        }
-
         static public bool operator ==(Direction dir1, Direction dir2)
         {
             return (dir1.DirectionEnum == dir2.DirectionEnum);

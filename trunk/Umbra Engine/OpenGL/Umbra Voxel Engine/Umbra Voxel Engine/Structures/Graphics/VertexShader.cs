@@ -21,10 +21,10 @@ namespace Umbra.Structures.Graphics
                 uniform mat4 projection_mat;
                 uniform mat4 view_mat;
                 uniform mat4 world_mat;
-                uniform float view_type;
 
-                varying float diffuse;
- 
+                uniform float view_type;
+                uniform vec3 light_dir;
+
                 void main() 
                 {
 
@@ -44,20 +44,16 @@ namespace Umbra.Structures.Graphics
 
                     gl_Position = projection_mat * view_mat * world_mat * position;
 
-                    gl_FrontColor = vec4(shade, shade, shade, 20.0) / 20.0; 
-
-                    if(view_type == 1.0)
-                    {
-                        gl_FrontColor /= vec4(3.0, 2.0, 1.0, 1.0);
-                    }
-
-                    gl_TexCoord[0] = vec4(type % 16, type >> 4, 1.0, 1.0);
+                    gl_TexCoord[0] = vec4(0.0, 0.0, type, 0.0);
                     
                     " + SetTextureCoords + @"
                     
                     " + SetDiffuseLighting + @"
 
-                    gl_TexCoord[0] /= 16.0;
+                    if(view_type == 1.0)
+                    {
+                        gl_FrontColor /= vec4(3.0, 2.0, 1.0, 1.0);
+                    }
                 }";
             }
         }
@@ -233,29 +229,25 @@ namespace Umbra.Structures.Graphics
 
 
         static public readonly string SetTextureCoords = @"
-
         switch(corner)
         {
             case 0:
             {
-                gl_TexCoord[0].x += 0.001;
-                gl_TexCoord[0].y += 0.999;
+                gl_TexCoord[0].y += 1.0;
                 break;
             }
             case 1:
             {
-                gl_TexCoord[0].xy += 0.001;
                 break;
             }
             case 2:
             {
-                gl_TexCoord[0].x += 0.999;
-                gl_TexCoord[0].y += 0.001;
+                gl_TexCoord[0].x += 1.0;
                 break;
             }
             case 3:
             {
-                gl_TexCoord[0].xy += 0.999;
+                gl_TexCoord[0].xy += 1.0;
                 break;
             }
         }";
@@ -267,34 +259,35 @@ namespace Umbra.Structures.Graphics
         {
             case 0:
             {
-                diffuse = 0.7;
+                gl_FrontColor = vec4(max(float(shade) / 20.0, dot(light_dir, vec3(1.0, 0.0, 0.0))));
                 break;
             }
             case 1:
             {
-                diffuse = 0.7;
+                gl_FrontColor = vec4(max(float(shade) / 20.0, dot(light_dir, vec3(1.0, 0.0, 0.0))));
                 break;
             }
             case 2:
             {
-                diffuse = 1.0;
+                gl_FrontColor = vec4(max(float(shade) / 20.0, dot(light_dir, vec3(0.0, 1.0, 0.0))));
                 break;
             }
             case 3:
             {
-                diffuse = 0.4;
+                gl_FrontColor = vec4(max(float(shade) / 20.0, dot(light_dir, vec3(0.0, -1.0, 0.0))));
                 break;
             }
             case 4:
             {
-                diffuse = 0.5;
+                gl_FrontColor = vec4(max(float(shade) / 20.0, dot(light_dir, vec3(0.0, 0.0, 1.0))));
                 break;
             }
             case 5:
             {
-                diffuse = 0.5;
+                gl_FrontColor = vec4(max(float(shade) / 20.0, dot(light_dir, vec3(0.0, 0.0, 1.0))));
                 break;
             }
-        }";
+        }
+        gl_FrontColor.a = 1.0;";
     }
 }

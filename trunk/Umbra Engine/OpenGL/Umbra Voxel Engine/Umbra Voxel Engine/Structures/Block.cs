@@ -22,71 +22,61 @@ namespace Umbra.Structures
 {
     public struct Block
     {
-        public byte Type { get; private set; }
-        public byte Data { get; private set; }
+        private BlockType InternalType { get; set; }
+        public byte Type 
+        {
+            get
+            {
+                return (byte)InternalType;
+            }
+        }
+        public byte Data { get; set; }
 
         public Block(byte type, byte data)
             : this()
         {
-            Type = type;
+            InternalType = (BlockType)type;
             Data = data;
         }
 
-        static public Block Air { get { return new Block((byte)BlockType.Air, 0); } }
-        static public Block Grass { get { return new Block((byte)BlockType.Grass, 0); } }
-        static public Block Stone { get { return new Block((byte)BlockType.Stone, 0); } }
-        static public Block Dirt { get { return new Block((byte)BlockType.Dirt, 0); } }
-        static public Block Water { get { return new Block((byte)BlockType.Water, 0); } }
-        static public Block Glass { get { return new Block((byte)BlockType.Glass, 0); } }
-        static public Block Bookshelf { get { return new Block((byte)BlockType.Bookshelf, 0); } }
-        static public Block Log { get { return new Block((byte)BlockType.Log, 0); } }
-        static public Block Wood { get { return new Block((byte)BlockType.Wood, 0); } }
-        static public Block Snow { get { return new Block((byte)BlockType.Snow, 0); } }
-        static public Block Slab { get { return new Block((byte)BlockType.Slab, 0); } }
-        static public Block CraftingTable { get { return new Block((byte)BlockType.CraftingTable, 0); } }
-        static public Block Furnace { get { return new Block((byte)BlockType.Furnace, 0); } }
-        static public Block Sand { get { return new Block((byte)BlockType.Sand, 0); } }
-        static public Block Leaves { get { return new Block((byte)BlockType.Leaves, 0); } }
-        static public Block Lava { get { return new Block((byte)BlockType.Lava, 0); } }
-        static public Block Brick { get { return new Block((byte)BlockType.Brick, 0); } }
-        static public Block Cobblestone { get { return new Block((byte)BlockType.Cobblestone, 0); } }
-        static public Block Ice { get { return new Block((byte)BlockType.Ice, 0); } }
-        static public Block Vacuum { get { return new Block((byte)BlockType.Vacuum, 0); } }
+        private Block(BlockType type, byte data)
+            : this()
+        {
+            InternalType = type;
+            Data = data;
+        }
 
-        public byte[] Bytes { get { return new byte[] { Type, Data }; } }
+        static public Block Air { get { return new Block(BlockType.Air, 0); } }
+        static public Block Grass { get { return new Block(BlockType.Grass, 0); } }
+        static public Block Stone { get { return new Block(BlockType.Stone, 0); } }
+        static public Block Dirt { get { return new Block(BlockType.Dirt, 0); } }
+        static public Block Water { get { return new Block(BlockType.Water, 0); } }
+        static public Block Sand { get { return new Block(BlockType.Sand, 0); } }
+        static public Block Leaves { get { return new Block(BlockType.Leaves, 0); } }
+        static public Block Lava { get { return new Block(BlockType.Lava, 0); } }
+        static public Block Log { get { return new Block(BlockType.Log, 0); } }
+        static public Block Vacuum { get { return new Block(BlockType.Vacuum, 0); } }
+
+        public byte[] Bytes { get { return new byte[] { (byte)InternalType, Data }; } }
 
         public byte GetFace(Direction direction)
         {
-            switch (Type)
+            switch (InternalType)
             {
-                case (byte)BlockType.Air: return 253;
-                case (byte)BlockType.Grass: return new byte[] { 3, 3, 0, 2, 3, 3 }[direction.Value];
-                //case (byte)BlockType.Grass: return 0;
-                case (byte)BlockType.Stone: return 1;
-                case (byte)BlockType.Dirt: return 2;
-                case (byte)BlockType.Water: return 205;
-                case (byte)BlockType.Glass: return 49;
-                case (byte)BlockType.Bookshelf: return new byte[] { 35, 35, 4, 4, 35, 35 }[direction.Value];
-                case (byte)BlockType.Log: return new byte[] { 20, 20, 21, 21, 20, 20 }[direction.Value];
-                case (byte)BlockType.Wood: return 4;
-                case (byte)BlockType.Snow: return new byte[] { 68, 68, 66, 2, 68, 68 }[direction.Value];
-                case (byte)BlockType.Slab: return new byte[] { 5, 5, 6, 6, 5, 5 }[direction.Value];
-                case (byte)BlockType.CraftingTable: return new byte[] { 60, 60, 43, 43, 59, 59 }[direction.Value];
-                case (byte)BlockType.Furnace: return new byte[] { 45, 45, 6, 6, 44, 45 }[direction.Value];
-                case (byte)BlockType.Sand: return 18;
-                case (byte)BlockType.Leaves: return 52;
-                case (byte)BlockType.Lava: return 255;
-                case (byte)BlockType.Brick: return 7;
-                case (byte)BlockType.Cobblestone: return 16;
-                case (byte)BlockType.Ice: return 67;
-                case (byte)BlockType.Vacuum: return 17;
-                default: return 49;
+                case BlockType.Grass: return new byte[] { 1, 1, 0, 3, 1, 1 }[direction.Value];
+                case BlockType.Stone: return 2;
+                case BlockType.Dirt: return 3;
+                case BlockType.Water: return 4;
+                case BlockType.Sand: return 5;
+                case BlockType.Leaves: return 6;
+                case BlockType.Lava: return 7;
+                case BlockType.Log: return new byte[] { 8, 8, 9, 9, 8, 8 }[direction.Value];
+                default: return 0;
             }
         }
 
         static public byte GetFaceShade(BlockIndex index, Direction direction)
         {
-            byte baseShade = direction.GetFaceShade();
 
             //double dist = Lighting.GetRayIntersectDistance(12, direction.GetVector3(), (index.Position + new Vector3d(0.5, 0.5, 0.5)) + direction.GetVector3() * 0.6);
 
@@ -105,21 +95,19 @@ namespace Umbra.Structures
             //baseShade = (byte)Math.Max((int)baseShade - 12, 0);
             //baseShade += (byte)dist;
 
-            return baseShade;
+            return 5;
         }
 
         public bool Translucency
         {
             get
             {
-                switch (Type)
+                switch (InternalType)
                 {
-                    case (byte)BlockType.Air: return true;
-                    case (byte)BlockType.Water: return true;
-                    case (byte)BlockType.Glass: return true;
-                    case (byte)BlockType.Leaves: return true;
-                    case (byte)BlockType.Ice: return true;
-                    case (byte)BlockType.Vacuum: return false;
+                    case BlockType.Air: return true;
+                    case BlockType.Water: return true;
+                    case BlockType.Leaves: return true;
+                    case BlockType.Vacuum: return false;
                     default: return false;
                 }
             }
@@ -129,11 +117,11 @@ namespace Umbra.Structures
         {
             get
             {
-                switch (Type)
+                switch (InternalType)
                 {
-                    case (byte)BlockType.Air: return false;
-                    case (byte)BlockType.Water: return false;
-                    case (byte)BlockType.Lava: return false;
+                    case BlockType.Air: return false;
+                    case BlockType.Water: return false;
+                    case BlockType.Lava: return false;
                     default: return true;
                 }
             }
@@ -143,14 +131,12 @@ namespace Umbra.Structures
         {
             get
             {
-                switch (Type)
+                switch (InternalType)
                 {
-                    case (byte)BlockType.Air: return BlockVisibility.Invisible;
-                    case (byte)BlockType.Water: return BlockVisibility.Translucent;
-                    case (byte)BlockType.Glass: return BlockVisibility.Translucent;
-                    case (byte)BlockType.Leaves: return BlockVisibility.Translucent;
-                    case (byte)BlockType.Ice: return BlockVisibility.Translucent;
-                    case (byte)BlockType.Vacuum: return BlockVisibility.Invisible;
+                    case BlockType.Air: return BlockVisibility.Invisible;
+                    case BlockType.Water: return BlockVisibility.Translucent;
+                    case BlockType.Leaves: return BlockVisibility.Translucent;
+                    case BlockType.Vacuum: return BlockVisibility.Invisible;
                     default: return BlockVisibility.Opaque;
                 }
             }
@@ -161,12 +147,12 @@ namespace Umbra.Structures
         {
             get
             {
-                switch (Type)
+                switch (InternalType)
                 {
-                    case (byte)BlockType.Air: return 1.2F;
-                    case (byte)BlockType.Water: return 1000.0F;
-                    case (byte)BlockType.Lava: return 2600.0F;
-                    case (byte)BlockType.Vacuum: return 0.0F;
+                    case BlockType.Air: return 1.2F;
+                    case BlockType.Water: return 1000.0F;
+                    case BlockType.Lava: return 2600.0F;
+                    case BlockType.Vacuum: return 0.0F;
                     default: return 0.0F;
                 }
             }
@@ -176,28 +162,18 @@ namespace Umbra.Structures
         {
             get
             {
-                switch (Type)
+                switch (InternalType)
                 {
-                    case (byte)BlockType.Air: return 1.225F;
-                    case (byte)BlockType.Grass: return 1920.0F;
-                    case (byte)BlockType.Stone: return 2700.0F;
-                    case (byte)BlockType.Dirt: return 1922.0F;
-                    case (byte)BlockType.Water: return 1000.0F;
-                    case (byte)BlockType.Glass: return 2600.0F;
-                    case (byte)BlockType.Bookshelf: return 500.0F;
-                    case (byte)BlockType.Log: return 700.0F;
-                    case (byte)BlockType.Wood: return 20.0F;
-                    case (byte)BlockType.Snow: return 200.0F;
-                    case (byte)BlockType.Slab: return 2400.0F;
-                    case (byte)BlockType.CraftingTable: return 500.0F;
-                    case (byte)BlockType.Furnace: return 1400.0F;
-                    case (byte)BlockType.Sand: return 1602.0F;
-                    case (byte)BlockType.Leaves: return 8.5F;
-                    case (byte)BlockType.Lava: return 2600.0F;
-                    case (byte)BlockType.Brick: return 1922.0F;
-                    case (byte)BlockType.Cobblestone: return 2800.0F;
-                    case (byte)BlockType.Ice: return 917.0F;
-                    case (byte)BlockType.Vacuum: return 0.0F;
+                    case BlockType.Air: return 1.225F;
+                    case BlockType.Grass: return 1920.0F;
+                    case BlockType.Stone: return 2700.0F;
+                    case BlockType.Dirt: return 1922.0F;
+                    case BlockType.Water: return 1000.0F;
+                    case BlockType.Sand: return 1602.0F;
+                    case BlockType.Leaves: return 8.5F;
+                    case BlockType.Lava: return 2600.0F;
+                    case BlockType.Log: return 700.0F;
+                    case BlockType.Vacuum: return 0.0F;
                     default: return 0.0F;
                 }
             }
@@ -207,28 +183,18 @@ namespace Umbra.Structures
         {
             get
             {
-                switch (Type)
+                switch (InternalType)
                 {
-                    case (byte)BlockType.Air: return 0.0F;
-                    case (byte)BlockType.Grass: return 1.0F;
-                    case (byte)BlockType.Stone: return 1.0F;
-                    case (byte)BlockType.Dirt: return 1.0F;
-                    case (byte)BlockType.Water: return 0.5F;
-                    case (byte)BlockType.Glass: return 0.94F;
-                    case (byte)BlockType.Bookshelf: return 1.0F;
-                    case (byte)BlockType.Log: return 1.0F;
-                    case (byte)BlockType.Wood: return 1.0F;
-                    case (byte)BlockType.Snow: return 0.8F;
-                    case (byte)BlockType.Slab: return 1.0F;
-                    case (byte)BlockType.CraftingTable: return 1.0F;
-                    case (byte)BlockType.Furnace: return 1.0F;
-                    case (byte)BlockType.Sand: return 1.3F;
-                    case (byte)BlockType.Leaves: return 1.2F;
-                    case (byte)BlockType.Lava: return 0.0F;
-                    case (byte)BlockType.Brick: return 1.0F;
-                    case (byte)BlockType.Cobblestone: return 1.0F;
-                    case (byte)BlockType.Ice: return 0.15F;
-                    case (byte)BlockType.Vacuum: return 0.0F;
+                    case BlockType.Air: return 0.0F;
+                    case BlockType.Grass: return 1.0F;
+                    case BlockType.Stone: return 1.0F;
+                    case BlockType.Dirt: return 1.0F;
+                    case BlockType.Water: return 0.5F;
+                    case BlockType.Sand: return 1.3F;
+                    case BlockType.Leaves: return 1.2F;
+                    case BlockType.Lava: return 0.0F;
+                    case BlockType.Log: return 1.0F;
+                    case BlockType.Vacuum: return 0.0F;
                     default: return 0.0F;
                 }
             }
@@ -238,28 +204,18 @@ namespace Umbra.Structures
         {
             get
             {
-                switch (Type)
+                switch (InternalType)
                 {
-                    case (byte)BlockType.Air: return 0.01F;
-                    case (byte)BlockType.Grass: return 1.0F;
-                    case (byte)BlockType.Stone: return 1.0F;
-                    case (byte)BlockType.Dirt: return 1.0F;
-                    case (byte)BlockType.Water: return 0.2F;
-                    case (byte)BlockType.Glass: return 0.94F;
-                    case (byte)BlockType.Bookshelf: return 1.0F;
-                    case (byte)BlockType.Log: return 1.0F;
-                    case (byte)BlockType.Wood: return 1.0F;
-                    case (byte)BlockType.Snow: return 0.8F;
-                    case (byte)BlockType.Slab: return 1.0F;
-                    case (byte)BlockType.CraftingTable: return 1.0F;
-                    case (byte)BlockType.Furnace: return 1.0F;
-                    case (byte)BlockType.Sand: return 0.7F;
-                    case (byte)BlockType.Leaves: return 0.8F;
-                    case (byte)BlockType.Lava: return 0.1F;
-                    case (byte)BlockType.Brick: return 1.0F;
-                    case (byte)BlockType.Cobblestone: return 1.0F;
-                    case (byte)BlockType.Ice: return 0.05F;
-                    case (byte)BlockType.Vacuum: return 0.0F;
+                    case BlockType.Air: return 0.01F;
+                    case BlockType.Grass: return 1.0F;
+                    case BlockType.Stone: return 1.0F;
+                    case BlockType.Dirt: return 1.0F;
+                    case BlockType.Water: return 0.2F;
+                    case BlockType.Sand: return 0.7F;
+                    case BlockType.Leaves: return 0.8F;
+                    case BlockType.Lava: return 0.1F;
+                    case BlockType.Log: return 1.0F;
+                    case BlockType.Vacuum: return 0.0F;
                     default: return 0.0F;
                 }
             }
@@ -269,29 +225,19 @@ namespace Umbra.Structures
         {
             get
             {
-                switch (Type)
+                switch (InternalType)
                 {
-                    case (byte)BlockType.Air: return "Air";
-                    case (byte)BlockType.Grass: return "Grass";
-                    case (byte)BlockType.Stone: return "Stone";
-                    case (byte)BlockType.Dirt: return "Dirt";
-                    case (byte)BlockType.Water: return "Water";
-                    case (byte)BlockType.Glass: return "Glass";
-                    case (byte)BlockType.Bookshelf: return "Bookshelf";
-                    case (byte)BlockType.Log: return "Log";
-                    case (byte)BlockType.Wood: return "Wood";
-                    case (byte)BlockType.Snow: return "Snow";
-                    case (byte)BlockType.Slab: return "Slab";
-                    case (byte)BlockType.CraftingTable: return "CraftingTable";
-                    case (byte)BlockType.Furnace: return "Furnace";
-                    case (byte)BlockType.Sand: return "Sand";
-                    case (byte)BlockType.Leaves: return "Leaves";
-                    case (byte)BlockType.Lava: return "Lava";
-                    case (byte)BlockType.Brick: return "Brick";
-                    case (byte)BlockType.Cobblestone: return "Cobblestone";
-                    case (byte)BlockType.Ice: return "Ice";
-                    case (byte)BlockType.Vacuum: return "Vacuum";
-                    default: return "UNUSED";
+                    case BlockType.Air: return "air";
+                    case BlockType.Grass: return "grass";
+                    case BlockType.Stone: return "stone";
+                    case BlockType.Dirt: return "dirt";
+                    case BlockType.Water: return "water";
+                    case BlockType.Sand: return "sand";
+                    case BlockType.Leaves: return "leaves";
+                    case BlockType.Lava: return "lava";
+                    case BlockType.Log: return "log";
+                    case BlockType.Vacuum: return "vacuum";
+                    default: return "unused";
                 }
             }
         }
@@ -305,33 +251,23 @@ namespace Umbra.Structures
                 case "stone": return Stone;
                 case "dirt": return Dirt;
                 case "water": return Water;
-                case "glass": return Glass;
-                case "bookshelf": return Bookshelf;
-                case "log": return Log;
-                case "wood": return Wood;
-                case "snow": return Snow;
-                case "slab": return Slab;
-                case "craftingtable": return CraftingTable;
-                case "furnace": return Furnace;
                 case "sand": return Sand;
                 case "leaves": return Leaves;
                 case "lava": return Lava;
-                case "brick": return Brick;
-                case "cobblestone": return Cobblestone;
-                case "ice": return Ice;
+                case "log": return Log;
                 case "vacuum": return Vacuum;
-                default: return Air;
+                default: return Vacuum;
             }
         }
 
         public static bool operator ==(Block part1, Block part2)
         {
-            return (part1.Type == part2.Type);
+            return (part1.InternalType == part2.InternalType);
         }
 
         public static bool operator !=(Block part1, Block part2)
         {
-            return !(part1.Type == part2.Type);
+            return !(part1.InternalType == part2.InternalType);
         }
 
         public override int GetHashCode()
@@ -348,29 +284,46 @@ namespace Umbra.Structures
         {
             return o == (object)this;
         }
-    }
 
-    public enum BlockType : byte
-    {
-        Air = 0,
-        Grass = 1,
-        Stone = 2,
-        Dirt = 3,
-        Water = 4,
-        Glass = 5,
-        Bookshelf = 6,
-        Log = 7,
-        Wood = 8,
-        Snow = 9,
-        Slab = 10,
-        CraftingTable = 11,
-        Furnace = 12,
-        Sand = 13,
-        Leaves = 14,
-        Lava = 15,
-        Brick = 16,
-        Cobblestone = 17,
-        Ice = 18,
-        Vacuum = 255
+        static public string[] GetBlockTexturePaths()
+        {
+            string Path = Constants.Content.Textures.Packs.CurrentPackPath;
+
+            string[] returnValue = new string[256];
+
+            for(int i = 0; i < returnValue.Length; i++)
+            {
+                returnValue[i] = Path + "grass1.png";
+            }
+
+            returnValue[Grass.GetFace(Direction.Up)] = Path + "grass1.png";
+            returnValue[Grass.GetFace(Direction.Right)] = Path + "grass2.png";
+            returnValue[Stone.GetFace(Direction.Up)] = Path + "stone.png";
+            returnValue[Dirt.GetFace(Direction.Up)] = Path + "dirt.png";
+            returnValue[Sand.GetFace(Direction.Up)] = Path + "sand.png";
+
+            returnValue[Water.GetFace(Direction.Up)] = Path + "water.png";
+            returnValue[Leaves.GetFace(Direction.Up)] = Path + "leaves.png";
+            returnValue[Lava.GetFace(Direction.Up)] = Path + "lava.png";
+
+            returnValue[Log.GetFace(Direction.Right)] = Path + "log1.png";
+            returnValue[Log.GetFace(Direction.Up)] = Path + "log2.png";
+
+            return returnValue;
+        }
+
+        private enum BlockType : byte
+        {
+            Air,
+            Grass,
+            Stone,
+            Dirt,
+            Water,
+            Sand,
+            Leaves,
+            Lava,
+            Log,
+            Vacuum = 255
+        }
     }
 }

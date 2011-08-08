@@ -74,12 +74,12 @@
     <Compile Include="Implementations\ChunkManager.cs" />
     <Compile Include="Implementations\ClockTime.cs" />
     <Compile Include="Implementations\Lighting.cs" />
-    <Compile Include="Implementations\Overlay\Compass.cs" />
-    <Compile Include="Implementations\Overlay\Console.cs" />
+    <Compile Include="Implementations\Graphics\Compass.cs" />
+    <Compile Include="Implementations\Graphics\Console.cs" />
     <Compile Include="Implementations\Content.cs" />
     <Compile Include="Implementations\BlockCursor.cs" />
-    <Compile Include="Implementations\Overlay\Crosshair.cs" />
-    <Compile Include="Implementations\Overlay\Popup.cs" />
+    <Compile Include="Implementations\Graphics\Crosshair.cs" />
+    <Compile Include="Implementations\Graphics\Popup.cs" />
     <Compile Include="Implementations\Program.cs" />
     <Compile Include="Implementations\Render.cs" />
     <Compile Include="Launcher.cs">
@@ -149,16 +149,44 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\compass.png">
+    <Content Include="content\textures\compass.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\crosshair.png">
+    <Content Include="content\textures\crosshair.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\textures.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="content\textures\texture packs\standard\dirt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\textures\texture packs\standard\grass1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\textures\texture packs\standard\grass2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\textures\texture packs\standard\lava.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\textures\texture packs\standard\leaves.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\textures\texture packs\standard\log1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\textures\texture packs\standard\log2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\textures\texture packs\standard\sand.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\textures\texture packs\standard\stone.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\textures\texture packs\standard\water.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
