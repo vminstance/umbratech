@@ -61,6 +61,11 @@ namespace Umbra.Engines
         {
             GL.UseProgram(shader);
 
+            if (shader == 0)
+            {
+                return;
+            }
+
             RenderHelp.BindTexture(TextureID, TextureUnit.Texture0);
 
             Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
@@ -122,6 +127,7 @@ namespace Umbra.Engines
                 c.VertexBuffer.Render();
             }
         }
+
         void RenderCursor()
         {
             if (Constants.Graphics.BlockCursorType == 0)
@@ -187,7 +193,6 @@ namespace Umbra.Engines
                 GL.Disable(EnableCap.DepthTest);
 
                 GL.Color4(0.0, 0.0, 0.0, 0.5);
-                GL.LineWidth(1);
                 GL.Begin(BeginMode.Lines);
                 {
                     GL.Vertex3(new Vector3d(0, 0, 0) + currentAim.Position);

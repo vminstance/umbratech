@@ -26,9 +26,6 @@ namespace Umbra
                 Constants.World.WorldSize = (int)this.numericUpDown_worldSize.Value;
                 Constants.World.Name = this.textBox_name.Text;
 
-                // Graphics
-                Constants.Graphics.AntiAliasingEnabled = this.checkBox_antiAliasing.Checked;
-
                 // Controls
                 Constants.Controls.NoclipAllowed = this.checkBox_noclip.Checked;
             }
@@ -40,6 +37,9 @@ namespace Umbra
             Constants.Content.Textures.Packs.CurrentPackPath = Constants.Content.Textures.Packs.Path + this.comboBox_texturePack.SelectedItem + @"/";
             Constants.Graphics.ScreenResolution = new Vector2((float)this.numericUpDown_resX.Value, (float)this.numericUpDown_resY.Value);
 
+            Constants.Graphics.AntiAliasingEnabled = this.checkBox_antiAliasing.Checked;
+            Constants.Graphics.AnisotropicFilteringEnabled = this.checkBox_anisotropicFiltering.Checked;
+
             Constants.Graphics.EnableFullScreen = this.checkBox_fullscreen.Checked;
             Constants.Graphics.EyefinityMode = this.checkBox_eyefinity.Checked;
 
@@ -47,14 +47,19 @@ namespace Umbra
             {
                 Constants.Graphics.BlockCursorType = 0;
             }
-            if (radioButton_darkBlock.Checked)
+            else if (radioButton_darkBlock.Checked)
             {
                 Constants.Graphics.BlockCursorType = 1;
             }
-            if (radioButton_wireframe.Checked)
+            else if (radioButton_wireframe.Checked)
             {
                 Constants.Graphics.BlockCursorType = 2;
             }
+            else if (radioButton_both.Checked)
+            {
+                Constants.Graphics.BlockCursorType = 3;
+            }
+
 
 
             // Controls
@@ -109,18 +114,20 @@ namespace Umbra
                 this.comboBox_preset.Enabled = false;
 
                 this.numericUpDown_worldSize.Enabled = false;
-
-                this.checkBox_antiAliasing.Enabled = false;
-                this.checkBox_antiAliasing.Checked = false;
                 this.checkBox_noclip.Enabled = false;
                 this.checkBox_noclip.Checked = false;
 
                 this.textBox_name.Enabled = false;
             }
 
-            comboBox_preset.SelectedIndex = 0;
-            comboBox_texturePack.Items.AddRange(Umbra.Implementations.Content.GetTexturePacks());
-            comboBox_texturePack.SelectedIndex = 0;
+            this.comboBox_preset.SelectedIndex = 0;
+            this.comboBox_texturePack.Items.AddRange(Umbra.Implementations.Content.GetTexturePacks());
+            this.comboBox_texturePack.SelectedIndex = 0;
+
+            this.checkBox_antiAliasing.Enabled = false;
+            this.checkBox_antiAliasing.Checked = false;
+
+            this.checkBox_anisotropicFiltering.Enabled = OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Extensions).Contains("GL_EXT_texture_filter_anisotropic");
         }
 
         private void comboBox_preset_SelectedIndexChanged(object sender, EventArgs e)
@@ -141,7 +148,7 @@ namespace Umbra
                         numericUpDown_resY.Value = 600;
                         checkBox_antiAliasing.Checked = false;
 
-                        radioButton_darkBlock.Checked = true;
+                        radioButton_both.Checked = true;
 
                         checkBox_blockEdit.Checked = true;
                         checkBox_noclip.Checked = true;
@@ -169,7 +176,7 @@ namespace Umbra
                         numericUpDown_resY.Value = 600;
                         checkBox_antiAliasing.Checked = false;
 
-                        radioButton_darkBlock.Checked = true;
+                        radioButton_both.Checked = true;
 
                         checkBox_blockEdit.Checked = true;
                         checkBox_noclip.Checked = true;
@@ -197,7 +204,7 @@ namespace Umbra
                         numericUpDown_resY.Value = 600;
                         checkBox_antiAliasing.Checked = false;
 
-                        radioButton_darkBlock.Checked = true;
+                        radioButton_both.Checked = true;
 
                         checkBox_blockEdit.Checked = true;
                         checkBox_noclip.Checked = true;
@@ -215,7 +222,7 @@ namespace Umbra
                     {
                         checkBox_dynUpdate.Checked = true;
                         checkBox_saveWorld.Checked = true;
-                        textBox_seed.Text = "";
+                        textBox_seed.Text = "shore";
                         numericUpDown_worldSize.Value = 13;
                         textBox_name.Text = "StressTest";
 
@@ -225,7 +232,7 @@ namespace Umbra
                         numericUpDown_resY.Value = 600;
                         checkBox_antiAliasing.Checked = true;
 
-                        radioButton_darkBlock.Checked = true;
+                        radioButton_both.Checked = true;
 
                         checkBox_blockEdit.Checked = true;
                         checkBox_noclip.Checked = true;

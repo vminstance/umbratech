@@ -49,6 +49,7 @@ namespace Umbra
             this.label5 = new System.Windows.Forms.Label();
             this.textBox_name = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkBox_anisotropicFiltering = new System.Windows.Forms.CheckBox();
             this.comboBox_texturePack = new System.Windows.Forms.ComboBox();
             this.checkBox_eyefinity = new System.Windows.Forms.CheckBox();
             this.radioButton_both = new System.Windows.Forms.RadioButton();
@@ -277,6 +278,7 @@ namespace Umbra
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.checkBox_anisotropicFiltering);
             this.tabPage2.Controls.Add(this.comboBox_texturePack);
             this.tabPage2.Controls.Add(this.checkBox_eyefinity);
             this.tabPage2.Controls.Add(this.radioButton_both);
@@ -298,6 +300,16 @@ namespace Umbra
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Graphics";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_anisotropicFiltering
+            // 
+            this.checkBox_anisotropicFiltering.AutoSize = true;
+            this.checkBox_anisotropicFiltering.Location = new System.Drawing.Point(11, 140);
+            this.checkBox_anisotropicFiltering.Name = "checkBox_anisotropicFiltering";
+            this.checkBox_anisotropicFiltering.Size = new System.Drawing.Size(117, 17);
+            this.checkBox_anisotropicFiltering.TabIndex = 13;
+            this.checkBox_anisotropicFiltering.Text = "Anisotropic Filtering";
+            this.checkBox_anisotropicFiltering.UseVisualStyleBackColor = true;
             // 
             // comboBox_texturePack
             // 
@@ -321,7 +333,7 @@ namespace Umbra
             // radioButton_both
             // 
             this.radioButton_both.AutoSize = true;
-            this.radioButton_both.Location = new System.Drawing.Point(108, 180);
+            this.radioButton_both.Location = new System.Drawing.Point(106, 230);
             this.radioButton_both.Name = "radioButton_both";
             this.radioButton_both.Size = new System.Drawing.Size(47, 17);
             this.radioButton_both.TabIndex = 7;
@@ -331,7 +343,7 @@ namespace Umbra
             // radioButton_wireframe
             // 
             this.radioButton_wireframe.AutoSize = true;
-            this.radioButton_wireframe.Location = new System.Drawing.Point(108, 157);
+            this.radioButton_wireframe.Location = new System.Drawing.Point(106, 207);
             this.radioButton_wireframe.Name = "radioButton_wireframe";
             this.radioButton_wireframe.Size = new System.Drawing.Size(73, 17);
             this.radioButton_wireframe.TabIndex = 7;
@@ -341,7 +353,7 @@ namespace Umbra
             // radioButton_nocursor
             // 
             this.radioButton_nocursor.AutoSize = true;
-            this.radioButton_nocursor.Location = new System.Drawing.Point(11, 157);
+            this.radioButton_nocursor.Location = new System.Drawing.Point(9, 207);
             this.radioButton_nocursor.Name = "radioButton_nocursor";
             this.radioButton_nocursor.Size = new System.Drawing.Size(71, 17);
             this.radioButton_nocursor.TabIndex = 7;
@@ -351,7 +363,7 @@ namespace Umbra
             // radioButton_darkBlock
             // 
             this.radioButton_darkBlock.AutoSize = true;
-            this.radioButton_darkBlock.Location = new System.Drawing.Point(11, 180);
+            this.radioButton_darkBlock.Location = new System.Drawing.Point(9, 230);
             this.radioButton_darkBlock.Name = "radioButton_darkBlock";
             this.radioButton_darkBlock.Size = new System.Drawing.Size(77, 17);
             this.radioButton_darkBlock.TabIndex = 7;
@@ -374,9 +386,9 @@ namespace Umbra
             this.checkBox_antiAliasing.AutoSize = true;
             this.checkBox_antiAliasing.Location = new System.Drawing.Point(11, 117);
             this.checkBox_antiAliasing.Name = "checkBox_antiAliasing";
-            this.checkBox_antiAliasing.Size = new System.Drawing.Size(83, 17);
+            this.checkBox_antiAliasing.Size = new System.Drawing.Size(89, 17);
             this.checkBox_antiAliasing.TabIndex = 5;
-            this.checkBox_antiAliasing.Text = "Anti-Aliasing";
+            this.checkBox_antiAliasing.Text = "Multisampling";
             this.checkBox_antiAliasing.UseVisualStyleBackColor = true;
             // 
             // numericUpDown_resY
@@ -435,7 +447,7 @@ namespace Umbra
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 141);
+            this.label7.Location = new System.Drawing.Point(6, 191);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(69, 13);
             this.label7.TabIndex = 1;
@@ -723,6 +735,7 @@ namespace Umbra
         private System.Windows.Forms.CheckBox checkBox_water;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox checkBox_anisotropicFiltering;
     }
 }
 
