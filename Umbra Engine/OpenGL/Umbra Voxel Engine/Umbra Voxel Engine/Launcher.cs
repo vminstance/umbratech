@@ -119,6 +119,7 @@ namespace Umbra
             }
 
             comboBox_preset.SelectedIndex = 0;
+            comboBox_texturePack.Items.AddRange(Umbra.Implementations.Content.GetTexturePacks());
             comboBox_texturePack.SelectedIndex = 0;
         }
 
