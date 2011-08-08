@@ -131,7 +131,8 @@ namespace Umbra.Definitions.Globals
             static public float FieldOfView = MathHelper.DegreesToRadians(60);
             static public bool EnableFullScreen = false;
             static public bool EyefinityMode = false;
-            static public int BlockCursorType = 1;  // 0-No cursor 1-Dark block 2-Wireframe
+            static public int BlockCursorType = 1;  // 0-No cursor, 1-Dark block, 2-Wireframe, 3-Both
+            static public bool AnisotropicFilteringEnabled = false;
 
             
             static public class Lighting
