@@ -74,8 +74,8 @@ namespace Umbra.Definitions.Globals
             {
                 static public int CharacterLimit = 32;
                 static public Rectangle DefaultArea = new Rectangle(0, (int)Graphics.ScreenResolution.Y / 2, 290, (int)Graphics.ScreenResolution.Y / 2);
-                static public int FadeSpeed = 500; // mS
-                static public int Timeout = 10000; // mS
+                static public double FadeSpeed = 0.5; // Seconds
+                static public double Timeout = 10.0; // Seconds
                 static public int MessageQuantity = 19;
             }
 
@@ -102,25 +102,15 @@ namespace Umbra.Definitions.Globals
             static public bool CanPlaceBlocks = false;
             static public bool NoclipAllowed = true;
             static public float SmoothCameraResponse = 0.4F;
-            static public string[] PlacableBlocks = {
-                                                    "grass",
-                                                    "stone",
-                                                    "dirt",
-                                                    "water",
-                                                    "glass",
-                                                    "bookshelf",
-                                                    "log",
-                                                    "wood",
-                                                    "snow",
-                                                    "slab",
-                                                    "craftingtable",
-                                                    "furnace",
-                                                    "leaves",
-                                                    "lava",
-                                                    "sand",
-                                                    "brick",
-                                                    "cobblestone",
-                                                    "ice",
+            static public Block[] PlacableBlocks = {
+                                                    Block.Grass,
+                                                    Block.Stone,
+                                                    Block.Dirt,
+                                                    Block.Water,
+                                                    Block.Leaves,
+                                                    Block.Lava,
+                                                    Block.Sand,
+                                                    Block.Log
                                                };
         }
 
@@ -140,16 +130,20 @@ namespace Umbra.Definitions.Globals
             static public float CameraFarPlane = 64000.0F;
             static public float FieldOfView = MathHelper.DegreesToRadians(60);
             static public bool EnableFullScreen = false;
-            static public float[] TranslucentBlocks = { Block.Glass.GetFace(Direction.Up), Block.Water.GetFace(Direction.Up), Block.Leaves.GetFace(Direction.Up), Block.Ice.GetFace(Direction.Up) };
+            static public bool EyefinityMode = false;
+            static public int BlockCursorType = 1;  // 0-No cursor 1-Dark block 2-Wireframe
 
+            
             static public class Lighting
             {
-                static public byte UpShade = 20;
-                static public byte DownShade = 20;
-                static public byte LeftShade = 20;
-                static public byte RightShade = 20;
-                static public byte ForwardShade = 20;
-                static public byte BackwardShade = 20;
+                static public Vector3 DiffuseLightDirection
+                {
+                    get
+                    {
+                        return Vector3.Normalize(new Vector3(0.8F, 1.0F, 0.6F));
+                        //return ClockTime.GetLightDirection();
+                    }
+                }
 
                 static readonly public float DayFaceLightCoef = 1F;
                 static readonly public float NightFaceLightCoef = 1F / 16F;
@@ -211,13 +205,17 @@ namespace Umbra.Definitions.Globals
             static public int TerrainStretch = 8;           // Area taken into account = 2^stretch, currently 256 blocks;
             static public float PerlinBicubicWeight = 0.7F; // 0.0F = Total perlin, 1.0F = Total Bicubic
             static public float WorldHeightAmplitude = 256.0F;
-            static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F);
+            static public int WorldHeightOffset = (int)(-WorldHeightAmplitude / 2.0F); 
+
+            static public bool WaterEnabled = true;
             static public int WaterLevel = 0;
+
             static public int SandLevel = WaterLevel + 3;
             static public bool CavesEnabled = true;
 
             static public class Vegetation
             {
+                static public bool TreesEnabled = true;
                 static public int TreeMinHeight = 7;        // Tree height = (random 0-1) * TreeVaryHeight + TreeMinHeight
                 static public int TreeVaryHeight = 8;       // Tree height will vary from TreeMinHeight to TreeVaryHeight + TreeMinHeight
                 static public float TreeDensity = 0.05F;    // If a tree can be placed at a location, this is the chance that it will grow there.
@@ -272,30 +270,18 @@ namespace Umbra.Definitions.Globals
 
         static public class Content
         {
+            static public string MainPath = @"content/";
+
             static public class Textures
             {
-                static public string Path = @"textures/";
-                static public string TerrainFilename = Path + @"textures";
-                static public string CrosshairFilename = Path + @"crosshair";
-                static public string CompassFilename = Path + @"compass";
-                static public int TerrainTextureIndexWidthHeigh = 16;
-            }
-
-            static public class Fonts
-            {
-                static public string Path = @"fonts/";
-                static public string ConsoleFilename = Path + @"console";
-                static public string DebugFilename = Path + @"debug";
-                static public string PopupFilename = Path + @"popup";
-            }
-
-            static public class Sounds
-            {
-                static public string Path = @"sounds/";
-                static public string MusicPath = Path + @"music/";
-                static public string SongFilename = MusicPath + @"song";
-                static public string WalkFilename = Path + @"walk";
-                static public string BlockEditFilename = Path + @"snap";
+                static public string Path = MainPath + @"textures/";
+                static public class Packs
+                {
+                    static public string Path = Textures.Path + @"texture packs/";
+                    static public string CurrentPackPath = Path + @"standard/";
+                }
+                static public string CrosshairFilename = Path + @"crosshair.png";
+                static public string CompassFilename = Path + @"compass.png";
             }
 
             static public class Data

@@ -43,7 +43,7 @@ namespace Umbra.Implementations
 
                 int textureID;
 
-                RenderHelp.CreateTexture(out textureID, texture);
+                RenderHelp.CreateTexture2D(out textureID, texture);
 
                 Characters.Add(character[0], textureID);
             }
@@ -83,12 +83,12 @@ namespace Umbra.Implementations
 
     static public class RenderHelp
     {
-        static public void CreateTexture(out int textureID, string bitmapName)
+        static public void CreateTexture2D(out int textureID, string bitmapName)
         {
-            CreateTexture(out textureID, (Bitmap)Content.Load(bitmapName));
+            CreateTexture2D(out textureID, (Bitmap)Content.Load(bitmapName));
         }
 
-        static public void CreateTexture(out int textureID, Bitmap texture)
+        static public void CreateTexture2D(out int textureID, Bitmap texture)
         {
             GL.GenTextures(1, out textureID);
 
@@ -102,6 +102,46 @@ namespace Umbra.Implementations
             GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, Color.Transparent);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Nearest);
+        }
+
+        static public void CreateTexture2DArray(out int textureID, string[] bitmapNames)
+        {
+            Bitmap[] bitmaps = new Bitmap[bitmapNames.Length];
+
+            for (int i = 0; i < bitmaps.Length; i++)
+            {
+                bitmaps[i] = (Bitmap)Content.Load(bitmapNames[i]);
+            }
+
+            CreateTexture2DArray(out textureID, bitmaps);
+        }
+
+        static public void CreateTexture2DArray(out int textureID, Bitmap[] textures)
+        {
+            GL.GenTextures(1, out textureID);
+
+            GL.BindTexture(TextureTarget.Texture2DArray, textureID);
+
+            BitmapData bmpData = textures[0].LockBits(new Rectangle(0, 0, textures[0].Width, textures[0].Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            textures[0].UnlockBits(bmpData);
+
+            int length = Math.Abs(bmpData.Stride) * textures[0].Height;
+            byte[] texturesData = new byte[length * textures.Length];
+
+            for (int i = 0; i < textures.Length; i++)
+            {
+                bmpData = textures[i].LockBits(new Rectangle(0, 0, textures[i].Width, textures[i].Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, texturesData, length * i, length);
+                textures[i].UnlockBits(bmpData);
+            }
+
+            GL.TexImage3D(TextureTarget.Texture2DArray, 0, PixelInternalFormat.Rgba, textures[0].Width, textures[0].Height, textures.Length, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, texturesData);
+
+            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, Color.Transparent);
+            GL.TexParameter(TextureTarget.Texture2DArray, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2DArray, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Nearest);
+
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2DArray);
         }
 
         static public void DeleteTexture(int textureID)

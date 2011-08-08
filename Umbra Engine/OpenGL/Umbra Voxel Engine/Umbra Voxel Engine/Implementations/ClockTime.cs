@@ -166,5 +166,10 @@ namespace Umbra.Implementations
 
             return TimeOfDay.Night;
         }
+
+        static public Vector3 GetLightDirection()
+        {
+            return Vector3.Normalize(new Vector3((float)Math.Cos(MathHelper.DegreesToRadians(Time - 90)), (float)Math.Sin(MathHelper.DegreesToRadians(Time - 90)), 0));
+        }
     }
 }

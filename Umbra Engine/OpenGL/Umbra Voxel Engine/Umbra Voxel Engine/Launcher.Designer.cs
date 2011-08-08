@@ -33,110 +33,138 @@ namespace Umbra
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button_launch = new System.Windows.Forms.Button();
+            this.checkBox_dynUpdate = new System.Windows.Forms.CheckBox();
+            this.checkBox_saveWorld = new System.Windows.Forms.CheckBox();
+            this.textBox_seed = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_worldSize = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.comboBox_preset = new System.Windows.Forms.ComboBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox_name = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.comboBox_texturePack = new System.Windows.Forms.ComboBox();
+            this.checkBox_eyefinity = new System.Windows.Forms.CheckBox();
+            this.radioButton_both = new System.Windows.Forms.RadioButton();
+            this.radioButton_wireframe = new System.Windows.Forms.RadioButton();
+            this.radioButton_nocursor = new System.Windows.Forms.RadioButton();
+            this.radioButton_darkBlock = new System.Windows.Forms.RadioButton();
+            this.checkBox_fullscreen = new System.Windows.Forms.CheckBox();
+            this.checkBox_antiAliasing = new System.Windows.Forms.CheckBox();
+            this.numericUpDown_resY = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_resX = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.checkBox_noclip = new System.Windows.Forms.CheckBox();
+            this.checkBox_blockEdit = new System.Windows.Forms.CheckBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numericUpDown_landRough = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_landAmp = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_treedensity = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_waterlevel = new System.Windows.Forms.NumericUpDown();
+            this.label14 = new System.Windows.Forms.Label();
+            this.checkBox_treeenabled = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.checkBox_water = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_worldSize)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_resY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_resX)).BeginInit();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_landRough)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_landAmp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_treedensity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_waterlevel)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // button_launch
             // 
-            this.button1.Location = new System.Drawing.Point(15, 297);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(208, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Launch!";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button_launch.Location = new System.Drawing.Point(15, 297);
+            this.button_launch.Name = "button_launch";
+            this.button_launch.Size = new System.Drawing.Size(208, 23);
+            this.button_launch.TabIndex = 0;
+            this.button_launch.Text = "Launch!";
+            this.button_launch.UseVisualStyleBackColor = true;
+            this.button_launch.Click += new System.EventHandler(this.button_launch_Click);
             // 
-            // checkBox1
+            // checkBox_dynUpdate
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(11, 6);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(211, 17);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Dynamically update world as you walk?";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkBox_dynUpdate.AutoSize = true;
+            this.checkBox_dynUpdate.Checked = true;
+            this.checkBox_dynUpdate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_dynUpdate.Location = new System.Drawing.Point(8, 49);
+            this.checkBox_dynUpdate.Name = "checkBox_dynUpdate";
+            this.checkBox_dynUpdate.Size = new System.Drawing.Size(211, 17);
+            this.checkBox_dynUpdate.TabIndex = 1;
+            this.checkBox_dynUpdate.Text = "Dynamically update world as you walk?";
+            this.checkBox_dynUpdate.UseVisualStyleBackColor = true;
+            this.checkBox_dynUpdate.CheckedChanged += new System.EventHandler(this.checkBox_dynUpdate_CheckedChanged);
             // 
-            // checkBox2
+            // checkBox_saveWorld
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(11, 29);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(144, 17);
-            this.checkBox2.TabIndex = 2;
-            this.checkBox2.Text = "Save world as you walk?";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox_saveWorld.AutoSize = true;
+            this.checkBox_saveWorld.Location = new System.Drawing.Point(8, 72);
+            this.checkBox_saveWorld.Name = "checkBox_saveWorld";
+            this.checkBox_saveWorld.Size = new System.Drawing.Size(144, 17);
+            this.checkBox_saveWorld.TabIndex = 2;
+            this.checkBox_saveWorld.Text = "Save world as you walk?";
+            this.checkBox_saveWorld.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // textBox_seed
             // 
-            this.textBox1.Location = new System.Drawing.Point(11, 81);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 3;
+            this.textBox_seed.Location = new System.Drawing.Point(9, 108);
+            this.textBox_seed.Name = "textBox_seed";
+            this.textBox_seed.Size = new System.Drawing.Size(100, 20);
+            this.textBox_seed.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 65);
+            this.label1.Location = new System.Drawing.Point(6, 92);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(64, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "World seed:";
             // 
-            // numericUpDown1
+            // numericUpDown_worldSize
             // 
-            this.numericUpDown1.Increment = new decimal(new int[] {
+            this.numericUpDown_worldSize.Increment = new decimal(new int[] {
             2,
             0,
             0,
             0});
-            this.numericUpDown1.Location = new System.Drawing.Point(161, 81);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numericUpDown_worldSize.Location = new System.Drawing.Point(161, 108);
+            this.numericUpDown_worldSize.Maximum = new decimal(new int[] {
             13,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.numericUpDown_worldSize.Minimum = new decimal(new int[] {
             3,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.ReadOnly = true;
-            this.numericUpDown1.Size = new System.Drawing.Size(52, 20);
-            this.numericUpDown1.TabIndex = 5;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numericUpDown_worldSize.Name = "numericUpDown_worldSize";
+            this.numericUpDown_worldSize.ReadOnly = true;
+            this.numericUpDown_worldSize.Size = new System.Drawing.Size(52, 20);
+            this.numericUpDown_worldSize.TabIndex = 5;
+            this.numericUpDown_worldSize.Value = new decimal(new int[] {
             5,
             0,
             0,
@@ -145,7 +173,7 @@ namespace Umbra
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(158, 65);
+            this.label2.Location = new System.Drawing.Point(158, 92);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 6;
@@ -156,6 +184,7 @@ namespace Umbra
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -165,16 +194,18 @@ namespace Umbra
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.comboBox_preset);
             this.tabPage1.Controls.Add(this.richTextBox2);
             this.tabPage1.Controls.Add(this.richTextBox1);
+            this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.textBox2);
-            this.tabPage1.Controls.Add(this.checkBox1);
+            this.tabPage1.Controls.Add(this.textBox_name);
+            this.tabPage1.Controls.Add(this.checkBox_dynUpdate);
             this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.numericUpDown1);
-            this.tabPage1.Controls.Add(this.checkBox2);
+            this.tabPage1.Controls.Add(this.numericUpDown_worldSize);
+            this.tabPage1.Controls.Add(this.checkBox_saveWorld);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Controls.Add(this.textBox_seed);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -183,10 +214,24 @@ namespace Umbra
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // comboBox_preset
+            // 
+            this.comboBox_preset.FormattingEnabled = true;
+            this.comboBox_preset.Items.AddRange(new object[] {
+            "Standard",
+            "Debug - physics",
+            "Debug - water",
+            "Debug - stress test"});
+            this.comboBox_preset.Location = new System.Drawing.Point(8, 19);
+            this.comboBox_preset.Name = "comboBox_preset";
+            this.comboBox_preset.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_preset.TabIndex = 11;
+            this.comboBox_preset.SelectedIndexChanged += new System.EventHandler(this.comboBox_preset_SelectedIndexChanged);
+            // 
             // richTextBox2
             // 
             this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox2.Location = new System.Drawing.Point(6, 109);
+            this.richTextBox2.Location = new System.Drawing.Point(9, 134);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.ReadOnly = true;
             this.richTextBox2.Size = new System.Drawing.Size(225, 34);
@@ -196,7 +241,7 @@ namespace Umbra
             // richTextBox1
             // 
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Location = new System.Drawing.Point(6, 213);
+            this.richTextBox1.Location = new System.Drawing.Point(9, 213);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(225, 34);
@@ -204,30 +249,47 @@ namespace Umbra
             this.richTextBox1.Text = "To load a world, specify the same world seed and name as the world you want to lo" +
                 "ad.";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 171);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(64, 13);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "World name";
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 164);
+            this.label5.Location = new System.Drawing.Point(6, 3);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(67, 13);
+            this.label5.Size = new System.Drawing.Size(37, 13);
             this.label5.TabIndex = 8;
-            this.label5.Text = "World name:";
+            this.label5.Text = "Preset";
             // 
-            // textBox2
+            // textBox_name
             // 
-            this.textBox2.Location = new System.Drawing.Point(11, 180);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 7;
-            this.textBox2.Text = "default";
+            this.textBox_name.Location = new System.Drawing.Point(9, 187);
+            this.textBox_name.Name = "textBox_name";
+            this.textBox_name.Size = new System.Drawing.Size(100, 20);
+            this.textBox_name.TabIndex = 7;
+            this.textBox_name.Text = "default";
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.checkBox4);
-            this.tabPage2.Controls.Add(this.checkBox3);
-            this.tabPage2.Controls.Add(this.numericUpDown3);
+            this.tabPage2.Controls.Add(this.comboBox_texturePack);
+            this.tabPage2.Controls.Add(this.checkBox_eyefinity);
+            this.tabPage2.Controls.Add(this.radioButton_both);
+            this.tabPage2.Controls.Add(this.radioButton_wireframe);
+            this.tabPage2.Controls.Add(this.radioButton_nocursor);
+            this.tabPage2.Controls.Add(this.radioButton_darkBlock);
+            this.tabPage2.Controls.Add(this.checkBox_fullscreen);
+            this.tabPage2.Controls.Add(this.checkBox_antiAliasing);
+            this.tabPage2.Controls.Add(this.numericUpDown_resY);
             this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.numericUpDown2);
+            this.tabPage2.Controls.Add(this.numericUpDown_resX);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -237,44 +299,103 @@ namespace Umbra
             this.tabPage2.Text = "Graphics";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // comboBox_texturePack
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(11, 12);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(74, 17);
-            this.checkBox4.TabIndex = 6;
-            this.checkBox4.Text = "Fullscreen";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            this.comboBox_texturePack.FormattingEnabled = true;
+            this.comboBox_texturePack.Location = new System.Drawing.Point(11, 19);
+            this.comboBox_texturePack.Name = "comboBox_texturePack";
+            this.comboBox_texturePack.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_texturePack.TabIndex = 12;
             // 
-            // checkBox3
+            // checkBox_eyefinity
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(11, 89);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(83, 17);
-            this.checkBox3.TabIndex = 5;
-            this.checkBox3.Text = "Anti-Aliasing";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox_eyefinity.AutoSize = true;
+            this.checkBox_eyefinity.Enabled = false;
+            this.checkBox_eyefinity.Location = new System.Drawing.Point(91, 46);
+            this.checkBox_eyefinity.Name = "checkBox_eyefinity";
+            this.checkBox_eyefinity.Size = new System.Drawing.Size(94, 17);
+            this.checkBox_eyefinity.TabIndex = 8;
+            this.checkBox_eyefinity.Text = "Eyefinity mode";
+            this.checkBox_eyefinity.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown3
+            // radioButton_both
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(125, 48);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
+            this.radioButton_both.AutoSize = true;
+            this.radioButton_both.Location = new System.Drawing.Point(108, 180);
+            this.radioButton_both.Name = "radioButton_both";
+            this.radioButton_both.Size = new System.Drawing.Size(47, 17);
+            this.radioButton_both.TabIndex = 7;
+            this.radioButton_both.Text = "Both";
+            this.radioButton_both.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_wireframe
+            // 
+            this.radioButton_wireframe.AutoSize = true;
+            this.radioButton_wireframe.Location = new System.Drawing.Point(108, 157);
+            this.radioButton_wireframe.Name = "radioButton_wireframe";
+            this.radioButton_wireframe.Size = new System.Drawing.Size(73, 17);
+            this.radioButton_wireframe.TabIndex = 7;
+            this.radioButton_wireframe.Text = "Wireframe";
+            this.radioButton_wireframe.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_nocursor
+            // 
+            this.radioButton_nocursor.AutoSize = true;
+            this.radioButton_nocursor.Location = new System.Drawing.Point(11, 157);
+            this.radioButton_nocursor.Name = "radioButton_nocursor";
+            this.radioButton_nocursor.Size = new System.Drawing.Size(71, 17);
+            this.radioButton_nocursor.TabIndex = 7;
+            this.radioButton_nocursor.Text = "No cursor";
+            this.radioButton_nocursor.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_darkBlock
+            // 
+            this.radioButton_darkBlock.AutoSize = true;
+            this.radioButton_darkBlock.Location = new System.Drawing.Point(11, 180);
+            this.radioButton_darkBlock.Name = "radioButton_darkBlock";
+            this.radioButton_darkBlock.Size = new System.Drawing.Size(77, 17);
+            this.radioButton_darkBlock.TabIndex = 7;
+            this.radioButton_darkBlock.Text = "Dark block";
+            this.radioButton_darkBlock.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_fullscreen
+            // 
+            this.checkBox_fullscreen.AutoSize = true;
+            this.checkBox_fullscreen.Location = new System.Drawing.Point(11, 46);
+            this.checkBox_fullscreen.Name = "checkBox_fullscreen";
+            this.checkBox_fullscreen.Size = new System.Drawing.Size(74, 17);
+            this.checkBox_fullscreen.TabIndex = 6;
+            this.checkBox_fullscreen.Text = "Fullscreen";
+            this.checkBox_fullscreen.UseVisualStyleBackColor = true;
+            this.checkBox_fullscreen.CheckedChanged += new System.EventHandler(this.checkBox_fullscreen_CheckedChanged);
+            // 
+            // checkBox_antiAliasing
+            // 
+            this.checkBox_antiAliasing.AutoSize = true;
+            this.checkBox_antiAliasing.Location = new System.Drawing.Point(11, 117);
+            this.checkBox_antiAliasing.Name = "checkBox_antiAliasing";
+            this.checkBox_antiAliasing.Size = new System.Drawing.Size(83, 17);
+            this.checkBox_antiAliasing.TabIndex = 5;
+            this.checkBox_antiAliasing.Text = "Anti-Aliasing";
+            this.checkBox_antiAliasing.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown_resY
+            // 
+            this.numericUpDown_resY.Location = new System.Drawing.Point(125, 82);
+            this.numericUpDown_resY.Maximum = new decimal(new int[] {
             1200,
             0,
             0,
             0});
-            this.numericUpDown3.Minimum = new decimal(new int[] {
+            this.numericUpDown_resY.Minimum = new decimal(new int[] {
             600,
             0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(91, 20);
-            this.numericUpDown3.TabIndex = 4;
-            this.numericUpDown3.Value = new decimal(new int[] {
+            this.numericUpDown_resY.Name = "numericUpDown_resY";
+            this.numericUpDown_resY.Size = new System.Drawing.Size(91, 20);
+            this.numericUpDown_resY.TabIndex = 4;
+            this.numericUpDown_resY.Value = new decimal(new int[] {
             600,
             0,
             0,
@@ -283,38 +404,56 @@ namespace Umbra
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(105, 55);
+            this.label4.Location = new System.Drawing.Point(105, 84);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(14, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "X";
             // 
-            // numericUpDown2
+            // numericUpDown_resX
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(11, 48);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.numericUpDown_resX.Location = new System.Drawing.Point(11, 82);
+            this.numericUpDown_resX.Maximum = new decimal(new int[] {
             6048,
             0,
             0,
             0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.numericUpDown_resX.Minimum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(88, 20);
-            this.numericUpDown2.TabIndex = 2;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.numericUpDown_resX.Name = "numericUpDown_resX";
+            this.numericUpDown_resX.Size = new System.Drawing.Size(88, 20);
+            this.numericUpDown_resX.TabIndex = 2;
+            this.numericUpDown_resX.Value = new decimal(new int[] {
             1000,
             0,
             0,
             0});
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 141);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(69, 13);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Block cursor:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 3);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(74, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Texture Pack:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 32);
+            this.label3.Location = new System.Drawing.Point(8, 66);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 13);
             this.label3.TabIndex = 1;
@@ -322,8 +461,8 @@ namespace Umbra
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.checkBox6);
-            this.tabPage3.Controls.Add(this.checkBox5);
+            this.tabPage3.Controls.Add(this.checkBox_noclip);
+            this.tabPage3.Controls.Add(this.checkBox_blockEdit);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(238, 253);
@@ -331,29 +470,179 @@ namespace Umbra
             this.tabPage3.Text = "Controls";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // checkBox_noclip
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Checked = true;
-            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox6.Location = new System.Drawing.Point(11, 38);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(56, 17);
-            this.checkBox6.TabIndex = 1;
-            this.checkBox6.Text = "Noclip";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkBox_noclip.AutoSize = true;
+            this.checkBox_noclip.Checked = true;
+            this.checkBox_noclip.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_noclip.Location = new System.Drawing.Point(11, 38);
+            this.checkBox_noclip.Name = "checkBox_noclip";
+            this.checkBox_noclip.Size = new System.Drawing.Size(56, 17);
+            this.checkBox_noclip.TabIndex = 1;
+            this.checkBox_noclip.Text = "Noclip";
+            this.checkBox_noclip.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // checkBox_blockEdit
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Checked = true;
-            this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox5.Location = new System.Drawing.Point(11, 15);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(87, 17);
-            this.checkBox5.TabIndex = 0;
-            this.checkBox5.Text = "Block editing";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBox_blockEdit.AutoSize = true;
+            this.checkBox_blockEdit.Checked = true;
+            this.checkBox_blockEdit.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_blockEdit.Location = new System.Drawing.Point(11, 15);
+            this.checkBox_blockEdit.Name = "checkBox_blockEdit";
+            this.checkBox_blockEdit.Size = new System.Drawing.Size(87, 17);
+            this.checkBox_blockEdit.TabIndex = 0;
+            this.checkBox_blockEdit.Text = "Block editing";
+            this.checkBox_blockEdit.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.label12);
+            this.tabPage4.Controls.Add(this.label10);
+            this.tabPage4.Controls.Add(this.numericUpDown_landRough);
+            this.tabPage4.Controls.Add(this.numericUpDown_landAmp);
+            this.tabPage4.Controls.Add(this.numericUpDown_treedensity);
+            this.tabPage4.Controls.Add(this.numericUpDown_waterlevel);
+            this.tabPage4.Controls.Add(this.label14);
+            this.tabPage4.Controls.Add(this.checkBox_treeenabled);
+            this.tabPage4.Controls.Add(this.label13);
+            this.tabPage4.Controls.Add(this.checkBox_water);
+            this.tabPage4.Controls.Add(this.label11);
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(238, 253);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Landscape";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(120, 56);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(42, 13);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "Density";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(104, 20);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(58, 13);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "Waterlevel";
+            // 
+            // numericUpDown_landRough
+            // 
+            this.numericUpDown_landRough.Location = new System.Drawing.Point(168, 112);
+            this.numericUpDown_landRough.Name = "numericUpDown_landRough";
+            this.numericUpDown_landRough.Size = new System.Drawing.Size(64, 20);
+            this.numericUpDown_landRough.TabIndex = 2;
+            this.numericUpDown_landRough.Value = new decimal(new int[] {
+            70,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDown_landAmp
+            // 
+            this.numericUpDown_landAmp.Location = new System.Drawing.Point(168, 86);
+            this.numericUpDown_landAmp.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.numericUpDown_landAmp.Name = "numericUpDown_landAmp";
+            this.numericUpDown_landAmp.Size = new System.Drawing.Size(64, 20);
+            this.numericUpDown_landAmp.TabIndex = 2;
+            this.numericUpDown_landAmp.Value = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDown_treedensity
+            // 
+            this.numericUpDown_treedensity.Location = new System.Drawing.Point(168, 52);
+            this.numericUpDown_treedensity.Name = "numericUpDown_treedensity";
+            this.numericUpDown_treedensity.Size = new System.Drawing.Size(64, 20);
+            this.numericUpDown_treedensity.TabIndex = 2;
+            this.numericUpDown_treedensity.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDown_waterlevel
+            // 
+            this.numericUpDown_waterlevel.Location = new System.Drawing.Point(168, 16);
+            this.numericUpDown_waterlevel.Name = "numericUpDown_waterlevel";
+            this.numericUpDown_waterlevel.Size = new System.Drawing.Size(64, 20);
+            this.numericUpDown_waterlevel.TabIndex = 2;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(8, 114);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(112, 13);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Landscape roughness";
+            // 
+            // checkBox_treeenabled
+            // 
+            this.checkBox_treeenabled.AutoSize = true;
+            this.checkBox_treeenabled.Checked = true;
+            this.checkBox_treeenabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_treeenabled.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBox_treeenabled.Location = new System.Drawing.Point(11, 55);
+            this.checkBox_treeenabled.Name = "checkBox_treeenabled";
+            this.checkBox_treeenabled.Size = new System.Drawing.Size(65, 17);
+            this.checkBox_treeenabled.TabIndex = 1;
+            this.checkBox_treeenabled.Text = "Enabled";
+            this.checkBox_treeenabled.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(8, 88);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(108, 13);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "Landscape amplitude";
+            // 
+            // checkBox_water
+            // 
+            this.checkBox_water.AutoSize = true;
+            this.checkBox_water.Checked = true;
+            this.checkBox_water.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_water.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBox_water.Location = new System.Drawing.Point(11, 19);
+            this.checkBox_water.Name = "checkBox_water";
+            this.checkBox_water.Size = new System.Drawing.Size(65, 17);
+            this.checkBox_water.TabIndex = 1;
+            this.checkBox_water.Text = "Enabled";
+            this.checkBox_water.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(8, 39);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(34, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Trees";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(8, 3);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(36, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Water";
             // 
             // Launcher
             // 
@@ -361,50 +650,79 @@ namespace Umbra
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(246, 332);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button_launch);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Launcher";
             this.Text = "Umbra Voxel Engine";
             this.Load += new System.EventHandler(this.Launcher_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_worldSize)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_resY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_resX)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_landRough)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_landAmp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_treedensity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_waterlevel)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button_launch;
+        private System.Windows.Forms.CheckBox checkBox_dynUpdate;
+        private System.Windows.Forms.CheckBox checkBox_saveWorld;
+        private System.Windows.Forms.TextBox textBox_seed;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown numericUpDown_worldSize;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.CheckBox checkBox_antiAliasing;
+        private System.Windows.Forms.NumericUpDown numericUpDown_resY;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown numericUpDown_resX;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox_name;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.RichTextBox richTextBox2;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox_fullscreen;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkBox_blockEdit;
+        private System.Windows.Forms.CheckBox checkBox_noclip;
+        private System.Windows.Forms.ComboBox comboBox_preset;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.RadioButton radioButton_nocursor;
+        private System.Windows.Forms.RadioButton radioButton_darkBlock;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.RadioButton radioButton_wireframe;
+        private System.Windows.Forms.CheckBox checkBox_eyefinity;
+        private System.Windows.Forms.ComboBox comboBox_texturePack;
+        private System.Windows.Forms.RadioButton radioButton_both;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown numericUpDown_landRough;
+        private System.Windows.Forms.NumericUpDown numericUpDown_landAmp;
+        private System.Windows.Forms.NumericUpDown numericUpDown_treedensity;
+        private System.Windows.Forms.NumericUpDown numericUpDown_waterlevel;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.CheckBox checkBox_treeenabled;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.CheckBox checkBox_water;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label9;
     }
 }
 

@@ -48,7 +48,7 @@ namespace Umbra.Engines
             Matrix4 proj = Constants.Engine_Physics.Player.ProjectionMatrix;
             GL.UniformMatrix4(Shaders.ProjectionMatrixID, false, ref proj);
 
-            RenderHelp.CreateTexture(out TextureID, "content/textures.png");
+            RenderHelp.CreateTexture2DArray(out TextureID, Block.GetBlockTexturePaths());
             RenderHelp.BindTexture(TextureID, TextureUnit.Texture0);
 
             Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
@@ -65,6 +65,8 @@ namespace Umbra.Engines
 
             Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
             GL.UniformMatrix4(Shaders.ViewMatrixID, false, ref view);
+
+            GL.Uniform3(Shaders.LightDirectionID, Constants.Graphics.Lighting.DiffuseLightDirection);
 
             GL.Uniform1(Shaders.ViewTypeID, Constants.Engine_Physics.Player.GetViewType());
         }
@@ -120,9 +122,13 @@ namespace Umbra.Engines
                 c.VertexBuffer.Render();
             }
         }
-
         void RenderCursor()
         {
+            if (Constants.Graphics.BlockCursorType == 0)
+            {
+                return;
+            }
+
             BlockIndex currentAim = BlockCursor.GetToDestroy();
 
             if (currentAim == null)
@@ -138,40 +144,82 @@ namespace Umbra.Engines
             Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
             GL.LoadMatrix(ref view);
 
-            GL.Color4(0.0, 0.0, 0.0, 0.2);
-            GL.Begin(BeginMode.Quads);
+            if (Constants.Graphics.BlockCursorType == 1 || Constants.Graphics.BlockCursorType == 3)
             {
-                GL.Vertex3(new Vector3d(1.005,  -0.005, -0.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.005,  1.005,  -0.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.005,  1.005,  1.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.005,  -0.005, 1.005) + currentAim.Position);
+                GL.Color4(0.0, 0.0, 0.0, 0.2);
+                GL.Begin(BeginMode.Quads);
+                {
+                    GL.Vertex3(new Vector3d(1.004, -0.004, -0.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, 1.004, -0.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, 1.004, 1.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, -0.004, 1.004) + currentAim.Position);
 
-                GL.Vertex3(new Vector3d(-0.005, -0.005, 1.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.005, 1.005,  1.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.005, 1.005,  -0.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.005, -0.005, -0.005) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, -0.004, 1.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, 1.004, 1.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, 1.004, -0.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, -0.004, -0.004) + currentAim.Position);
 
-                GL.Vertex3(new Vector3d(1.005,  1.005,  1.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.005,  1.005,  -0.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.005, 1.005,  -0.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.005, 1.005,  1.005) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, 1.004, 1.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, 1.004, -0.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, 1.004, -0.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, 1.004, 1.004) + currentAim.Position);
 
-                GL.Vertex3(new Vector3d(-0.005, -0.005, 1.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.005, -0.005, -0.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.005,  -0.005, -0.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.005,  -0.005, 1.005) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, -0.004, 1.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, -0.004, -0.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, -0.004, -0.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, -0.004, 1.004) + currentAim.Position);
 
-                GL.Vertex3(new Vector3d(1.005,  -0.005, 1.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.005,  1.005,  1.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.005, 1.005,  1.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.005, -0.005, 1.005) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, -0.004, 1.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, 1.004, 1.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, 1.004, 1.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, -0.004, 1.004) + currentAim.Position);
 
-                GL.Vertex3(new Vector3d(-0.005, -0.005, -0.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(-0.005, 1.005,  -0.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.005,  1.005,  -0.005) + currentAim.Position);
-                GL.Vertex3(new Vector3d(1.005,  -0.005, -0.005) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, -0.004, -0.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(-0.004, 1.004, -0.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, 1.004, -0.004) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1.004, -0.004, -0.004) + currentAim.Position);
+                }
+                GL.End();
             }
-            GL.End();
+
+            if (Constants.Graphics.BlockCursorType == 2 || Constants.Graphics.BlockCursorType == 3)
+            {
+                GL.Disable(EnableCap.DepthTest);
+
+                GL.Color4(0.0, 0.0, 0.0, 0.5);
+                GL.LineWidth(1);
+                GL.Begin(BeginMode.Lines);
+                {
+                    GL.Vertex3(new Vector3d(0, 0, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 0, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(0, 0, 1) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 0, 1) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(0, 1, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 1, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(0, 1, 1) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 1, 1) + currentAim.Position);
+
+                    GL.Vertex3(new Vector3d(0, 0, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(0, 1, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(0, 0, 1) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(0, 1, 1) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 0, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 1, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 0, 1) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 1, 1) + currentAim.Position);
+
+                    GL.Vertex3(new Vector3d(0, 0, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(0, 0, 1) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(0, 1, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(0, 1, 1) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 0, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 0, 1) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 1, 0) + currentAim.Position);
+                    GL.Vertex3(new Vector3d(1, 1, 1) + currentAim.Position);
+                }
+                GL.End();
+                GL.Enable(EnableCap.DepthTest);
+            }
         }
 
         public override void Update(FrameEventArgs e)
