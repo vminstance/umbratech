@@ -45,7 +45,6 @@ namespace Umbra.Engines
             }
 
             Variables.Game.IsInitialized = true;
-            Variables.Game.IsActive = true;
             base.OnLoad(e);
         }
 
@@ -70,6 +69,7 @@ namespace Umbra.Engines
                 engine.Render(e);
             }
 
+            GL.Finish();
             SwapBuffers();
 
             base.OnRenderFrame(e);

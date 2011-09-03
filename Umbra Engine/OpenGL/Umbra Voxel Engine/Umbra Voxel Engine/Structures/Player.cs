@@ -27,8 +27,6 @@ namespace Umbra.Structures
         float CurrentAlterDelay;
         public bool IsReleased;
         Vector3d MoveDirection;
-        bool SpacePressed;
-        bool LeftShiftPressed;
 
         public Player()
             : base(Constants.Player.Spawn, new Vector3d(Constants.Player.Physics.Box.Width, Constants.Player.Physics.Box.Height, Constants.Player.Physics.Box.Width), Constants.Player.Physics.Mass)
@@ -37,8 +35,6 @@ namespace Umbra.Structures
             CurrentAlterDelay = Constants.Controls.AlterDelay;
             IsReleased = false;
             MoveDirection = Vector3d.Zero;
-            SpacePressed = false;
-            LeftShiftPressed = false;
         }
 
         public Matrix4 ViewMatrix
@@ -100,21 +96,6 @@ namespace Umbra.Structures
 
             base.Update(e);
         }
-
-        public void UpdateKeyboard(KeyboardDevice keyboard)
-        {
-            if (Variables.Player.NoclipEnabled)
-            {
-                MoveDirection = NoclipDirection(keyboard);
-            }
-            else
-            {
-                MoveDirection = WalkingDirection(keyboard);
-                SpacePressed = keyboard[Key.Space];
-                LeftShiftPressed = keyboard[Key.ShiftLeft];
-            }
-        }
-
 
         public void UpdateMouse(MouseDevice mouse)
         {
@@ -188,25 +169,12 @@ namespace Umbra.Structures
                     ApplyForce((newVelocity - horizontalVelocity) * Mass / e.Time * GripCoefficient * Constants.Player.Movement.GripSignificance);
 
 
-                    if (SpacePressed && Velocity.Y == 0)
-                    {
-                        ApplyForce(Vector3d.UnitY * Constants.Player.Movement.JumpForce);
-                    }
-
                 }
                 else
                 {
                     // Swimming or in air
-                    Vector3d newVelocity;
-
-                    if (LeftShiftPressed)
-                    {
-                        newVelocity = horizontalVelocity + Vector3d.Transform(MoveDirection, FirstPersonCamera.Rotation) * (Constants.Player.Movement.SwimForce / Mass * e.Time);
-                    }
-                    else
-                    {
-                        newVelocity = horizontalVelocity + Vector3d.Transform(MoveDirection, Matrix4d.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Movement.SwimForce / Mass * (float)e.Time);
-                    }
+                    Vector3d newVelocity = horizontalVelocity + Vector3d.Transform(MoveDirection, Matrix4d.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Movement.SwimForce / Mass * (float)e.Time);
+                   
 
                     if (newVelocity != Vector3d.Zero)
                     {
@@ -214,61 +182,52 @@ namespace Umbra.Structures
                     }
 
                     ApplyForce((newVelocity - horizontalVelocity) * Mass / e.Time * GripCoefficient * Constants.Player.Movement.GripSignificance);
-
-                    if (SpacePressed)
-                    {
-                        double magnitude = Interpolation.Linear((double)Constants.World.Current.GetBlock(new BlockIndex(Position)).Viscosity, (double)Constants.World.Current.GetBlock(new BlockIndex(Position + Vector3d.UnitY)).Viscosity, Position.Y % 1.0) / 5000.0;
-
-                        ApplyForce(Vector3d.UnitY * Constants.Player.Movement.SwimForce * magnitude);
-                    }
                 }
             }
 
             MoveDirection = Vector3d.Zero;
         }
 
+        public void MoveForward()
+        {
+            MoveDirection -= Vector3d.UnitZ;
+        }
+
+        public void MoveBackward()
+        {
+            MoveDirection += Vector3d.UnitZ;
+        }
+
+        public void MoveLeft()
+        {
+            MoveDirection -= Vector3d.UnitX;
+        }
+
+        public void MoveRight()
+        {
+            MoveDirection += Vector3d.UnitX;
+        }
+
+        public void Jump()
+        {
+            if (Variables.Player.NoclipEnabled)
+            {
+                MoveDirection += Vector3d.UnitY;
+            }
+            {
+                if (Constants.Engine_Physics.IsOnGround(this))
+                {
+                    if (Velocity.Y == 0)
+                    {
+                        ApplyForce(Vector3d.UnitY * Constants.Player.Movement.JumpForce);
+                    }
+                }
+            }
+        }
 
         private void UpdateCamera(FrameEventArgs e)
         {
             FirstPersonCamera.Position = Position + Vector3d.Multiply(Dimensions / 2.0F, new Vector3d(1, 0, 1)) + Vector3d.UnitY * Constants.Player.Physics.EyeHeight;
-        }
-
-        public Vector3d NoclipDirection(KeyboardDevice keyboard)
-        {
-            Vector3d returnVector = Vector3d.Zero;
-
-            if (Variables.Game.IsActive)
-            {
-                returnVector = new Vector3d((keyboard[Key.D] ? 1 : 0) - (keyboard[Key.A] ? 1 : 0),
-                    (keyboard[Key.Space] ? 1 : 0) - (keyboard[Key.ShiftLeft] ? 1 : 0),
-                    (keyboard[Key.S] ? 1 : 0) - (keyboard[Key.W] ? 1 : 0));
-            }
-
-            if (returnVector != Vector3d.Zero)
-            {
-                returnVector = Vector3d.Normalize(returnVector);
-            }
-
-            return returnVector;
-        }
-
-        public Vector3d WalkingDirection(KeyboardDevice keyboard)
-        {
-            Vector3d returnVector = Vector3d.Zero;
-
-            if (Variables.Game.IsActive)
-            {
-                returnVector = new Vector3d((keyboard[Key.D] ? 1 : 0) - (keyboard[Key.A] ? 1 : 0),
-                    0,
-                    (keyboard[Key.S] ? 1 : 0) - (keyboard[Key.W] ? 1 : 0));
-            }
-
-            if (returnVector != Vector3d.Zero)
-            {
-                returnVector = Vector3d.Normalize(returnVector);
-            }
-
-            return returnVector;
         }
 
         public float GetViewType()

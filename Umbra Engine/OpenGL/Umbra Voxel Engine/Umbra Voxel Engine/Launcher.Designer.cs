@@ -78,7 +78,8 @@ namespace Umbra
             this.checkBox_treeenabled = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
             this.checkBox_water = new System.Windows.Forms.CheckBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_worldSize)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -92,13 +93,14 @@ namespace Umbra
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_landAmp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_treedensity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_waterlevel)).BeginInit();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // button_launch
             // 
-            this.button_launch.Location = new System.Drawing.Point(15, 297);
+            this.button_launch.Location = new System.Drawing.Point(15, 285);
             this.button_launch.Name = "button_launch";
-            this.button_launch.Size = new System.Drawing.Size(208, 23);
+            this.button_launch.Size = new System.Drawing.Size(237, 35);
             this.button_launch.TabIndex = 0;
             this.button_launch.Text = "Launch!";
             this.button_launch.UseVisualStyleBackColor = true;
@@ -186,11 +188,12 @@ namespace Umbra
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(246, 279);
+            this.tabControl1.Size = new System.Drawing.Size(264, 279);
             this.tabControl1.TabIndex = 7;
             // 
             // tabPage1
@@ -210,7 +213,7 @@ namespace Umbra
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(238, 253);
+            this.tabPage1.Size = new System.Drawing.Size(256, 253);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -296,7 +299,7 @@ namespace Umbra
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(238, 253);
+            this.tabPage2.Size = new System.Drawing.Size(256, 253);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Graphics";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -304,7 +307,7 @@ namespace Umbra
             // checkBox_anisotropicFiltering
             // 
             this.checkBox_anisotropicFiltering.AutoSize = true;
-            this.checkBox_anisotropicFiltering.Location = new System.Drawing.Point(11, 140);
+            this.checkBox_anisotropicFiltering.Location = new System.Drawing.Point(8, 140);
             this.checkBox_anisotropicFiltering.Name = "checkBox_anisotropicFiltering";
             this.checkBox_anisotropicFiltering.Size = new System.Drawing.Size(117, 17);
             this.checkBox_anisotropicFiltering.TabIndex = 13;
@@ -314,7 +317,7 @@ namespace Umbra
             // comboBox_texturePack
             // 
             this.comboBox_texturePack.FormattingEnabled = true;
-            this.comboBox_texturePack.Location = new System.Drawing.Point(11, 19);
+            this.comboBox_texturePack.Location = new System.Drawing.Point(8, 19);
             this.comboBox_texturePack.Name = "comboBox_texturePack";
             this.comboBox_texturePack.Size = new System.Drawing.Size(121, 21);
             this.comboBox_texturePack.TabIndex = 12;
@@ -323,7 +326,7 @@ namespace Umbra
             // 
             this.checkBox_eyefinity.AutoSize = true;
             this.checkBox_eyefinity.Enabled = false;
-            this.checkBox_eyefinity.Location = new System.Drawing.Point(91, 46);
+            this.checkBox_eyefinity.Location = new System.Drawing.Point(88, 46);
             this.checkBox_eyefinity.Name = "checkBox_eyefinity";
             this.checkBox_eyefinity.Size = new System.Drawing.Size(94, 17);
             this.checkBox_eyefinity.TabIndex = 8;
@@ -333,7 +336,7 @@ namespace Umbra
             // radioButton_both
             // 
             this.radioButton_both.AutoSize = true;
-            this.radioButton_both.Location = new System.Drawing.Point(106, 230);
+            this.radioButton_both.Location = new System.Drawing.Point(103, 230);
             this.radioButton_both.Name = "radioButton_both";
             this.radioButton_both.Size = new System.Drawing.Size(47, 17);
             this.radioButton_both.TabIndex = 7;
@@ -343,7 +346,7 @@ namespace Umbra
             // radioButton_wireframe
             // 
             this.radioButton_wireframe.AutoSize = true;
-            this.radioButton_wireframe.Location = new System.Drawing.Point(106, 207);
+            this.radioButton_wireframe.Location = new System.Drawing.Point(103, 207);
             this.radioButton_wireframe.Name = "radioButton_wireframe";
             this.radioButton_wireframe.Size = new System.Drawing.Size(73, 17);
             this.radioButton_wireframe.TabIndex = 7;
@@ -353,7 +356,7 @@ namespace Umbra
             // radioButton_nocursor
             // 
             this.radioButton_nocursor.AutoSize = true;
-            this.radioButton_nocursor.Location = new System.Drawing.Point(9, 207);
+            this.radioButton_nocursor.Location = new System.Drawing.Point(6, 207);
             this.radioButton_nocursor.Name = "radioButton_nocursor";
             this.radioButton_nocursor.Size = new System.Drawing.Size(71, 17);
             this.radioButton_nocursor.TabIndex = 7;
@@ -363,7 +366,7 @@ namespace Umbra
             // radioButton_darkBlock
             // 
             this.radioButton_darkBlock.AutoSize = true;
-            this.radioButton_darkBlock.Location = new System.Drawing.Point(9, 230);
+            this.radioButton_darkBlock.Location = new System.Drawing.Point(6, 230);
             this.radioButton_darkBlock.Name = "radioButton_darkBlock";
             this.radioButton_darkBlock.Size = new System.Drawing.Size(77, 17);
             this.radioButton_darkBlock.TabIndex = 7;
@@ -373,7 +376,7 @@ namespace Umbra
             // checkBox_fullscreen
             // 
             this.checkBox_fullscreen.AutoSize = true;
-            this.checkBox_fullscreen.Location = new System.Drawing.Point(11, 46);
+            this.checkBox_fullscreen.Location = new System.Drawing.Point(8, 46);
             this.checkBox_fullscreen.Name = "checkBox_fullscreen";
             this.checkBox_fullscreen.Size = new System.Drawing.Size(74, 17);
             this.checkBox_fullscreen.TabIndex = 6;
@@ -384,7 +387,7 @@ namespace Umbra
             // checkBox_antiAliasing
             // 
             this.checkBox_antiAliasing.AutoSize = true;
-            this.checkBox_antiAliasing.Location = new System.Drawing.Point(11, 117);
+            this.checkBox_antiAliasing.Location = new System.Drawing.Point(8, 117);
             this.checkBox_antiAliasing.Name = "checkBox_antiAliasing";
             this.checkBox_antiAliasing.Size = new System.Drawing.Size(89, 17);
             this.checkBox_antiAliasing.TabIndex = 5;
@@ -393,7 +396,7 @@ namespace Umbra
             // 
             // numericUpDown_resY
             // 
-            this.numericUpDown_resY.Location = new System.Drawing.Point(125, 82);
+            this.numericUpDown_resY.Location = new System.Drawing.Point(143, 82);
             this.numericUpDown_resY.Maximum = new decimal(new int[] {
             1200,
             0,
@@ -405,7 +408,7 @@ namespace Umbra
             0,
             0});
             this.numericUpDown_resY.Name = "numericUpDown_resY";
-            this.numericUpDown_resY.Size = new System.Drawing.Size(91, 20);
+            this.numericUpDown_resY.Size = new System.Drawing.Size(102, 20);
             this.numericUpDown_resY.TabIndex = 4;
             this.numericUpDown_resY.Value = new decimal(new int[] {
             600,
@@ -416,7 +419,7 @@ namespace Umbra
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(105, 84);
+            this.label4.Location = new System.Drawing.Point(123, 84);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(14, 13);
             this.label4.TabIndex = 3;
@@ -424,7 +427,7 @@ namespace Umbra
             // 
             // numericUpDown_resX
             // 
-            this.numericUpDown_resX.Location = new System.Drawing.Point(11, 82);
+            this.numericUpDown_resX.Location = new System.Drawing.Point(8, 82);
             this.numericUpDown_resX.Maximum = new decimal(new int[] {
             6048,
             0,
@@ -436,7 +439,7 @@ namespace Umbra
             0,
             0});
             this.numericUpDown_resX.Name = "numericUpDown_resX";
-            this.numericUpDown_resX.Size = new System.Drawing.Size(88, 20);
+            this.numericUpDown_resX.Size = new System.Drawing.Size(109, 20);
             this.numericUpDown_resX.TabIndex = 2;
             this.numericUpDown_resX.Value = new decimal(new int[] {
             1000,
@@ -447,7 +450,7 @@ namespace Umbra
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 191);
+            this.label7.Location = new System.Drawing.Point(3, 191);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(69, 13);
             this.label7.TabIndex = 1;
@@ -456,7 +459,7 @@ namespace Umbra
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 3);
+            this.label8.Location = new System.Drawing.Point(5, 3);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(74, 13);
             this.label8.TabIndex = 1;
@@ -477,7 +480,7 @@ namespace Umbra
             this.tabPage3.Controls.Add(this.checkBox_blockEdit);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(238, 253);
+            this.tabPage3.Size = new System.Drawing.Size(256, 253);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Controls";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -487,7 +490,7 @@ namespace Umbra
             this.checkBox_noclip.AutoSize = true;
             this.checkBox_noclip.Checked = true;
             this.checkBox_noclip.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_noclip.Location = new System.Drawing.Point(11, 38);
+            this.checkBox_noclip.Location = new System.Drawing.Point(8, 35);
             this.checkBox_noclip.Name = "checkBox_noclip";
             this.checkBox_noclip.Size = new System.Drawing.Size(56, 17);
             this.checkBox_noclip.TabIndex = 1;
@@ -499,7 +502,7 @@ namespace Umbra
             this.checkBox_blockEdit.AutoSize = true;
             this.checkBox_blockEdit.Checked = true;
             this.checkBox_blockEdit.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_blockEdit.Location = new System.Drawing.Point(11, 15);
+            this.checkBox_blockEdit.Location = new System.Drawing.Point(8, 12);
             this.checkBox_blockEdit.Name = "checkBox_blockEdit";
             this.checkBox_blockEdit.Size = new System.Drawing.Size(87, 17);
             this.checkBox_blockEdit.TabIndex = 0;
@@ -518,12 +521,10 @@ namespace Umbra
             this.tabPage4.Controls.Add(this.checkBox_treeenabled);
             this.tabPage4.Controls.Add(this.label13);
             this.tabPage4.Controls.Add(this.checkBox_water);
-            this.tabPage4.Controls.Add(this.label11);
-            this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(238, 253);
+            this.tabPage4.Size = new System.Drawing.Size(256, 253);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Landscape";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -531,24 +532,24 @@ namespace Umbra
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(120, 56);
+            this.label12.Location = new System.Drawing.Point(113, 53);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(42, 13);
+            this.label12.Size = new System.Drawing.Size(65, 13);
             this.label12.TabIndex = 3;
-            this.label12.Text = "Density";
+            this.label12.Text = "Tree density";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(104, 20);
+            this.label10.Location = new System.Drawing.Point(117, 20);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(58, 13);
+            this.label10.Size = new System.Drawing.Size(61, 13);
             this.label10.TabIndex = 3;
-            this.label10.Text = "Waterlevel";
+            this.label10.Text = "Water level";
             // 
             // numericUpDown_landRough
             // 
-            this.numericUpDown_landRough.Location = new System.Drawing.Point(168, 112);
+            this.numericUpDown_landRough.Location = new System.Drawing.Point(184, 121);
             this.numericUpDown_landRough.Name = "numericUpDown_landRough";
             this.numericUpDown_landRough.Size = new System.Drawing.Size(64, 20);
             this.numericUpDown_landRough.TabIndex = 2;
@@ -560,7 +561,7 @@ namespace Umbra
             // 
             // numericUpDown_landAmp
             // 
-            this.numericUpDown_landAmp.Location = new System.Drawing.Point(168, 86);
+            this.numericUpDown_landAmp.Location = new System.Drawing.Point(184, 86);
             this.numericUpDown_landAmp.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -577,7 +578,7 @@ namespace Umbra
             // 
             // numericUpDown_treedensity
             // 
-            this.numericUpDown_treedensity.Location = new System.Drawing.Point(168, 52);
+            this.numericUpDown_treedensity.Location = new System.Drawing.Point(184, 51);
             this.numericUpDown_treedensity.Name = "numericUpDown_treedensity";
             this.numericUpDown_treedensity.Size = new System.Drawing.Size(64, 20);
             this.numericUpDown_treedensity.TabIndex = 2;
@@ -589,7 +590,7 @@ namespace Umbra
             // 
             // numericUpDown_waterlevel
             // 
-            this.numericUpDown_waterlevel.Location = new System.Drawing.Point(168, 16);
+            this.numericUpDown_waterlevel.Location = new System.Drawing.Point(184, 16);
             this.numericUpDown_waterlevel.Name = "numericUpDown_waterlevel";
             this.numericUpDown_waterlevel.Size = new System.Drawing.Size(64, 20);
             this.numericUpDown_waterlevel.TabIndex = 2;
@@ -597,7 +598,7 @@ namespace Umbra
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(8, 114);
+            this.label14.Location = new System.Drawing.Point(66, 123);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(112, 13);
             this.label14.TabIndex = 0;
@@ -609,17 +610,17 @@ namespace Umbra
             this.checkBox_treeenabled.Checked = true;
             this.checkBox_treeenabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_treeenabled.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBox_treeenabled.Location = new System.Drawing.Point(11, 55);
+            this.checkBox_treeenabled.Location = new System.Drawing.Point(8, 35);
             this.checkBox_treeenabled.Name = "checkBox_treeenabled";
-            this.checkBox_treeenabled.Size = new System.Drawing.Size(65, 17);
+            this.checkBox_treeenabled.Size = new System.Drawing.Size(85, 17);
             this.checkBox_treeenabled.TabIndex = 1;
-            this.checkBox_treeenabled.Text = "Enabled";
+            this.checkBox_treeenabled.Text = "Enable trees";
             this.checkBox_treeenabled.UseVisualStyleBackColor = true;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(8, 88);
+            this.label13.Location = new System.Drawing.Point(70, 88);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(108, 13);
             this.label13.TabIndex = 0;
@@ -631,36 +632,48 @@ namespace Umbra
             this.checkBox_water.Checked = true;
             this.checkBox_water.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_water.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBox_water.Location = new System.Drawing.Point(11, 19);
+            this.checkBox_water.Location = new System.Drawing.Point(8, 12);
             this.checkBox_water.Name = "checkBox_water";
-            this.checkBox_water.Size = new System.Drawing.Size(65, 17);
+            this.checkBox_water.Size = new System.Drawing.Size(88, 17);
             this.checkBox_water.TabIndex = 1;
-            this.checkBox_water.Text = "Enabled";
+            this.checkBox_water.Text = "Enable water";
             this.checkBox_water.UseVisualStyleBackColor = true;
             // 
-            // label11
+            // tabPage5
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(8, 39);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(34, 13);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "Trees";
+            this.tabPage5.Controls.Add(this.label9);
+            this.tabPage5.Controls.Add(this.button1);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(256, 253);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Tools";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(7, 23);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(90, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Clear save data";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 3);
+            this.label9.Location = new System.Drawing.Point(4, 7);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(36, 13);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Water";
+            this.label9.Size = new System.Drawing.Size(162, 13);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Warning! Will clear all save data:";
             // 
             // Launcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(246, 332);
+            this.ClientSize = new System.Drawing.Size(264, 332);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button_launch);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -683,6 +696,8 @@ namespace Umbra
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_landAmp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_treedensity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_waterlevel)).EndInit();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -733,9 +748,10 @@ namespace Umbra
         private System.Windows.Forms.CheckBox checkBox_treeenabled;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.CheckBox checkBox_water;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox checkBox_anisotropicFiltering;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button1;
     }
 }
 

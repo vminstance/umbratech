@@ -299,17 +299,42 @@ namespace Umbra.Definitions
 
                 if (!canUse)
                 {
-                    Popup.Post("\"" + args[0] + "\" is not a placable block!");
+                    Popup.Post("\"" + args[0] + "\" is not a selectable block!");
                     return;
                 }
 
                 Variables.Player.BlockEditing.CurrentCursorBlock = Block.GetFromName(args[0]);
                 Popup.Post("Block cursor set to " + args[0] + ".");
+			});
+
+			ConsoleCommands["console_toggle"] = (ConsoleFunction)((string command, string[] args, string original) =>
+			{
+				Console.Toggle();
+			});
+
+            ConsoleCommands["player_move_forward"] = (ConsoleFunction)((string command, string[] args, string original) =>
+            {
+                Constants.Engine_Physics.Player.MoveForward();
             });
 
-            ConsoleCommands["window"] = (ConsoleFunction)((string command, string[] args, string original) =>
+            ConsoleCommands["player_move_backward"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Constants.Engine_Overlay.DebugWindow("scrollWheel");
+                Constants.Engine_Physics.Player.MoveBackward();
+            });
+
+            ConsoleCommands["player_move_left"] = (ConsoleFunction)((string command, string[] args, string original) =>
+            {
+                Constants.Engine_Physics.Player.MoveLeft();
+            });
+
+            ConsoleCommands["player_move_right"] = (ConsoleFunction)((string command, string[] args, string original) =>
+            {
+                Constants.Engine_Physics.Player.MoveRight();
+            });
+
+            ConsoleCommands["player_move_jump"] = (ConsoleFunction)((string command, string[] args, string original) =>
+            {
+                Constants.Engine_Physics.Player.Jump();
             });
         }
 

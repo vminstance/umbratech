@@ -27,10 +27,6 @@ namespace Umbra.Engines
     {
         int TextureID;
 
-        public Graphics()
-        {
-        }
-
         public override void Initialize(EventArgs e)
         {
             Shaders.CompileShaders();
@@ -82,13 +78,13 @@ namespace Umbra.Engines
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Blend);
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             // Render World
             {
                 UseShader(Shaders.DefaultShaderProgram.ProgramID);
                 RenderChunks();
+
 
                 GL.Disable(EnableCap.CullFace);
 
@@ -98,14 +94,14 @@ namespace Umbra.Engines
                 GL.Enable(EnableCap.CullFace);
             }
 
-            UseShader(0);
-            RenderCursor();
+			GL.Disable(EnableCap.Texture2D);
 
+			UseShader(0);
+			RenderCursor();
 
             GL.Disable(EnableCap.DepthTest);
-            GL.Disable(EnableCap.Texture2D);
             GL.Disable(EnableCap.CullFace);
-            GL.Disable(EnableCap.Blend);
+			GL.Disable(EnableCap.Blend);
 
             base.Render(e);
         }
@@ -192,7 +188,7 @@ namespace Umbra.Engines
             {
                 GL.Disable(EnableCap.DepthTest);
 
-                GL.Color4(0.0, 0.0, 0.0, 0.5);
+                GL.Color4(0.0, 0.0, 0.0, 0.2);
                 GL.Begin(BeginMode.Lines);
                 {
                     GL.Vertex3(new Vector3d(0, 0, 0) + currentAim.Position);

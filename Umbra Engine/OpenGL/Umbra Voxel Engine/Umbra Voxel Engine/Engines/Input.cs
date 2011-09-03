@@ -28,15 +28,31 @@ namespace Umbra.Engines
         MouseDevice Mouse { get; set; }
         Point MouseDelta { get; set; }
 
+        Dictionary<Key, string> KeyBinds;
+
         public override void Initialize(EventArgs e)
         {
             Keyboard = Main.Keyboard;
             Mouse = Main.Mouse;
 
-            Keyboard.KeyDown += new EventHandler<KeyboardKeyEventArgs>(KeyboardEvent);
-            Mouse.ButtonDown += new EventHandler<MouseButtonEventArgs>(MouseButton);
+            Keyboard.KeyDown += new EventHandler<KeyboardKeyEventArgs>(KeyboardKeyDown);
+            Keyboard.KeyUp += new EventHandler<KeyboardKeyEventArgs>(KeyboardKeyUp);
+            Mouse.ButtonDown += new EventHandler<MouseButtonEventArgs>(MouseButtonDown);
 
             CenterMouse();
+
+            KeyBinds = new Dictionary<Key, string>();
+
+            KeyBinds.Add(Key.Escape, "exit");
+            KeyBinds.Add(Key.T, "console_toggle");
+            KeyBinds.Add(Key.Q, "noclip");
+            KeyBinds.Add(Key.F, "flashlight");
+
+            KeyBinds.Add(Key.W, "+player_move_forward");
+            KeyBinds.Add(Key.S, "+player_move_backward");
+            KeyBinds.Add(Key.A, "+player_move_left");
+            KeyBinds.Add(Key.D, "+player_move_right");
+            KeyBinds.Add(Key.Space, "+player_move_jump");
 
             base.Initialize(e);
         }
@@ -60,16 +76,13 @@ namespace Umbra.Engines
 
         void MouseMove()
         {
-            if (Variables.Game.IsActive)
-            {
-                MouseDelta = new Point(Mouse.X - (Main.ClientSize.Width / 2), Mouse.Y - (Main.ClientSize.Height / 2));
-                CenterMouse();
+            MouseDelta = new Point(Mouse.X - (Main.ClientSize.Width / 2), Mouse.Y - (Main.ClientSize.Height / 2));
+            CenterMouse();
 
-                Constants.Engine_Physics.Player.FirstPersonCamera.UpdateMouse(MouseDelta);
-            }
+            Constants.Engine_Physics.Player.FirstPersonCamera.UpdateMouse(MouseDelta);
         }
 
-        void MouseButton(object sender, MouseButtonEventArgs e)
+        void MouseButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!Main.Focused)
             {
@@ -77,7 +90,7 @@ namespace Umbra.Engines
             }
         }
 
-        void KeyboardEvent(object sender, KeyboardKeyEventArgs e)
+        void KeyboardKeyDown(object sender, KeyboardKeyEventArgs e)
         {
             if (!Main.Focused)
             {
@@ -86,52 +99,39 @@ namespace Umbra.Engines
 
             if (Variables.Game.IsActive)
             {
-                switch (e.Key)
+                if (KeyBinds.ContainsKey(e.Key))
                 {
-                    case Key.Escape:
-                        {
-                            Console.Execute("exit");
-                        }
-                        break;
-
-                    case Key.T:
-                        {
-                            Console.Toggle();
-                        }
-                        break;
-
-                    case Key.Q:
-                        {
-                            Console.Execute("noclip");
-                        }
-                        break;
-
-                    case Key.F:
-                        {
-                            Console.Execute("flashlight");
-                        }
-                        break;
+                    Console.Execute(KeyBinds[e.Key]);
                 }
             }
-            else
+            else if (Variables.Overlay.Console.IsActive)
             {
                 Console.Input(e, Keyboard);
+            }
+        }
+
+        void KeyboardKeyUp(object sender, KeyboardKeyEventArgs e)
+        {
+            if (!Main.Focused)
+            {
+                return;
+            }
+
+            if (Variables.Game.IsActive && KeyBinds.ContainsKey(e.Key) && KeyBinds[e.Key][0] == '+')
+            {
+                Console.Execute('-' + KeyBinds[e.Key].Substring(1));
             }
         }
 
 
         public override void Update(FrameEventArgs e)
         {
-
-
-            if (!Variables.Game.IsActive)
-            {
-            }
-            else if (Variables.Game.IsActive && Main.Focused)
+            if (Variables.Game.IsActive && Main.Focused)
             {
                 MouseMove();
-                Constants.Engine_Physics.Player.UpdateKeyboard(Keyboard);
                 Constants.Engine_Physics.Player.UpdateMouse(Mouse);
+
+                SetMouseShow(false);
             }
 
             base.Update(e);
