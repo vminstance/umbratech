@@ -23,145 +23,93 @@ using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Engines
 {
-    public class Overlay : Engine
-    {
-        //public SpriteBatch SpriteBatch { get; private set; }
-        //public SpriteFont DebugFont { get; set; }
-        //List<Window> Windows;
+	public class Overlay : Engine
+	{
+		public int BlankTextureID;
 
-        public Overlay()
-        {
-        }
+		public Overlay()
+		{
+			Bitmap BlankTexture = new Bitmap(1, 1);
+			BlankTexture.SetPixel(0, 0, Color.White);
+			RenderHelp.CreateTexture2D(out BlankTextureID, BlankTexture);
+		}
 
-        public void DebugWindow(string title)
-        {
-            //switch (title)
-            //{
-            //    case "scroolWheel": Windows.Add(new GraphWindow(title, new Rectangle(100, 50, 400, 100), 10.0F, Color.Green, (GraphFunction)(() => new float[] { 
-            //        Constants.Engine_Input.MouseCurrentState.ScrollWheelValue
-            //    }))); break;
-            //    case "position": Windows.Add(new GraphWindow(title, new Rectangle(100, 50, 400, 100), 10.0F, Color.Green, (GraphFunction)(() => new float[] { 
-            //        Constants.Engine_Physics.Player.Position.X,
-            //        Constants.Engine_Physics.Player.Position.Y,
-            //        Constants.Engine_Physics.Player.Position.Z
-            //    }))); break;
-            //    case "velocity": Windows.Add(new GraphWindow(title, new Rectangle(100, 50, 400, 100), 10.0F, Color.Green, (GraphFunction)(() => new float[] { 
-            //        Constants.Engine_Physics.Player.Velocity.X,
-            //        Constants.Engine_Physics.Player.Velocity.Y,
-            //        Constants.Engine_Physics.Player.Velocity.Z
-            //    }))); break;
-            //}
-        }
+		public override void Update(FrameEventArgs e)
+		{
+			Console.Update(e);
+			Popup.Update(e);
 
-        //public void CloseAllWindows()
-        //{
-        //    Windows.Clear();
-        //}
+			base.Update(e);
+		}
 
-        //public void GiveFocus(Window window)
-        //{
-        //    Windows.Remove(window);
-        //    Windows.Add(window);
-        //}
-
-        public override void Initialize(EventArgs e)
-        {
-            //SpriteBatch = new SpriteBatch(Constants.Engine_Graphics.GraphicsDevice);
-
-            //Windows = new List<Window>();
-
-            //Windows.Add(new GraphWindow("Scroll wheel value", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
-            //    (GraphFunction)(() => new float[] { 
-            //        Constants.Engine_Input.MouseCurrentState.ScrollWheelValue
-            //    })));
-            //Windows.Add(new GraphWindow("Negative scroll wheel value", new Rectangle(100, 50, 400, 100), 10.0F, Color.Green,
-            //    (GraphFunction)(() => new float[] { 
-            //        -Constants.Engine_Input.MouseCurrentState.ScrollWheelValue
-            //    })));
-
-            base.Initialize(e);
-        }
-
-        public override void Update(FrameEventArgs e)
-        {
-            Console.Update(e);
-            Popup.Update(e);
-
-            //for (int i = 0; i < Windows.Count; i++)
-            //{
-            //    Windows.ElementAt(i).Event_OnUpdate.Invoke(gameTime, new object[0]);
-            //}
-            base.Update(e);
-        }
-
-        public override void Render(FrameEventArgs e)
-        {
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(0, Constants.Graphics.ScreenResolution.X, Constants.Graphics.ScreenResolution.Y, 0, -1.0, 1.0);
+		public override void Render(FrameEventArgs e)
+		{
+			GL.MatrixMode(MatrixMode.Modelview);
+			GL.LoadIdentity();
+			GL.MatrixMode(MatrixMode.Projection);
+			GL.LoadIdentity();
+			GL.Ortho(0, Constants.Graphics.ScreenResolution.X, Constants.Graphics.ScreenResolution.Y, 0, -1.0, 1.0);
 
 
-            GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+			GL.Enable(EnableCap.Texture2D);
+			GL.Enable(EnableCap.Blend);
+			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
-            Crosshair.Render(e);
-            Console.Render(e);
-            Popup.Render(e);
-            Compass.Render(e);
+			Crosshair.Render(e);
+			Console.Render(e);
+			Popup.Render(e);
+			Compass.Render(e);
 
-            if (Variables.Overlay.DisplayFPS)
-            {
-                SpriteString.Render(Math.Round(1.0 / e.Time, 0) + "", Point.Empty, Color.Yellow);
-            }
-            if (Variables.Game.DeveloperMode)
-            {
-                // Memory
-                string memoryUsage = (int)(System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024) + " kB";
-                SpriteString.Render(memoryUsage, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(memoryUsage).X - 10, 100), Color.Yellow);
+			if (Variables.Overlay.DisplayFPS)
+			{
+				SpriteString.Render(Math.Round(1.0 / e.Time, 0) + "", Point.Empty, Color.Yellow);
+			}
+			if (Variables.Game.DeveloperMode)
+			{
+				// Memory
+				string memoryUsage = (int)(System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024) + " kB";
+				SpriteString.Render(memoryUsage, new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(memoryUsage).X - 10, 100), Color.Yellow);
 
-                // Position
-                string[] position = { 
+				// Position
+				string[] position = { 
                                         "Px: " + Math.Round(Constants.Engine_Physics.Player.Position.X, 1), 
                                         "Py: " + Math.Round(Constants.Engine_Physics.Player.Position.Y, 1), 
                                         "Pz: " + Math.Round(Constants.Engine_Physics.Player.Position.Z, 1) 
                                     };
 
-                SpriteString.Render(position[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[0]).X - 10, 130), Color.Yellow);
-                SpriteString.Render(position[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[1]).X - 10, 150), Color.Yellow);
-                SpriteString.Render(position[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[2]).X - 10, 170), Color.Yellow);
+				SpriteString.Render(position[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[0]).X - 10, 130), Color.Yellow);
+				SpriteString.Render(position[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[1]).X - 10, 150), Color.Yellow);
+				SpriteString.Render(position[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[2]).X - 10, 170), Color.Yellow);
 
-               
-                // Velocity
-                string[] velocity = { 
+
+				// Velocity
+				string[] velocity = { 
                                         "Vx: " + Math.Round(Constants.Engine_Physics.Player.Velocity.X, 2), 
                                         "Vy: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Y, 2), 
                                         "Vz: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Z, 2) 
                                     };
 
-                SpriteString.Render(velocity[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[0]).X - 10, 200), Color.Yellow);
-                SpriteString.Render(velocity[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[1]).X - 10, 220), Color.Yellow);
-                SpriteString.Render(velocity[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[2]).X - 10, 240), Color.Yellow);
+				SpriteString.Render(velocity[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[0]).X - 10, 200), Color.Yellow);
+				SpriteString.Render(velocity[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[1]).X - 10, 220), Color.Yellow);
+				SpriteString.Render(velocity[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[2]).X - 10, 240), Color.Yellow);
 
-                
-                // Acceleration
-                string[] acceleration = { 
+
+				// Acceleration
+				string[] acceleration = { 
                                             "Ax: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.X / Constants.Engine_Physics.Player.Mass, 2), 
                                             "Ay: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Y / Constants.Engine_Physics.Player.Mass, 2), 
                                             "Az: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Z / Constants.Engine_Physics.Player.Mass, 2) 
                                         };
 
-                SpriteString.Render(acceleration[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[0]).X - 10, 270), Color.Yellow);
-                SpriteString.Render(acceleration[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[1]).X - 10, 290), Color.Yellow);
-                SpriteString.Render(acceleration[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[2]).X - 10, 310), Color.Yellow);
+				SpriteString.Render(acceleration[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[0]).X - 10, 270), Color.Yellow);
+				SpriteString.Render(acceleration[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[1]).X - 10, 290), Color.Yellow);
+				SpriteString.Render(acceleration[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[2]).X - 10, 310), Color.Yellow);
 
-            }
+			}
 
-            GL.Disable(EnableCap.Texture2D);
-            GL.Disable(EnableCap.Blend);
-            base.Render(e);
-        }
-    }
+			GL.Disable(EnableCap.Texture2D);
+			GL.Disable(EnableCap.Blend);
+			base.Render(e);
+		}
+	}
 }

@@ -39,7 +39,7 @@ namespace Umbra.Implementations
 
                 System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(texture);
                 graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
-                graphics.DrawString(character, Constants.Overlay.DefaultFont, Brushes.White, Point.Empty);
+                graphics.DrawString(character, Constants.Overlay.DefaultFont, Brushes.White, new Point(-1, 0));
 
                 int textureID;
 
@@ -54,6 +54,12 @@ namespace Umbra.Implementations
             if (str == "")
             {
                 return;
+            }
+
+            // Remove control characters
+            for (int i = 0; i < 32; i++)
+            {
+                str = str.Replace((char)i + "", "");
             }
 
             for (int i = 0; i < str.Length; i++)
@@ -142,7 +148,7 @@ namespace Umbra.Implementations
 
             if (Constants.Graphics.AnisotropicFilteringEnabled)
             {
-                GL.TexParameter(TextureTarget.Texture2DArray, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+                GL.TexParameter(TextureTarget.Texture2DArray, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
 
                 float maxAniso;
                 GL.GetFloat((GetPName)ExtTextureFilterAnisotropic.MaxTextureMaxAnisotropyExt, out maxAniso);
@@ -170,14 +176,7 @@ namespace Umbra.Implementations
 
         static public void RenderTexture(int textureID, Rectangle destination)
         {
-            GL.BindTexture(TextureTarget.Texture2D, textureID);
-            GL.Color4(Color.White);
-            GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0.0F, 1.0F); GL.Vertex2(destination.X, destination.Y + destination.Height);
-            GL.TexCoord2(1.0F, 1.0F); GL.Vertex2(destination.X + destination.Width, destination.Y + destination.Height);
-            GL.TexCoord2(1.0F, 0.0F); GL.Vertex2(destination.X + destination.Width, destination.Y);
-            GL.TexCoord2(0.0F, 0.0F); GL.Vertex2(destination.X, destination.Y);
-            GL.End();
+            RenderTexture(textureID, destination, Color.White);
         }
 
         static public void RenderTexture(int textureID, Size BitmapSize, Point destination, Rectangle source)
@@ -189,6 +188,18 @@ namespace Umbra.Implementations
             GL.TexCoord2((float)(source.Width + source.X) / (float)BitmapSize.Width, (float)(source.Height + source.Y) / (float)BitmapSize.Height); GL.Vertex2(destination.X + source.Width, destination.Y + source.Height);
             GL.TexCoord2((float)(source.Width + source.X) / (float)BitmapSize.Width, (float)source.Y / (float)BitmapSize.Height); GL.Vertex2(destination.X + source.Width, destination.Y);
             GL.TexCoord2((float)source.X / (float)BitmapSize.Width, (float)source.Y / (float)BitmapSize.Height); GL.Vertex2(destination.X, destination.Y);
+            GL.End();
+        }
+
+        static public void RenderTexture(int textureID, Rectangle destination, Color color)
+        {
+            GL.BindTexture(TextureTarget.Texture2D, textureID);
+            GL.Color4(color);
+            GL.Begin(BeginMode.Quads);
+            GL.TexCoord2(0.0F, 1.0F); GL.Vertex2(destination.X, destination.Y + destination.Height);
+            GL.TexCoord2(1.0F, 1.0F); GL.Vertex2(destination.X + destination.Width, destination.Y + destination.Height);
+            GL.TexCoord2(1.0F, 0.0F); GL.Vertex2(destination.X + destination.Width, destination.Y);
+            GL.TexCoord2(0.0F, 0.0F); GL.Vertex2(destination.X, destination.Y);
             GL.End();
         }
     }

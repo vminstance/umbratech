@@ -23,11 +23,10 @@ namespace Umbra.Implementations.Graphics
 {
     static public class Popup
     {
-        //static public Bitmap Background { get; set; }
-        static double LastMessageTimeStamp = 0;
-        static double LastTimeStamp = 0;
-        static string LastMessage = "";
-        static int alpha = 0;
+        static private double LastMessageTimeStamp = 0;
+        static private double LastTimeStamp = 0;
+        static private string LastMessage = "";
+        static private int alpha = 0;
 
         static public void Post(string message)
         {
@@ -63,10 +62,11 @@ namespace Umbra.Implementations.Graphics
                     }
                 }
 
-                //Constants.Engine_Overlay.SpriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(0, 140, (int)Constants.Graphics.ScreenResolution.X, (int)Console.Font.MeasureString(LastMessage).Y), new Color(20, 20, 20, alpha / 3));
-                //Constants.Engine_Overlay.SpriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(0, 139, (int)Constants.Graphics.ScreenResolution.X, 1), new Color(200, 200, 200, alpha / 2));
-                //Constants.Engine_Overlay.SpriteBatch.Draw(Constants.Engine_Content.BlankTexture, new Rectangle(0, 140 + (int)Console.Font.MeasureString(LastMessage).Y, (int)Constants.Graphics.ScreenResolution.X, 1), new Color(200, 200, 200, alpha / 2));
-                //Constants.Engine_Overlay.SpriteBatch.DrawString(Console.Font, LastMessage, new Vector2((Constants.Graphics.ScreenResolution.X - Console.Font.MeasureString(LastMessage).X) / 2, 141), new Color(255, 255, 255, alpha));
+                RenderHelp.RenderTexture(Constants.Engine_Overlay.BlankTextureID, new Rectangle(0, 140, (int)Constants.Graphics.ScreenResolution.X, (int)SpriteString.Measure(LastMessage).Y), Color.FromArgb(alpha / 3, 20, 20, 20));
+                RenderHelp.RenderTexture(Constants.Engine_Overlay.BlankTextureID, new Rectangle(0, 139, (int)Constants.Graphics.ScreenResolution.X, 1), Color.FromArgb(alpha / 2, 200, 200, 200));
+                RenderHelp.RenderTexture(Constants.Engine_Overlay.BlankTextureID, new Rectangle(0, 140 + (int)SpriteString.Measure(LastMessage).Y, (int)Constants.Graphics.ScreenResolution.X, 1), Color.FromArgb(alpha / 2, 200, 200, 200));
+
+                SpriteString.Render(LastMessage, new Point((int)((Constants.Graphics.ScreenResolution.X - SpriteString.Measure(LastMessage).X) / 2), 141), Color.FromArgb(alpha, 255, 255, 255));
             }
         }
     }

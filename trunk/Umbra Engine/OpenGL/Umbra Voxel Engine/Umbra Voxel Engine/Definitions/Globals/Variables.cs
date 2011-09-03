@@ -25,19 +25,14 @@ namespace Umbra.Definitions.Globals
     {
         static public class Game
         {
-            static private bool _isActive = true;
             static public bool IsActive
             {
                 get
                 {
-                    return _isActive;
-                }
-                set
-                {
-                    _isActive = value;
-                    Constants.Engine_Input.SetMouseShow(!value);
+                    return !Overlay.Console.IsActive;
                 }
             }
+
             static public bool DeveloperMode = true;
 
             static public bool IsInitialized;
@@ -50,6 +45,7 @@ namespace Umbra.Definitions.Globals
             static public class Console
             {
                 static public Rectangle Area = Constants.Overlay.Console.DefaultArea;
+                static public bool IsActive = false;
             }
         }
 

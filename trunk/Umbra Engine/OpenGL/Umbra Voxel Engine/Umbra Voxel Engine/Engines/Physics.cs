@@ -37,13 +37,13 @@ namespace Umbra.Engines
         {
             foreach (PhysicsObject currentObject in PhysicsObjects)
             {
-                currentObject.ResetForceAccumulator();
                 currentObject.Update(e);
                 if (currentObject.PhysicsEnabled)
                 {
                     UpdateVelocity(currentObject, e);
                     UpdatePosition(currentObject, e);
                 }
+                currentObject.ResetForceAccumulator();
             }
 
             base.Update(e);
@@ -51,17 +51,14 @@ namespace Umbra.Engines
 
         private void UpdateVelocity(PhysicsObject currentObject, FrameEventArgs e)
         {
+
+            // To avoid errors (specifically, NaN), remove velocity if too small.
             if (Player.Velocity.Length <= Constants.Physics.MinSpeed)
             {
                 Player.Velocity.X = 0.0;
                 Player.Velocity.Y = 0.0;
                 Player.Velocity.Z = 0.0;
             }
-
-            // To avoid errors, remove velocity if too small.
-            //currentObject.Velocity.X = (float)Math.Round(currentObject.Velocity.X, 3);
-            //currentObject.Velocity.Y = (float)Math.Round(currentObject.Velocity.Y, 3);
-            //currentObject.Velocity.Z = (float)Math.Round(currentObject.Velocity.Z, 3);
 
             // Gravity
             currentObject.ApplyForce(-Vector3d.UnitY * Constants.Physics.Gravity * currentObject.Mass);

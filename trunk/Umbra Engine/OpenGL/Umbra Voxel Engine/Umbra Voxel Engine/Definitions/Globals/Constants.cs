@@ -68,7 +68,7 @@ namespace Umbra.Definitions.Globals
         {
 
             static public Font DefaultFont = new Font("Lucida Console", 11, FontStyle.Regular);
-            static public int DefaultFontWidth = 10; 
+            static public int DefaultFontWidth = 9; 
 
             static public class Console
             {
@@ -81,8 +81,8 @@ namespace Umbra.Definitions.Globals
 
             static public class Popup
             {
-                static public int Timein = 1000; // mS
-                static public int Timeout = 3000; // mS
+                static public int Timein = 1; // Seconds
+                static public int Timeout = 3; // Seconds
             }
 
             static public class Compass
