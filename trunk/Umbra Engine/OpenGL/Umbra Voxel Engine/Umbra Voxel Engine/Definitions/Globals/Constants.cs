@@ -59,8 +59,6 @@ namespace Umbra.Definitions.Globals
             ClockTime.SetTimeOfDay(TimeOfDay.Day);
 
             Console.Initialize();
-            Crosshair.Initialize();
-            Compass.Initialize();
             SpriteString.Initialize();
         }
 
