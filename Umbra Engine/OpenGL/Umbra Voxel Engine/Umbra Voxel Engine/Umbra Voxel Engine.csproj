@@ -74,11 +74,9 @@
     <Compile Include="Implementations\ChunkManager.cs" />
     <Compile Include="Implementations\ClockTime.cs" />
     <Compile Include="Implementations\Lighting.cs" />
-    <Compile Include="Implementations\Graphics\Compass.cs" />
     <Compile Include="Implementations\Graphics\Console.cs" />
     <Compile Include="Implementations\Content.cs" />
     <Compile Include="Implementations\BlockCursor.cs" />
-    <Compile Include="Implementations\Graphics\Crosshair.cs" />
     <Compile Include="Implementations\Graphics\Popup.cs" />
     <Compile Include="Implementations\Program.cs" />
     <Compile Include="Implementations\Render.cs" />
@@ -92,6 +90,11 @@
     <Compile Include="Structures\Chunk.cs" />
     <Compile Include="Structures\ChunkQueue.cs" />
     <Compile Include="Structures\FaceList.cs" />
+    <Compile Include="Structures\Forms\FormElement.cs" />
+    <Compile Include="Structures\Forms\Form.cs" />
+    <Compile Include="Structures\Forms\Handle.cs" />
+    <Compile Include="Structures\Forms\Specific form types\CompassPanel.cs" />
+    <Compile Include="Structures\Forms\Specific form types\CrosshairPanel.cs" />
     <Compile Include="Structures\Geometry\BoundingBox.cs" />
     <Compile Include="Structures\Block.cs" />
     <Compile Include="Structures\Engine.cs" />

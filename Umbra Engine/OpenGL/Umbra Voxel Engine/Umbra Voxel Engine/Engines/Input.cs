@@ -28,6 +28,14 @@ namespace Umbra.Engines
         MouseDevice Mouse { get; set; }
         Point MouseDelta { get; set; }
 
+        public Point MousePosition
+        {
+            get
+            {
+                return new Point(Mouse.X, Mouse.Y);
+            }
+        }
+
         Dictionary<Key, string> KeyBinds;
 
         public override void Initialize(EventArgs e)
@@ -38,6 +46,7 @@ namespace Umbra.Engines
             Keyboard.KeyDown += new EventHandler<KeyboardKeyEventArgs>(KeyboardKeyDown);
             Keyboard.KeyUp += new EventHandler<KeyboardKeyEventArgs>(KeyboardKeyUp);
             Mouse.ButtonDown += new EventHandler<MouseButtonEventArgs>(MouseButtonDown);
+            Mouse.ButtonDown += new EventHandler<MouseButtonEventArgs>(Constants.Engine_Overlay.MouseButtonDown);
 
             CenterMouse();
 
@@ -131,7 +140,7 @@ namespace Umbra.Engines
                 MouseMove();
                 Constants.Engine_Physics.Player.UpdateMouse(Mouse);
 
-                SetMouseShow(false);
+                SetMouseShow(true);
             }
 
             base.Update(e);

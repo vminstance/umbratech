@@ -19,27 +19,27 @@ using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
 using Console = Umbra.Implementations.Graphics.Console;
 
-namespace Umbra.Implementations.Graphics
+namespace Umbra.Structures.Forms
 {
-    static public class Compass
+    class CompassPanel : Panel
     {
         static private int TextureID;
         static private Bitmap Texture;
 
-        static public void Initialize()
+        public CompassPanel()
         {
             Texture = (Bitmap)Content.Load(Constants.Content.Textures.CompassFilename);
 
             RenderHelp.CreateTexture2D(out TextureID, Texture);
         }
 
-        static public void Render(FrameEventArgs e)
+        public void Render(Rectangle clientFrame)
         {
             // Draw frame
             RenderHelp.RenderTexture(
                 TextureID,
                 Texture.Size,
-                Constants.Overlay.Compass.ScreenPosition,
+                clientFrame.Location,
                 new Rectangle(0, 0, (int)Constants.Overlay.Compass.FrameSize.X, (int)Constants.Overlay.Compass.FrameSize.Y));
 
 
@@ -54,7 +54,7 @@ namespace Umbra.Implementations.Graphics
 
             // Draw main strip
 
-            Point stripLocation = new Point(Constants.Overlay.Compass.ScreenPosition.X + Constants.Overlay.Compass.StripOffset.X, Constants.Overlay.Compass.ScreenPosition.Y + Constants.Overlay.Compass.StripOffset.Y);
+            Point stripLocation = new Point(clientFrame.X + Constants.Overlay.Compass.StripOffset.X, clientFrame.Y + Constants.Overlay.Compass.StripOffset.Y);
 
             RenderHelp.RenderTexture(TextureID, Texture.Size, stripLocation, mainRectangle);
         }
