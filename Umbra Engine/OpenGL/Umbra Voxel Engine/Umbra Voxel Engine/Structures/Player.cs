@@ -171,6 +171,19 @@ namespace Umbra.Structures
 
 						Accelerate((newVelocity - horizontalVelocity) * Constants.Physics.GripSignificance * GripCoefficient);
 					}
+					else
+					{
+						// In air or swimming
+
+						Vector3d newVelocity = horizontalVelocity + Vector3d.Transform(MoveDirection, Matrix4d.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Physics.Movement.SwimMagnitude);
+
+						if (newVelocity != Vector3d.Zero)
+						{
+							newVelocity = Vector3d.Normalize(newVelocity) * Math.Min(newVelocity.Length, Constants.Player.Physics.Movement.MaxSpeed);
+						}
+
+						Accelerate((newVelocity - horizontalVelocity) * GripCoefficient * Constants.Physics.GripSignificance);
+					}
 				}
 				MoveDirection = Vector3d.Zero;
 			}

@@ -197,9 +197,9 @@ namespace Umbra.Definitions.Globals
 
         static public class Physics
         {
-			static public double Gravity = 15.0;
-			static public double FrictionSignificance = 25.0;
-			static public double GripSignificance = 60.0;
+			static public double Gravity = 20.0;
+			static public double FrictionSignificance = 30.0;
+			static public double GripSignificance = 70.0;
 			static public double MinSpeed = 0.0005;
 			static public double TimeStep = 0.01; // Seconds between each update
         }
@@ -249,8 +249,9 @@ namespace Umbra.Definitions.Globals
 					static public double NoclipSpeed = 0.3;
 
 					static public double WalkMagnitude = 4.0;
+					static public double SwimMagnitude = 20.0;	// Swimming and movement in air (movement in non-solid blocks)
 					static public double MaxSpeed = 4.0;
-					static public double JumpVelocity = 5.8;
+					static public double JumpVelocity = 6.7;
 				}
             }
 

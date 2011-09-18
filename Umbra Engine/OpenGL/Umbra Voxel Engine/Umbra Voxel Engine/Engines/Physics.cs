@@ -83,6 +83,9 @@ namespace Umbra.Engines
 			// Gravity
 			currentObject.Accelerate(-Vector3d.UnitY * Constants.Physics.Gravity);
 
+			// Buoyancy
+			currentObject.Accelerate(Vector3d.UnitY * currentObject.BuoyancyMagnitude);
+
 			// Surface friction
 			Vector3d horizontalVelocity = Vector3d.Multiply(currentObject.Velocity, new Vector3d(1, 0, 1));
 
