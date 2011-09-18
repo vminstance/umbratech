@@ -199,7 +199,7 @@ namespace Umbra.Definitions.Globals
         {
 			static public double Gravity = 15.0;
 			static public double FrictionSignificance = 25.0;
-			static public double GripSignificance = 45.0;
+			static public double GripSignificance = 60.0;
 			static public double MinSpeed = 0.0005;
 			static public double TimeStep = 0.01; // Seconds between each update
         }
