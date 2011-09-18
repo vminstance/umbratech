@@ -41,13 +41,13 @@ namespace Umbra.Engines
         {
             GL.UseProgram(shader);
 
-            Matrix4 proj = Constants.Engine_Physics.Player.ProjectionMatrix;
+            Matrix4 proj = Constants.Engines.Physics.Player.ProjectionMatrix;
             GL.UniformMatrix4(Shaders.ProjectionMatrixID, false, ref proj);
 
             RenderHelp.CreateTexture2DArray(out TextureID, Block.GetBlockTexturePaths());
             RenderHelp.BindTexture(TextureID, TextureUnit.Texture0);
 
-            Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
+            Matrix4 view = Constants.Engines.Physics.Player.ViewMatrix;
             GL.UniformMatrix4(Shaders.ViewMatrixID, false, ref view);
 
             GL.UseProgram(0);
@@ -64,12 +64,12 @@ namespace Umbra.Engines
 
             RenderHelp.BindTexture(TextureID, TextureUnit.Texture0);
 
-            Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
+            Matrix4 view = Constants.Engines.Physics.Player.ViewMatrix;
             GL.UniformMatrix4(Shaders.ViewMatrixID, false, ref view);
 
             GL.Uniform3(Shaders.LightDirectionID, Constants.Graphics.Lighting.DiffuseLightDirection);
 
-            GL.Uniform1(Shaders.ViewTypeID, Constants.Engine_Physics.Player.GetViewType());
+            GL.Uniform1(Shaders.ViewTypeID, Constants.Engines.Physics.Player.GetViewType());
         }
 
         public override void Render(FrameEventArgs e)
@@ -139,11 +139,11 @@ namespace Umbra.Engines
             }
 
             GL.MatrixMode(MatrixMode.Projection);
-            Matrix4 proj = Constants.Engine_Physics.Player.ProjectionMatrix;
+            Matrix4 proj = Constants.Engines.Physics.Player.ProjectionMatrix;
             GL.LoadMatrix(ref proj);
 
             GL.MatrixMode(MatrixMode.Modelview);
-            Matrix4 view = Constants.Engine_Physics.Player.ViewMatrix;
+            Matrix4 view = Constants.Engines.Physics.Player.ViewMatrix;
             GL.LoadMatrix(ref view);
 
             if (Constants.Graphics.BlockCursorType == 1 || Constants.Graphics.BlockCursorType == 3)

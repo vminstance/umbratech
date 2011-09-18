@@ -33,6 +33,12 @@ namespace Umbra.Implementations.Graphics
             LastMessage = message;
             LastMessageTimeStamp = LastTimeStamp;
         }
+		
+		static public void Post(object message)
+        {
+            LastMessage = message.ToString();
+            LastMessageTimeStamp = LastTimeStamp;
+        }
 
         static public void Update(FrameEventArgs e)
         {
@@ -62,9 +68,9 @@ namespace Umbra.Implementations.Graphics
                     }
                 }
 
-                RenderHelp.RenderTexture(Constants.Engine_Overlay.BlankTextureID, new Rectangle(0, 140, (int)Constants.Graphics.ScreenResolution.X, (int)SpriteString.Measure(LastMessage).Y), Color.FromArgb(alpha / 3, 20, 20, 20));
-                RenderHelp.RenderTexture(Constants.Engine_Overlay.BlankTextureID, new Rectangle(0, 139, (int)Constants.Graphics.ScreenResolution.X, 1), Color.FromArgb(alpha / 2, 200, 200, 200));
-                RenderHelp.RenderTexture(Constants.Engine_Overlay.BlankTextureID, new Rectangle(0, 140 + (int)SpriteString.Measure(LastMessage).Y, (int)Constants.Graphics.ScreenResolution.X, 1), Color.FromArgb(alpha / 2, 200, 200, 200));
+                RenderHelp.RenderTexture(Constants.Engines.Overlay.BlankTextureID, new Rectangle(0, 140, (int)Constants.Graphics.ScreenResolution.X, (int)SpriteString.Measure(LastMessage).Y), Color.FromArgb(alpha / 3, 20, 20, 20));
+                RenderHelp.RenderTexture(Constants.Engines.Overlay.BlankTextureID, new Rectangle(0, 139, (int)Constants.Graphics.ScreenResolution.X, 1), Color.FromArgb(alpha / 2, 200, 200, 200));
+                RenderHelp.RenderTexture(Constants.Engines.Overlay.BlankTextureID, new Rectangle(0, 140 + (int)SpriteString.Measure(LastMessage).Y, (int)Constants.Graphics.ScreenResolution.X, 1), Color.FromArgb(alpha / 2, 200, 200, 200));
 
                 SpriteString.Render(LastMessage, new Point((int)((Constants.Graphics.ScreenResolution.X - SpriteString.Measure(LastMessage).X) / 2), 141), Color.FromArgb(alpha, 255, 255, 255));
             }

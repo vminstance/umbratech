@@ -26,31 +26,35 @@ namespace Umbra.Definitions.Globals
 {
     static public class Constants
     {
-        static public Engines.Graphics Engine_Graphics;
-        static public Engines.Input Engine_Input;
-        static public Engines.Main Engine_Main;
-        static public Engines.Overlay Engine_Overlay;
-        static public Engines.Physics Engine_Physics;
-        static public Engines.Audio Engine_Sound;
+
+		static public class Engines
+		{
+			static public Umbra.Engines.Graphics Graphics;
+			static public Umbra.Engines.Input Input;
+			static public Umbra.Engines.Main Main;
+			static public Umbra.Engines.Overlay Overlay;
+			static public Umbra.Engines.Physics Physics;
+			static public Umbra.Engines.Audio Sound;
+		}
 
         static public void SetupEngines(Main main)
         {
-            Engine_Graphics = new Engines.Graphics();
-            Engine_Input = new Engines.Input();
-            Engine_Main = main;
-            Engine_Overlay = new Engines.Overlay();
-            Engine_Physics = new Engines.Physics();
-            Engine_Sound = new Engines.Audio();
+            Engines.Graphics = new Umbra.Engines.Graphics();
+			Engines.Input = new Umbra.Engines.Input();
+			Engines.Main = main;
+			Engines.Overlay = new Umbra.Engines.Overlay();
+			Engines.Physics = new Umbra.Engines.Physics();
+			Engines.Sound = new Umbra.Engines.Audio();
 
-            Engine_Main.AddEngine(Engine_Input);
-            Engine_Main.AddEngine(Engine_Physics);
-            Engine_Main.AddEngine(Engine_Graphics);
-            Engine_Main.AddEngine(Engine_Overlay);
-            Engine_Main.AddEngine(Engine_Sound);
+			Engines.Main.AddEngine(Engines.Input);
+			Engines.Main.AddEngine(Engines.Physics);
+			Engines.Main.AddEngine(Engines.Graphics);
+			Engines.Main.AddEngine(Engines.Overlay);
+			Engines.Main.AddEngine(Engines.Sound);
 
 
             TerrainGenerator.Initialize(Landscape.WorldSeed);
-            Engine_Physics.Player.Initialize();
+			Engines.Physics.Player.Initialize();
 
             World.Current = new Structures.World(World.Name);
             ConsoleFunctions.Initialize();
@@ -193,9 +197,10 @@ namespace Umbra.Definitions.Globals
 
         static public class Physics
         {
-            static public float Gravity = 9.81F;
-            static public float FrictionSignificance = 1F;
-            static public float MinSpeed = 0.0005F;
+			static public double Gravity = 15.0;
+			static public double FrictionSignificance = 1.0;
+			static public double MinSpeed = 0.0005;
+			static public double TimeStep = 0.01; // Seconds between each update
         }
 
         static public class Landscape
@@ -236,7 +241,16 @@ namespace Umbra.Definitions.Globals
                     static public double Height = 1.8;
                 }
 
-                static public double EyeHeight = 1.5;
+				static public double EyeHeight = 1.5;
+
+				static public class Movement
+				{
+					static public double NoclipSpeed = 0.3;
+
+					static public double WalkForce = 4.0;
+					static public double MaxSpeed = 4.0;
+					static public double JumpVelocity = 6.5;
+				}
             }
 
             static public class Camera
@@ -246,18 +260,6 @@ namespace Umbra.Definitions.Globals
                     static public float Speed = 0.4F;
                     static public float Magnitude = 0.7F;
                 }
-            }
-
-            static public class Movement
-            {
-                static public double NoclipSpeed = 0.3;
-
-                static public double WalkForce = 36.0 * Physics.Mass;
-                static public double MaxSpeed = 4.0;
-                static public double JumpForce = Physics.Mass * 4.9 * 60.0;
-                static public double SwimForce = 40.0 * Physics.Mass;
-
-                static public double GripSignificance = 3.0;
             }
 
             static public class BlockEditing

@@ -60,8 +60,8 @@ namespace Umbra.Implementations
 
         static private BlockIndex GetCursorIntersect(double maxReach, out Vector3d intersectionPoint)
         {
-            Vector3d direction = Vector3d.Transform(-Vector3d.UnitZ, Constants.Engine_Physics.Player.FirstPersonCamera.Rotation);
-            Vector3d startPosition = Constants.Engine_Physics.Player.FirstPersonCamera.Position;
+            Vector3d direction = Vector3d.Transform(-Vector3d.UnitZ, Constants.Engines.Physics.Player.FirstPersonCamera.Rotation);
+            Vector3d startPosition = Constants.Engines.Physics.Player.FirstPersonCamera.Position;
 
             return GetCursorIntersect(maxReach, direction, startPosition, out intersectionPoint);
         }

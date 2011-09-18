@@ -46,7 +46,7 @@ namespace Umbra.Engines
             Keyboard.KeyDown += new EventHandler<KeyboardKeyEventArgs>(KeyboardKeyDown);
             Keyboard.KeyUp += new EventHandler<KeyboardKeyEventArgs>(KeyboardKeyUp);
             Mouse.ButtonDown += new EventHandler<MouseButtonEventArgs>(MouseButtonDown);
-            Mouse.ButtonDown += new EventHandler<MouseButtonEventArgs>(Constants.Engine_Overlay.MouseButtonDown);
+            Mouse.ButtonDown += new EventHandler<MouseButtonEventArgs>(Constants.Engines.Overlay.MouseButtonDown);
 
             CenterMouse();
 
@@ -88,7 +88,7 @@ namespace Umbra.Engines
             MouseDelta = new Point(Mouse.X - (Main.ClientSize.Width / 2), Mouse.Y - (Main.ClientSize.Height / 2));
             CenterMouse();
 
-            Constants.Engine_Physics.Player.FirstPersonCamera.UpdateMouse(MouseDelta);
+            Constants.Engines.Physics.Player.FirstPersonCamera.UpdateMouse(MouseDelta);
         }
 
         void MouseButtonDown(object sender, MouseButtonEventArgs e)
@@ -138,9 +138,7 @@ namespace Umbra.Engines
             if (Variables.Game.IsActive && Main.Focused)
             {
                 MouseMove();
-                Constants.Engine_Physics.Player.UpdateMouse(Mouse);
-
-                SetMouseShow(true);
+                Constants.Engines.Physics.Player.UpdateMouse(Mouse);
             }
 
             base.Update(e);

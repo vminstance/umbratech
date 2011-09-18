@@ -47,7 +47,7 @@ namespace Umbra.Engines
 
             Forms.Add(new Form(20, 20, 300, 200));
             Forms.Last().Content = new Panel();
-            Forms.Last().Content.Background = (Bitmap)Content.Load(@"C:\Users\Azzi\Pictures\UmbraPics\denseTrees.png");
+            //Forms.Last().Content.Background = (Bitmap)Content.Load(@"C:\Users\Azzi\Pictures\UmbraPics\denseTrees.png");
             Forms.Last().Show();
         }
 
@@ -104,9 +104,9 @@ namespace Umbra.Engines
 
                 // Position
                 string[] position = { 
-                                        "Px: " + Math.Round(Constants.Engine_Physics.Player.Position.X, 1), 
-                                        "Py: " + Math.Round(Constants.Engine_Physics.Player.Position.Y, 1), 
-                                        "Pz: " + Math.Round(Constants.Engine_Physics.Player.Position.Z, 1) 
+                                        "Px: " + Math.Round(Constants.Engines.Physics.Player.Position.X, 1), 
+                                        "Py: " + Math.Round(Constants.Engines.Physics.Player.Position.Y, 1), 
+                                        "Pz: " + Math.Round(Constants.Engines.Physics.Player.Position.Z, 1) 
                                     };
 
                 SpriteString.Render(position[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(position[0]).X - 10, 130), Color.Yellow);
@@ -116,9 +116,9 @@ namespace Umbra.Engines
 
                 // Velocity
                 string[] velocity = { 
-                                        "Vx: " + Math.Round(Constants.Engine_Physics.Player.Velocity.X, 2), 
-                                        "Vy: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Y, 2), 
-                                        "Vz: " + Math.Round(Constants.Engine_Physics.Player.Velocity.Z, 2) 
+                                        "Vx: " + Math.Round(Constants.Engines.Physics.Player.Velocity.X, 2), 
+                                        "Vy: " + Math.Round(Constants.Engines.Physics.Player.Velocity.Y, 2), 
+                                        "Vz: " + Math.Round(Constants.Engines.Physics.Player.Velocity.Z, 2) 
                                     };
 
                 SpriteString.Render(velocity[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[0]).X - 10, 200), Color.Yellow);
@@ -128,9 +128,9 @@ namespace Umbra.Engines
 
                 // Acceleration
                 string[] acceleration = { 
-                                            "Ax: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.X / Constants.Engine_Physics.Player.Mass, 2), 
-                                            "Ay: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Y / Constants.Engine_Physics.Player.Mass, 2), 
-                                            "Az: " + Math.Round(Constants.Engine_Physics.Player.ForceAccumulator.Z / Constants.Engine_Physics.Player.Mass, 2) 
+                                            "Ax: " + Math.Round(Constants.Engines.Physics.Player.AccelerationAccumulator.X / Constants.Engines.Physics.Player.Mass, 2), 
+                                            "Ay: " + Math.Round(Constants.Engines.Physics.Player.AccelerationAccumulator.Y / Constants.Engines.Physics.Player.Mass, 2), 
+                                            "Az: " + Math.Round(Constants.Engines.Physics.Player.AccelerationAccumulator.Z / Constants.Engines.Physics.Player.Mass, 2) 
                                         };
 
                 SpriteString.Render(acceleration[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[0]).X - 10, 270), Color.Yellow);

@@ -26,7 +26,7 @@ namespace Umbra.Structures
 
         public Vector3d Position;
         public Vector3d Velocity;
-        public Vector3d ForceAccumulator { get; protected set; }
+        public Vector3d AccelerationAccumulator { get; protected set; }
         public BoundingBox BoundingBox { get { return new BoundingBox(Position, Position + Dimensions); } }
         public Vector3d Dimensions { get; protected set; }
 
@@ -71,7 +71,7 @@ namespace Umbra.Structures
             {
                 double maxFriction = 0.0;
 
-                foreach (BlockIndex index in Constants.Engine_Physics.BlocksBeneath(this))
+                foreach (BlockIndex index in Constants.Engines.Physics.BlocksBeneath(this))
                 {
                     if (maxFriction < Constants.World.Current.GetBlock(index).KineticFrictionCoefficient)
                     {
@@ -89,7 +89,7 @@ namespace Umbra.Structures
             {
                 double maxGrip = 0.0;
 
-                foreach (BlockIndex index in Constants.Engine_Physics.BlocksBeneath(this))
+                foreach (BlockIndex index in Constants.Engines.Physics.BlocksBeneath(this))
                 {
                     if (maxGrip < Constants.World.Current.GetBlock(index).GripCoefficient)
                     {
@@ -106,7 +106,7 @@ namespace Umbra.Structures
             Position = position;
             Dimensions = Vector3d.One;
             Velocity = Vector3d.Zero;
-            ForceAccumulator = Vector3d.Zero;
+            AccelerationAccumulator = Vector3d.Zero;
             Volume = Dimensions.X * Dimensions.Y * Dimensions.Z;
             Mass = mass;
             PhysicsEnabled = true;
@@ -118,7 +118,7 @@ namespace Umbra.Structures
             Position = position;
             Dimensions = dimension;
             Velocity = Vector3d.Zero;
-            ForceAccumulator = Vector3d.Zero;
+            AccelerationAccumulator = Vector3d.Zero;
             Volume = Dimensions.X * Dimensions.Y * Dimensions.Z;
             Mass = mass;
             PhysicsEnabled = true;
@@ -130,29 +130,34 @@ namespace Umbra.Structures
             Position = position;
             Dimensions = dimension;
             Velocity = Vector3d.Zero;
-            ForceAccumulator = Vector3d.Zero;
+            AccelerationAccumulator = Vector3d.Zero;
             Volume = volume;
             Mass = mass;
             PhysicsEnabled = true;
             DragCoefficient = 1;
         }
 
-        public void ResetForceAccumulator()
+        public void ResetAccelerationAccumulator()
         {
-            ForceAccumulator = Vector3d.Zero;
+            AccelerationAccumulator = Vector3d.Zero;
         }
 
-        public void ApplyForce(Vector3d force)
+        public void Accelerate(Vector3d acceleration)
         {
-            ForceAccumulator += force;
+			AccelerationAccumulator += acceleration;
         }
 
-        public void UpdateVelocity(double timespan)
+        public void ApplyAcceleration()
         {
-            Velocity += (ForceAccumulator / Mass) * timespan;
+            Velocity += AccelerationAccumulator * Constants.Physics.TimeStep;
         }
 
-        virtual public void Update(FrameEventArgs e)
+		public void SetVelocity(Vector3d velocity)
+		{
+			Velocity = velocity;
+		}
+
+        virtual public void Update()
         {
         }
     }

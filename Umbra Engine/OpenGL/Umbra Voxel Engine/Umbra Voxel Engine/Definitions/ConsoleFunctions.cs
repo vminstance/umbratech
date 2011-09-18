@@ -34,7 +34,8 @@ namespace Umbra.Definitions
             ConsoleCommands["exit"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
                 ChunkManager.AbortThreads();
-                Constants.Engine_Main.Exit();
+				Constants.Engines.Physics.AbortThread();
+                Constants.Engines.Main.Exit();
             });
             ConsoleCommands.Add("quit", ConsoleCommands["exit"]);
 
@@ -116,7 +117,7 @@ namespace Umbra.Definitions
 
                 Popup.Post("Noclip: " + Variables.Player.NoclipEnabled.ToString());
 
-                Constants.Engine_Physics.Player.Velocity = Vector3d.Zero;
+                Constants.Engines.Physics.Player.Velocity = Vector3d.Zero;
             });
 
             ConsoleCommands["nightday"] = (ConsoleFunction)((string command, string[] args, string original) =>
@@ -211,7 +212,7 @@ namespace Umbra.Definitions
 
             ConsoleCommands["facing"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Popup.Post(Vector3d.Transform(Vector3d.UnitZ, Matrix4d.CreateRotationY(Constants.Engine_Physics.Player.FirstPersonCamera.Direction)).ToString());
+                Popup.Post(Vector3d.Transform(Vector3d.UnitZ, Matrix4d.CreateRotationY(Constants.Engines.Physics.Player.FirstPersonCamera.Direction)).ToString());
             });
 
             ConsoleCommands["list"] = (ConsoleFunction)((string command, string[] args, string original) =>
@@ -309,32 +310,33 @@ namespace Umbra.Definitions
 
 			ConsoleCommands["console_toggle"] = (ConsoleFunction)((string command, string[] args, string original) =>
 			{
-				Console.Toggle();
+				Constants.Engines.Input.SetMouseShow(true);
+				Console.Toggle(true);
 			});
 
             ConsoleCommands["player_move_forward"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Constants.Engine_Physics.Player.MoveForward();
+                Constants.Engines.Physics.Player.MoveForward();
             });
 
             ConsoleCommands["player_move_backward"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Constants.Engine_Physics.Player.MoveBackward();
+                Constants.Engines.Physics.Player.MoveBackward();
             });
 
             ConsoleCommands["player_move_left"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Constants.Engine_Physics.Player.MoveLeft();
+                Constants.Engines.Physics.Player.MoveLeft();
             });
 
             ConsoleCommands["player_move_right"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Constants.Engine_Physics.Player.MoveRight();
+                Constants.Engines.Physics.Player.MoveRight();
             });
 
             ConsoleCommands["player_move_jump"] = (ConsoleFunction)((string command, string[] args, string original) =>
             {
-                Constants.Engine_Physics.Player.Jump();
+                Constants.Engines.Physics.Player.Jump();
             });
         }
 
