@@ -160,7 +160,7 @@ namespace Umbra.Structures
 					{
 						// Walking on ground
 
-						Vector3d newVelocity = horizontalVelocity + Vector3d.Transform(MoveDirection, Matrix4d.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Physics.Movement.WalkForce);
+						Vector3d newVelocity = horizontalVelocity + Vector3d.Transform(MoveDirection, Matrix4d.CreateRotationY(FirstPersonCamera.Direction)) * (Constants.Player.Physics.Movement.WalkMagnitude);
 
 						if (newVelocity != Vector3d.Zero)
 						{
@@ -169,7 +169,7 @@ namespace Umbra.Structures
 
 						newVelocity.Y = 0;
 
-						Accelerate((newVelocity - horizontalVelocity));
+						Accelerate((newVelocity - horizontalVelocity) * Constants.Physics.GripSignificance * GripCoefficient);
 					}
 				}
 				MoveDirection = Vector3d.Zero;
