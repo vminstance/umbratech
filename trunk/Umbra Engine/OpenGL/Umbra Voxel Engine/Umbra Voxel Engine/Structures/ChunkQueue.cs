@@ -95,7 +95,7 @@ namespace Umbra.Structures
                 ChunkIndex modified = chunk.Index * new ChunkIndex(1, 1, 1);
                 if (tempChunk != null)
                 {
-                    int val = ((modified.Position - Constants.Engine_Physics.Player.Position).LengthSquared).CompareTo((tempChunk.Index.Position - Constants.Engine_Physics.Player.Position).LengthSquared);
+                    int val = ((modified.Position - Constants.Engines.Physics.Player.Position).LengthSquared).CompareTo((tempChunk.Index.Position - Constants.Engines.Physics.Player.Position).LengthSquared);
 
                     if (val > 0)
                     {

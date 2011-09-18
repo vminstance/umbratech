@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Diagnostics;
 using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Audio;
@@ -16,151 +18,158 @@ using Umbra.Definitions;
 using Umbra.Implementations;
 using Umbra.Structures.Geometry;
 using Umbra.Definitions.Globals;
+using Umbra.Implementations.Graphics;
 using Console = Umbra.Implementations.Graphics.Console;
 
 namespace Umbra.Engines
 {
-    public class Physics : Engine
-    {
-        List<PhysicsObject> PhysicsObjects;
+	public class Physics : Engine
+	{
+		List<PhysicsObject> PhysicsObjects;
 
-        public Player Player { get { return (Player)PhysicsObjects.First(); } }
+		public Player Player { get { return (Player)PhysicsObjects.First(); } }
+		public Thread CalculationsThread { get; private set; }
 
-        public Physics()
-        {
-            PhysicsObjects = new List<PhysicsObject>();
-            PhysicsObjects.Add(new Player());
+		public Physics()
+		{
+			PhysicsObjects = new List<PhysicsObject>();
+			PhysicsObjects.Add(new Player());
 
-        }
 
-        public override void Update(FrameEventArgs e)
-        {
-            foreach (PhysicsObject currentObject in PhysicsObjects)
-            {
-                currentObject.Update(e);
-                if (currentObject.PhysicsEnabled)
-                {
-                    UpdateVelocity(currentObject, e);
-                    UpdatePosition(currentObject, e);
-                }
-                currentObject.ResetForceAccumulator();
-            }
+			CalculationsThread = new Thread(new ThreadStart(RunCalculationThread));
+			CalculationsThread.Start();
+		}
 
-            base.Update(e);
-        }
+		public void AbortThread()
+		{
+			CalculationsThread.Abort();
+		}
 
-        private void UpdateVelocity(PhysicsObject currentObject, FrameEventArgs e)
-        {
+		public void RunCalculationThread()
+		{
+			Stopwatch timer = new Stopwatch();
+			timer.Start();
 
-            // To avoid errors (specifically, NaN), remove velocity if too small.
-            if (Player.Velocity.Length <= Constants.Physics.MinSpeed)
-            {
-                Player.Velocity.X = 0.0;
-                Player.Velocity.Y = 0.0;
-                Player.Velocity.Z = 0.0;
-            }
+			while (true)
+			{
+				long currentTime = timer.ElapsedMilliseconds;
 
-            // Gravity
-            currentObject.ApplyForce(-Vector3d.UnitY * Constants.Physics.Gravity * currentObject.Mass);
+				if (timer.ElapsedMilliseconds >= (Constants.Physics.TimeStep * 1000.0))
+				{
+					timer.Restart();
+					Popup.Post(currentTime.ToString());
+					foreach (PhysicsObject currentObject in PhysicsObjects)
+					{
+						currentObject.Update();
+						if (currentObject.PhysicsEnabled)
+						{
+							UpdateVelocity(currentObject);
+							UpdatePosition(currentObject);
+						}
+						currentObject.ResetAccelerationAccumulator();
+					}
+				}
+			}
+		}
 
-            // Buoyancy
-            currentObject.ApplyForce(Vector3d.UnitY * currentObject.BuoyancyMagnitude);
+		private void UpdateVelocity(PhysicsObject currentObject)
+		{
 
-            // Drag
-            currentObject.ApplyForce(-0.5F *
-                currentObject.AverageViscosity *
-                currentObject.BoundingBox.SurfaceArea *
-                currentObject.DragCoefficient *
-                currentObject.Velocity.LengthSquared *
-                (currentObject.Velocity == Vector3d.Zero ? Vector3d.One : Vector3d.Normalize(currentObject.Velocity)));
+			// To avoid errors (specifically, NaN), remove velocity if too small.
+			if (Player.Velocity.Length <= Constants.Physics.MinSpeed)
+			{
+				Player.Velocity = Vector3d.Zero;
+			}
 
-            // Surface friction
-            Vector3d horizontalVelocity = Vector3d.Multiply(currentObject.Velocity, new Vector3d(1, 0, 1));
+			// Gravity
+			currentObject.Accelerate(-Vector3d.UnitY * Constants.Physics.Gravity);
 
-            if (IsOnGround(currentObject) && horizontalVelocity != Vector3d.Zero)
-            {
-                currentObject.ApplyForce((-Vector3d.Normalize(horizontalVelocity) * currentObject.KineticFrictionCoefficient * currentObject.Mass * Constants.Physics.Gravity) * horizontalVelocity.Length * Constants.Physics.FrictionSignificance);
+			// Surface friction
+			Vector3d horizontalVelocity = Vector3d.Multiply(currentObject.Velocity, new Vector3d(1, 0, 1));
 
-            }
+			if (IsOnGround(currentObject) && horizontalVelocity != Vector3d.Zero)
+			{
+				//currentObject.ApplyVelocity((-Vector3d.Normalize(horizontalVelocity) * currentObject.KineticFrictionCoefficient * currentObject.Mass * Constants.Physics.Gravity) * horizontalVelocity.Length * Constants.Physics.FrictionSignificance);
+			}
 
-            // Update velocity
-            currentObject.UpdateVelocity(e.Time);
-        }
+			// Update velocity
+			currentObject.ApplyAcceleration();
+		}
 
-        private void UpdatePosition(PhysicsObject obj, FrameEventArgs e)
-        {
-            Vector3d newPos = obj.Position + obj.Velocity * e.Time;
+		private void UpdatePosition(PhysicsObject obj)
+		{
+			Vector3d newPos = obj.Position + obj.Velocity * Constants.Physics.TimeStep;
 
-            if (PlaceFree(obj, newPos))
-            {
-                obj.Position = newPos;
-            }
-            else
-            {
-                UpdatePositionOneDimension(obj, ref obj.Position.Y, ref obj.Velocity.Y, Vector3d.UnitY, e);
+			if (PlaceFree(obj, newPos))
+			{
+				obj.Position = newPos;
+			}
+			else
+			{
+				UpdatePositionOneDimension(obj, ref obj.Position.Y, ref obj.Velocity.Y, Vector3d.UnitY);
 
-                if (Math.Abs(obj.Velocity.X) > Math.Abs(obj.Velocity.Z))
-                {
-                    UpdatePositionOneDimension(obj, ref obj.Position.X, ref obj.Velocity.X, Vector3d.UnitX, e);
-                    UpdatePositionOneDimension(obj, ref obj.Position.Z, ref obj.Velocity.Z, Vector3d.UnitZ, e);
-                }
-                else
-                {
-                    UpdatePositionOneDimension(obj, ref obj.Position.Z, ref obj.Velocity.Z, Vector3d.UnitZ, e);
-                    UpdatePositionOneDimension(obj, ref obj.Position.X, ref obj.Velocity.X, Vector3d.UnitX, e);
-                }
-            }
-        }
+				if (Math.Abs(obj.Velocity.X) > Math.Abs(obj.Velocity.Z))
+				{
+					UpdatePositionOneDimension(obj, ref obj.Position.X, ref obj.Velocity.X, Vector3d.UnitX);
+					UpdatePositionOneDimension(obj, ref obj.Position.Z, ref obj.Velocity.Z, Vector3d.UnitZ);
+				}
+				else
+				{
+					UpdatePositionOneDimension(obj, ref obj.Position.Z, ref obj.Velocity.Z, Vector3d.UnitZ);
+					UpdatePositionOneDimension(obj, ref obj.Position.X, ref obj.Velocity.X, Vector3d.UnitX);
+				}
+			}
+		}
 
-        private bool PlaceFree(PhysicsObject obj, Vector3d position)
-        {
-            foreach (BlockIndex index in obj.BoundingBox.At(position).IntersectionIndices)
-            {
-                if (Constants.World.Current.GetBlock(index).Solidity)
-                {
-                    return false;
-                }
-            }
+		private bool PlaceFree(PhysicsObject obj, Vector3d position)
+		{
+			foreach (BlockIndex index in obj.BoundingBox.At(position).IntersectionIndices)
+			{
+				if (Constants.World.Current.GetBlock(index).Solidity)
+				{
+					return false;
+				}
+			}
 
-            return true;
-        }
+			return true;
+		}
 
-        private void UpdatePositionOneDimension(PhysicsObject obj, ref double position, ref double velocity, Vector3d axis, FrameEventArgs e)
-        {
-            while (!PlaceFree(obj, velocity * axis * e.Time + obj.Position))
-            {
-                if (Math.Round(velocity, 4) != 0.0F)
-                {
-                    velocity = velocity / 1.5F;
-                }
-                else
-                {
-                    velocity = 0.0F;
-                    return;
-                }
-            }
+		private void UpdatePositionOneDimension(PhysicsObject obj, ref double position, ref double velocity, Vector3d axis)
+		{
+			while (!PlaceFree(obj, velocity * Constants.Physics.TimeStep * axis + obj.Position))
+			{
+				if (Math.Round(velocity, 4) != 0.0)
+				{
+					velocity = velocity / 1.5;
+				}
+				else
+				{
+					velocity = 0.0;
+					return;
+				}
+			}
 
-            position += velocity * (float)e.Time;
-        }
+			position += velocity * Constants.Physics.TimeStep;
+		}
 
-        public List<BlockIndex> BlocksBeneath(PhysicsObject obj)
-        {
-            List<BlockIndex> returnList = new List<BlockIndex>();
+		public List<BlockIndex> BlocksBeneath(PhysicsObject obj)
+		{
+			List<BlockIndex> returnList = new List<BlockIndex>();
 
-            for (int x = (int)Math.Floor(obj.BoundingBox.Min.X); x <= Math.Floor(obj.BoundingBox.Max.X); x++)
-            {
-                for (int z = (int)Math.Floor(obj.BoundingBox.Min.Z); z <= Math.Floor(obj.BoundingBox.Max.Z); z++)
-                {
-                    returnList.Add(new BlockIndex(x, (int)Math.Floor(obj.Position.Y - Constants.Player.MinDistanceToGround), z));
-                }
-            }
+			for (int x = (int)Math.Floor(obj.BoundingBox.Min.X); x <= Math.Floor(obj.BoundingBox.Max.X); x++)
+			{
+				for (int z = (int)Math.Floor(obj.BoundingBox.Min.Z); z <= Math.Floor(obj.BoundingBox.Max.Z); z++)
+				{
+					returnList.Add(new BlockIndex(x, (int)Math.Floor(obj.Position.Y - Constants.Player.MinDistanceToGround), z));
+				}
+			}
 
-            return returnList;
-        }
+			return returnList;
+		}
 
-        public bool IsOnGround(PhysicsObject obj)
-        {
-            return !PlaceFree(obj, obj.Position - Vector3d.UnitY * Constants.Player.MinDistanceToGround);
-        }
-    }
+		public bool IsOnGround(PhysicsObject obj)
+		{
+			return !PlaceFree(obj, obj.Position - Vector3d.UnitY * Constants.Player.MinDistanceToGround);
+		}
+	}
 }

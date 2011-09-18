@@ -161,11 +161,11 @@ namespace Umbra
 
 						break;
 					}
-				case 1: // Physics
+				case 1: // Land
 					{
 						this.checkBox_dynUpdate.Checked = false;
 						this.checkBox_saveWorld.Checked = false;
-						this.textBox_seed.Text = "Facepunch";
+						this.textBox_seed.Text = "Land";
 						this.numericUpDown_worldSize.Value = 3;
 						this.textBox_name.Text = "default";
 
@@ -193,7 +193,7 @@ namespace Umbra
 					{
 						this.checkBox_dynUpdate.Checked = false;
 						this.checkBox_saveWorld.Checked = false;
-						this.textBox_seed.Text = "glacier";
+						this.textBox_seed.Text = "Water";
 						this.numericUpDown_worldSize.Value = 5;
 						this.textBox_name.Text = "default";
 

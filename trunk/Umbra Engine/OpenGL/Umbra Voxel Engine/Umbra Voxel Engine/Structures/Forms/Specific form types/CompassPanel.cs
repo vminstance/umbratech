@@ -44,7 +44,7 @@ namespace Umbra.Structures.Forms
 
 
 
-            int degrees = (int)Mathematics.WrapAngleDegrees(MathHelper.RadiansToDegrees(-(float)Constants.Engine_Physics.Player.FirstPersonCamera.Direction) - 62.0); // -62.0 offsets the compass to show the right direction
+            int degrees = (int)Mathematics.WrapAngleDegrees(MathHelper.RadiansToDegrees(-(float)Constants.Engines.Physics.Player.FirstPersonCamera.Direction) - 62.0); // -62.0 offsets the compass to show the right direction
 
             Rectangle mainRectangle = new Rectangle();
             mainRectangle.Y = (int)Constants.Overlay.Compass.FrameSize.Y;

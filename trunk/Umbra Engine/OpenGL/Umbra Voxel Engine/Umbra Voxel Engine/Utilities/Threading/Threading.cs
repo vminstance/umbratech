@@ -201,9 +201,9 @@ namespace Umbra.Utilities.Threading
 						AddToBuild(currentChunk);
 					}
 
-					if (VegetationQueue.Count == 0 && !Constants.Engine_Physics.Player.IsReleased)
+					if (VegetationQueue.Count == 0 && !Constants.Engines.Physics.Player.IsReleased)
 					{
-						Constants.Engine_Physics.Player.Release();
+						Constants.Engines.Physics.Player.Release();
 					}
 				}
 				else if (BuildQueue.Count > 0)

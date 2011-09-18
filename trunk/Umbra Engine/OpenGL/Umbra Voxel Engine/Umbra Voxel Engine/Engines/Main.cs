@@ -29,8 +29,9 @@ namespace Umbra.Engines
         {
             Engines = new List<Engine>();
             Constants.SetupEngines(this);
+			Constants.Engines.Input.SetMouseShow(false);
         }
-
+			
         public void AddEngine(Engine engine)
         {
             Engines.Add(engine);

@@ -179,25 +179,18 @@ namespace Umbra.Implementations.Graphics
 			return command;
 		}
 
-		static public void Toggle()
+		static public void Toggle(bool? state = null)
 		{
-			Constants.Engine_Input.CenterMouse();
+			Constants.Engines.Input.CenterMouse();
 			InputString = "";
-			Variables.Overlay.Console.IsActive = !Variables.Overlay.Console.IsActive;
-		}
-
-		static public void Open()
-		{
-			InputString = "";
-
-			Variables.Overlay.Console.IsActive = true;
-		}
-
-		static public void Close()
-		{
-			InputString = "";
-
-			Variables.Overlay.Console.IsActive = false;
+			if (!state.HasValue)
+			{
+				Variables.Overlay.Console.IsActive = !Variables.Overlay.Console.IsActive;
+			}
+			else
+			{
+				Variables.Overlay.Console.IsActive = state.Value;
+			}
 		}
 
 		static public void Input(KeyboardKeyEventArgs e, KeyboardDevice keyboard)
@@ -249,7 +242,8 @@ namespace Umbra.Implementations.Graphics
 			}
 			else if (e.Key == Key.Escape)
 			{
-				Toggle();
+				Toggle(false);
+				Constants.Engines.Input.SetMouseShow(false);
 			}
 			else if (e.Key == Key.Tab)
 			{
