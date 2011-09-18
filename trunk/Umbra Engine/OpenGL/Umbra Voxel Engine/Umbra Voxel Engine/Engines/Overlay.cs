@@ -45,10 +45,10 @@ namespace Umbra.Engines
             //    (int)Constants.Graphics.ScreenResolution.Y / 2, 0, 0));
             //Forms.Last().Show();
 
-            Forms.Add(new Form(20, 20, 300, 200));
-            Forms.Last().Content = new Panel();
+            //Forms.Add(new Form(20, 20, 300, 200));
+            //Forms.Last().Content = new Panel();
             //Forms.Last().Content.Background = (Bitmap)Content.Load(@"C:\Users\Azzi\Pictures\UmbraPics\denseTrees.png");
-            Forms.Last().Show();
+            //Forms.Last().Show();
         }
 
         public void MouseButtonDown(object sender, MouseButtonEventArgs e)

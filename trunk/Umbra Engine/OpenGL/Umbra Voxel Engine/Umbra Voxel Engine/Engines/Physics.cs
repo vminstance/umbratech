@@ -57,7 +57,6 @@ namespace Umbra.Engines
 				if (timer.ElapsedMilliseconds >= (Constants.Physics.TimeStep * 1000.0))
 				{
 					timer.Restart();
-					Popup.Post(currentTime.ToString());
 					foreach (PhysicsObject currentObject in PhysicsObjects)
 					{
 						currentObject.Update();
@@ -89,7 +88,7 @@ namespace Umbra.Engines
 
 			if (IsOnGround(currentObject) && horizontalVelocity != Vector3d.Zero)
 			{
-				//currentObject.ApplyVelocity((-Vector3d.Normalize(horizontalVelocity) * currentObject.KineticFrictionCoefficient * currentObject.Mass * Constants.Physics.Gravity) * horizontalVelocity.Length * Constants.Physics.FrictionSignificance);
+				currentObject.Accelerate((-Vector3d.Normalize(horizontalVelocity) * currentObject.KineticFrictionCoefficient * Constants.Physics.Gravity) * horizontalVelocity.Length * Constants.Physics.FrictionSignificance / Constants.Physics.GripSignificance);
 			}
 
 			// Update velocity
