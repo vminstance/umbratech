@@ -39,14 +39,15 @@ namespace Umbra.Structures
         {
             get
             {
-                double buoyancy = 0.0;
+				//double buoyancy = 0.0;
 
-                foreach (BlockIndex index in BoundingBox.IntersectionIndices)
-                {
-                    buoyancy += Constants.World.Current.GetBlock(index).Density * BoundingBox.IntersectionVolume(index.GetBoundingBox());
-                }
+				//foreach (BlockIndex index in BoundingBox.IntersectionIndices)
+				//{
+				//    buoyancy += Constants.World.Current.GetBlock(index).Density * BoundingBox.IntersectionVolume(index.GetBoundingBox());
+				//}
 
-                return (2.0 * Constants.Physics.Gravity * Mass * buoyancy) / (Mass + buoyancy);
+				//return (2.0 * Constants.Physics.Gravity * buoyancy) / (Mass + buoyancy) / Mass;
+				return 0.0;
             }
         }
 

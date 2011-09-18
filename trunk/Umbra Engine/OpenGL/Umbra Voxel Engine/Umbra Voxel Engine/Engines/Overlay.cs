@@ -36,21 +36,6 @@ namespace Umbra.Engines
             RenderHelp.CreateTexture2D(out BlankTextureID, BlankTexture);
 
             Forms = new List<Form>();
-
-            Forms.Add(new Form(20, 20, 300, 200));
-            Forms.Last().Content = new Panel();
-            Forms.Last().ResizeHandlePosition = Corner.BottomRight;
-            Forms.Last().Title = "Antidisestablishmenterianism";
-            Forms.Last().Dragable = true;
-            Forms.Last().Content.Background = (Bitmap)Content.Load(@"D:\Users\Eier\Pictures\maze.png");
-            Forms.Last().Show();
-
-            Forms.Add(new Form(0, (int)Constants.Graphics.ScreenResolution.Y - 400, 300, 400));
-            Forms.Last().Content = new Panel();
-            Forms.Last().ResizeHandlePosition = Corner.TopRight;
-            Forms.Last().Title = "";
-            Forms.Last().Dragable = false;
-            Forms.Last().Show();
         }
 
         public void MouseButtonDown(object sender, MouseButtonEventArgs e)
