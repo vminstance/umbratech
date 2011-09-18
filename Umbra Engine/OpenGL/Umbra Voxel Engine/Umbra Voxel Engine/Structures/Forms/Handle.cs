@@ -23,40 +23,50 @@ namespace Umbra.Structures.Forms
 {
     class Handle
     {
-        Rectangle Location;
+        public Rectangle HandleRectangle;
         Point? Grip;
         bool DynamicGrip;
 
-        public Handle(Rectangle location, bool dynamicGrip)
+        public Handle(Rectangle handleRectangle, bool dynamicGrip)
         {
-            Location = location;
+            HandleRectangle = handleRectangle;
             Grip = null;
             DynamicGrip = dynamicGrip;
+
+            Constants.Engines.Main.Mouse.ButtonDown += new EventHandler<MouseButtonEventArgs>(Click);
+            Constants.Engines.Main.Mouse.ButtonUp += new EventHandler<MouseButtonEventArgs>(Release);
         }
 
-        public void Click(MouseButtonEventArgs e)
+        public void Click(object sender, MouseButtonEventArgs e)
         {
-            if (Location.Contains(e.Position))
+            if (HandleRectangle.Contains(e.Position))
             {
                 if (DynamicGrip)
                 {
-                    Grip = new Point(e.Position.X - Location.X, e.Position.Y - Location.Y);
+                    Grip = new Point(e.Position.X - HandleRectangle.X, e.Position.Y - HandleRectangle.Y);
                 }
                 else
                 {
-                    Grip = Point.Empty;
+                    Grip = new Point(HandleRectangle.Width / 2, HandleRectangle.Height / 2);
                 }
             }
         }
 
-        public void Release(MouseButtonEventArgs e)
+        public void Release(object sender, MouseButtonEventArgs e)
         {
             Grip = null;
         }
 
-        public void Update()
+        public bool Update()
         {
-			Location.Location = new Point(Grip.Value.X + Constants.Engines.Input.MousePosition.X, Grip.Value.Y + Constants.Engines.Input.MousePosition.Y);
+            if (Grip.HasValue)
+            {
+                HandleRectangle.Location = new Point(Constants.Engines.Input.MousePosition.X - Grip.Value.X, Constants.Engines.Input.MousePosition.Y - Grip.Value.Y);
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

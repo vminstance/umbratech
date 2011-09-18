@@ -37,18 +37,20 @@ namespace Umbra.Engines
 
             Forms = new List<Form>();
 
-            //Forms.Add(new Form(Constants.Overlay.Compass.ScreenPosition.X,
-            //    Constants.Overlay.Compass.ScreenPosition.Y, 0, 0));
-            //Forms.Last().Show();
+            Forms.Add(new Form(20, 20, 300, 200));
+            Forms.Last().Content = new Panel();
+            Forms.Last().ResizeHandlePosition = Corner.BottomRight;
+            Forms.Last().Title = "Antidisestablishmenterianism";
+            Forms.Last().Dragable = true;
+            Forms.Last().Content.Background = (Bitmap)Content.Load(@"D:\Users\Eier\Pictures\maze.png");
+            Forms.Last().Show();
 
-            //Forms.Add(new Form((int)Constants.Graphics.ScreenResolution.X / 2,
-            //    (int)Constants.Graphics.ScreenResolution.Y / 2, 0, 0));
-            //Forms.Last().Show();
-
-            //Forms.Add(new Form(20, 20, 300, 200));
-            //Forms.Last().Content = new Panel();
-            //Forms.Last().Content.Background = (Bitmap)Content.Load(@"C:\Users\Azzi\Pictures\UmbraPics\denseTrees.png");
-            //Forms.Last().Show();
+            Forms.Add(new Form(0, (int)Constants.Graphics.ScreenResolution.Y - 400, 300, 400));
+            Forms.Last().Content = new Panel();
+            Forms.Last().ResizeHandlePosition = Corner.TopRight;
+            Forms.Last().Title = "";
+            Forms.Last().Dragable = false;
+            Forms.Last().Show();
         }
 
         public void MouseButtonDown(object sender, MouseButtonEventArgs e)
@@ -124,18 +126,6 @@ namespace Umbra.Engines
                 SpriteString.Render(velocity[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[0]).X - 10, 200), Color.Yellow);
                 SpriteString.Render(velocity[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[1]).X - 10, 220), Color.Yellow);
                 SpriteString.Render(velocity[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(velocity[2]).X - 10, 240), Color.Yellow);
-
-
-                // Acceleration
-                string[] acceleration = { 
-                                            "Ax: " + Math.Round(Constants.Engines.Physics.Player.AccelerationAccumulator.X / Constants.Engines.Physics.Player.Mass, 2), 
-                                            "Ay: " + Math.Round(Constants.Engines.Physics.Player.AccelerationAccumulator.Y / Constants.Engines.Physics.Player.Mass, 2), 
-                                            "Az: " + Math.Round(Constants.Engines.Physics.Player.AccelerationAccumulator.Z / Constants.Engines.Physics.Player.Mass, 2) 
-                                        };
-
-                SpriteString.Render(acceleration[0], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[0]).X - 10, 270), Color.Yellow);
-                SpriteString.Render(acceleration[1], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[1]).X - 10, 290), Color.Yellow);
-                SpriteString.Render(acceleration[2], new Point((int)Constants.Graphics.ScreenResolution.X - SpriteString.Measure(acceleration[2]).X - 10, 310), Color.Yellow);
 
             }
 
